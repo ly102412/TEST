@@ -1,0 +1,6 @@
+src/assets/js/
+build/*.js
+config/*.js
+static/**/*.js
+src/cms/assets/js/*.js
+src/cms/**/*.vue
