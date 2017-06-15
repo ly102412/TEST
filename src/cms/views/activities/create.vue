@@ -16,7 +16,7 @@
                   </div>
                   <div class="bottom">
                     <strong>超级大转盘</strong>
-                    <span><el-button type="primary" size="mini" icon="plus">创建活动</el-button></span>
+                    <span><router-link :to="{path:'main'}"><el-button type="primary" size="mini" icon="plus">创建活动</el-button></router-link></span>
                   </div>
                 </div>
               </div><!--/.col-->

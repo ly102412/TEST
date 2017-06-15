@@ -6,6 +6,7 @@ import ActivityCreate from '../views/activities/create'
 import ActivityList from '../views/activities/activityList'
 import ActivityTemplates from '../views/activities/templateList'
 import ActivityRecord from '../views/activities/activityRecord'
+import ActivityMain from '../views/activities/main'
 
 // views - 商户信息
 import AccountConsumeRecord from '../views/bussiness/accountConsumeRecord'
@@ -58,6 +59,12 @@ const routes = [
             path: '/activities/activityRecord',
             name: '中奖记录',
             component: ActivityRecord,
+            hidden: true
+          },
+          {
+            path: '/activities/main',
+            name: '活动编辑页',
+            component: ActivityMain,
             hidden: true
           }
         ]
