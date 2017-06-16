@@ -10,8 +10,8 @@ module.exports = {
   entryApp: 'src/'+directory+'/main.js',   // 项目入口app.js文件
   build: {
     env: require('./prod.env'), // 使用 config/prod.env.js 中定义的编译环境
-    index: path.resolve(__dirname, '../statics/'+directory+'/index.html'), // 编译输入的 index.html 文件
-    assetsRoot: path.resolve(__dirname, '../statics/'+directory+''), // 编译输出的静态资源路径
+    index: path.resolve(__dirname, '../dist/'+directory+'/index.html'), // 编译输入的 index.html 文件
+    assetsRoot: path.resolve(__dirname, '../dist/'+directory+''), // 编译输出的静态资源路径
     assetsEntry: 'src/'+directory+'/index.html',
     assetsSubDirectory: 'static', // 编译输出的二级目录
     assetsPublicPath: '/'+directory+'/', // 编译发布的根目录，可配置为资源服务器域名或 CDN 域名
@@ -32,7 +32,7 @@ module.exports = {
     cssSourceMap: false,// 是否开启 cssSourceMap
     proxyTable: {
       '/cmcc': {
-        target: 'http://192.168.199.191:7050/', // 目标地址 http://ruowei.ap.ngrok.io/     http://app.m.ruwe.cn/api/  内网环境http://m.ruowei.cn/  瑞清：192.168.199.204:7040
+        target: 'http://192.168.199.193:7050/', // 目标地址 http://ruowei.ap.ngrok.io/     http://app.m.ruwe.cn/api/  内网环境http://m.ruowei.cn/  瑞清：192.168.199.204:7040
         changeOrigin: true,               // needed for virtual hosted sites
         ws: true,                         // websockets代理
         pathRewrite: {
