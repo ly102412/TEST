@@ -11,9 +11,9 @@
               <el-tab-pane label="首页" name="1"></el-tab-pane>
               <el-tab-pane label="活动奖品" name="2"></el-tab-pane>
               <el-tab-pane label="我的奖品" name="3"></el-tab-pane>
-              <el-tab-pane label="奖品详情" name="4"></el-tab-pane>
-              <el-tab-pane label="中奖页面" name="5"></el-tab-pane>
-              <el-tab-pane label="没中奖页" name="6"></el-tab-pane>
+              <!-- <el-tab-pane label="奖品详情" name="4"></el-tab-pane> -->
+              <el-tab-pane label="中奖页面" name="4"></el-tab-pane>
+              <el-tab-pane label="没中奖页" name="5"></el-tab-pane>
             </el-tabs>
             <!-- <input type="button" name="" value="prev" @click="tabPrev">
             <input type="button" name="" value="next" @click="tabNext"> -->
@@ -22,7 +22,7 @@
               <div class="col-md-5">
                 <div class="device">
                   <div class="device-content">
-                    <iframe ref="iframe" src="../../../static/2.html" width="320" height="560" @load="load"></iframe>
+                    <iframe ref="iframe" frameborder="0" scrolling="no" style="width:100%;height:100%;" src="../../../static/template/turnplate/index.html" width="320" height="560" @load="load"></iframe>
                   </div>
                 </div>
               </div>
