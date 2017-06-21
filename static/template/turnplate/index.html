@@ -11,267 +11,16 @@
   <script src="../common/js/jquery.min.js"></script>
   <script src="../common/js/vue.min.js"></script>
   <script src="../common/js/rem.js"></script>
-  <script src="js/template.js"></script>
+  <script src="js/turnplate.js"></script>
   <script src="js/awardRotate.js"></script>
   <link rel="stylesheet" href="../common/css/reset.css" />
-  <title>大转盘活动</title>
-  <style>
-  .turnplate-lottery-body{
-    background-color: #572967;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    height: 100%;
-  }
-  .main{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #a72058;
-    overflow: hidden;
-  }
-  .home-bg img{
-    width: 100%;
-    height: auto;
-  }
-  .rules-icon{
-    position: absolute;
-    top: .3rem;
-    right: .3rem;
-    width: 1.2rem;
-    height: 1.2rem;
-    overflow: hidden;
-  }
-  .rules-icon img{
-    width: 100%
-  }
-  .turnplate{
-    width: 80%;
-    font-size:1em;
-    box-sizing:border-box;
-    position: absolute;
-    top:13%;
-    left:10%;
-  }
-  .turnplate-bg{
-    position:absolute;top:0;left:0;width:100%;height:95%;box-sizing:border-box;display:block;background-color: rgba(0,0,0,0);box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
-  }
-  #btn_start{
-    position:absolute;
-    width:31.5%;
-    height:42.5%;
-    left:34.6%;
-    top:21%;
-    z-index: 1;
-  }
-  .join-num{
-    position: absolute;
-    width: 100%;
-    top: 70%;
-    text-align: center;
-    font-size: .32rem;
-    color: #fff;
-    line-height: .8rem;
-  }
-  .join-num strong{
-    font-size: .4rem;
-    color: #fff500;
-    margin: 0 .2rem;
-  }
-  .copyright{
-    position: fixed;
-    font-size: .32rem;
-    height: .6rem;
-    line-height: .6rem;
-    color: #fff;
-    width: 100%;
-    text-align: center;
-    bottom: 0;
-    background: rgba(0,0,0,.4);
-  }
-  .hide{
-    display: none
-  }
-
-  /* 活动说明样式 */
-  .rules-box {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: rgba(0,0,0,0.8);
-    /*transform: scale(0,0);*/
-    transition: .4s;
-    color: #fff;
-    overflow: hidden;
-  }
-  .rules-box .rules-box-top{
-    position: fixed;
-    width: 100%;
-    top: 0;
-    height: 1.25rem;
-    border-bottom: 1px solid rgba(255,255,255,.6);
-    padding: .2rem 0 0;
-    overflow: hidden;
-  }
-  .rules-box .rules-box-top .rules-tab{
-    float: left;
-  }
-  .rules-box .rules-box-top .rules-tab li{
-    float: left;
-    line-height: .65rem;
-    padding: .36rem 0;
-    text-align: center;
-    cursor: pointer;
-    font-size: .36rem;
-  }
-  .rules-box .rules-box-top .rules-tab li:first-child strong{
-    border-left: none;
-  }
-  .rules-box .rules-box-top .rules-tab li  strong{
-    border-left: 1px solid #fff;
-    padding: .2rem .8rem;
-  }
-  .rules-box .rules-box-top .rules-tab li.cur strong{
-    border-bottom: 7px solid #fff;
-  }
-  .rules-box .rules-box-top .close{
-    position: absolute;
-    right: 0.3rem;
-    width: 1.25rem;
-    height: 1.25rem;
-    background: url('images/close.png') no-repeat;
-    background-size: 50%;
-    background-position: center;
-  }
-  .rules-content{
-    position: absolute;
-    top: 1.8rem;
-    bottom: 0;
-    height: auto;
-    font-size: .28rem;
-    line-height: .6rem;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    padding: 0 .3rem;
-    position: relative;
-    padding-bottom: 1rem;
-  }
-  .rules-content .module{
-    padding: .2rem 0;
-  }
-  .rules-content .module h3{
-    padding: 0 .3rem;
-    background: #fff;
-    color: #000;
-    display: inline-block;
-    margin: .2rem 0;
-  }
-
-  .rules-content .rules-card-list li{
-    font-size: .32rem;
-    border: #fff 5px solid;
-    padding: .2rem;
-    margin-bottom: .2rem;
-  }
-  .rules-content .rules-card-list li h1{
-    font-size: .4rem;
-  }
-   .contract{
-    width: 100%;
-    margin: 0 auto;
-    margin-top: 1rem;
-  }
-   .btn-contract{
-    font-size: .32rem;
-    width: 100%;
-    display: block;
-    color: #fff;
-    background: #41bd43;
-    height: .8rem;
-    width:100%;
-    border-radius: .2rem;
-    text-align: center;
-    line-height: .8rem;
-  }
-
-  /* 中奖结果页 */
-  .result-box,.result-failed{
-    position: fixed;
-    font-size: .32rem;
-    color: #fff;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    background: rgba(0,0,0,.85);
-    z-index: 999;
-  }
-  .result-box .result-gift-scroll{
-    padding: 0 .5rem;
-    word-wrap: break-word;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-top: 1.8rem;
-    -webkit-overflow-scrolling: touch;
-  }
-  .result-box .result-bglight{
-    width: 100%;
-    height: 80%;
-    top: -0.5rem;
-    background-image: url('images/light.png');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    position: absolute;
-    border-radius: 50%;
-    left: 0;
-    animation: bgRotate 6s linear infinite;
-  }
-  .result-box .result-gift-scroll .title{
-    font-size: .5rem;
-  }
-  .result-box .result-gift-scroll .result-img{
-    position: relative;
-    width: 2.5rem;
-    height: 2.6rem;
-    text-align:center;
-    margin: 0 auto;
-    margin-top: 1.2rem;
-    margin-bottom: 1.2rem;
-    z-index: 1;
-  }
-  .result-box .result-gift-scroll .result-img img{
-    width: 100%;
-    height: 100%;
-  }
-  .result-box .result-footer{
-    line-height: .6rem;
-    font-size: .4rem;
-  }
-  .result-box .result-footer strong{
-    color: #ffdb12;
-  }
-  .result-failed .failed-img{
-    padding-top: 1.2rem;
-    width: 80%;
-    text-align: center;
-    margin: 0 auto;
-  }
-  .result-failed .failed-img img{
-    width: 100%;
-  }
-  @keyframes bgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@-webkit-keyframes bgRotate{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(360deg)}}
-  </style>
+  <link rel="stylesheet" href="css/turnplate.css" />
+  <title></title>
 </head>
 <body class="turnplate-lottery-body">
   <div id="app">
     <!-- 首页 begin-->
-    <div class="main">
+    <div class="main" v-show="activity.main_tab == 1">
       <!-- 活动背景图 begin-->
       <div class="home-bg">
         <img src="images/active-bg.jpg" alt="">
@@ -291,8 +40,9 @@
       <!-- 大转盘 end-->
       <!-- 参与人数 begin-->
       <div class="join-num">
-        <p>已有<strong>0</strong>人参与</p>
-        <p>您今天还有<strong>3</strong>次抽奖机会</p>
+        <p>已有<strong>{{activity.base_setting.fictitious_join_num}}</strong>人参与</p>
+        <p>今天还有<strong>{{activity.lottery_setting.total_lottery_time}}</strong>次抽奖机会</p>
+        <p v-if="activity.lottery_setting.is_total_lottery == '1'">您还有<strong>{{activity.lottery_setting.daily_lottery_time}}</strong>次抽奖机会</p>
       </div>
       <!-- 参与人数 end-->
       <!-- 版权 begin-->
@@ -303,7 +53,7 @@
     </div>
     <!-- 首页 end-->
     <!-- 活动说明 begin-->
-    <div class="rules-box hide">
+    <div class="rules-box" v-show="activity.main_tab == 2 || activity.main_tab == 3">
       <div class="rules-box-top">
         <div class="rules-tab">
           <li class="cur">
@@ -317,7 +67,7 @@
         </div>
       </div>
 
-      <div class="rules-content">
+      <div class="rules-content" v-show="activity.main_tab == 2">
         <div class="module">
           <h3>活动奖品</h3>
           <div class="info">
@@ -329,13 +79,13 @@
         <div class="module">
           <h3>活动时间</h3>
           <div class="info">
-            <p>2017-06-18 11:23 - 2017-08-12 14:04</p>
+            <p>{{activity.base_setting.begin_date}} - {{activity.base_setting.end_date}}</p>
           </div>
         </div>
         <div class="module">
           <h3>主办单位</h3>
           <div class="info">
-            <p>本次活动主办单位为<strong>口粮APP</strong></p>
+            <p>本次活动主办单位为<a :href="activity.advanced_setting.enterprise_setting.website_url"><strong>{{activity.advanced_setting.enterprise_setting.organizers}}</strong></a></p>
           </div>
         </div>
         <div class="module">
@@ -348,38 +98,17 @@
           <h3>活动及兑奖说明</h3>
           <div class="info">
             <p>没人每日有3次抽奖机会</p>
-            <p>获奖后将自动充值</p>
-          </div>
-        </div>
-        <div class="module">
-          <h3>活动及兑奖说明</h3>
-          <div class="info">
-            <p>没人每日有3次抽奖机会</p>
-            <p>获奖后将自动充值</p>
-          </div>
-        </div>
-        <div class="module">
-          <h3>活动及兑奖说明</h3>
-          <div class="info">
-            <p>没人每日有3次抽奖机会</p>
-            <p>获奖后将自动充值</p>
-          </div>
-        </div>
-        <div class="module">
-          <h3>活动及兑奖说明</h3>
-          <div class="info">
-            <p>没人每日有3次抽奖机会</p>
-            <p>获奖后将自动充值</p>
+            <p>{{activity.base_setting.activity_des}}</p>
           </div>
         </div>
       </div>
-      <div class="rules-content">
+      <div class="rules-content" v-show="activity.main_tab == 3">
         <div class="rules-card-list">
           <ul>
             <li>
               <div class="card-content">
                 <h1 class="price-name">一等奖</h1>
-                <p>兑奖期限: 2017-06-16 至 2017-06-30</p>
+                <p>兑奖期限: {{activity.base_setting.begin_date}} 至 {{activity.base_setting.begin_date}}</p>
               </div>
               <div class="status">
                 未兑换
@@ -388,13 +117,13 @@
           </ul>
         </div>
         <div class="contract">
-            <a class="btn-contract">关注我们</a>
+            <a class="btn-contract">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
         </div>
       </div>
     </div>
     <!-- 活动说明 end-->
     <!-- 中奖页面 begin-->
-    <div class="result-box hide">
+    <div class="result-box" v-show="activity.main_tab == 4">
       <div class="result-gift-scroll">
         <div class="result-bglight"></div>
         <h1 class="title">恭喜您获得了</h1>
@@ -406,49 +135,60 @@
           <p>价值100元礼品</p>
         </div>
         <div class="contract">
-            <a class="btn-contract">领取奖品</a>
-        </div>
-        <div class="contract">
-            <a class="btn-contract">关注我们</a>
+            <a class="btn-contract">领取奖品</a></br>
+            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
+            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
         </div>
       </div>
     </div>
     <!-- 中奖页面 end-->
-    <div class="result-failed hide">
+    <div class="result-failed" v-show="activity.main_tab == 5">
       <div class="failed-img">
         <img src="images/faiImg.png" alt="">
         <div class="contract">
             <a class="btn-contract">再来一次</a></br>
-            <a class="btn-contract">关注我们</a>
+            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
+            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
         </div>
       </div>
     </div>
   </div>
   <script>
-      // window.app = new Vue({
-      //     el: '#app',
-      //     data () {
-      //       return {
-      //         activity: {}
-      //       }
-      //     },
-      //     created () {
-      //        if(window.parent.window._item){
-      //            this.setContent(window.parent.window._item)
-      //        }
-      //     },
-      //     methods: {
-      //       setContent (item) {
-      //         this.item = item
-      //       }
-      //     }
-      // });
+  window.app = new Vue({
+      el: '#app',
+      data () {
+        return {
+          activity: {}
+        }
+      },
+      mounted () {
+         if(window.parent.window._activity){
+             this.setContent(window.parent.window._activity)
+         }else{
+            // this.activity.base_setting.activity_name = '哈哈哈'
+         }
+      },
+      methods: {
+        setContent (activity) {
+          this.activity = activity
+          this.setAwardList(this.activity)
+        },
+        setAwardList (activity) {
+          // console.log(activity.award_setting)
+          turnplate.restaraunts = []
+          var award_length = activity.award_setting.length
+          for(var i=0; i<award_length;i++){
+            turnplate.restaraunts.push(
+              {'award_id':activity.award_setting[i].award_id,'award_name':activity.award_setting[i].award_name}
+            )
+          }
+          turnplate.drawRouletteWheel();
+        }
+      }
+  });
   </script>
   <script>
   $(function(){
-    // 初始化大转盘
-      turnplate.drawRouletteWheel();
-
       // 开始抽奖
       $('#btn_start').click(function (){
         if(turnplate.bRotate) return;

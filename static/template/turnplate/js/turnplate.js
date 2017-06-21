@@ -1,20 +1,14 @@
 'use strict'
 // 大转盘初始参数
 var turnplate = {
-  restaraunts:[
-    {prizeId:'1',prize_name:'100M'},
-    {prizeId:'2',prize_name:'200M'},
-    {prizeId:'3',prize_name:'300M'},
-    {prizeId:'4',prize_name:'400M'},
-    {prizeId:'5',prize_name:'500M'}
-  ],             //大转盘奖品名称
+  restaraunts:[],             //大转盘奖品名称
   colors:['#FFF4D6', '#FFFFFF', '#FFF4D6', '#FFFFFF','#FFF4D6', '#FFFFFF', '#FFF4D6', '#FFFFFF','#FFF4D6', '#FFFFFF'],                  //大转盘奖品区块对应背景颜色
   outsideRadius:192,          //大转盘外圆的半径
   textRadius:155,             //大转盘奖品位置距离圆心的距离
   insideRadius:68,            //大转盘内圆的半径
   startAngle:0,               //开始角度
   bRotate:false,              //false:停止;ture:旋转
-  prizeId:''                  // 返回中奖结果id
+  award_id:''                  // 返回中奖结果id
 };
 
 //旋转转盘 item:奖品位置; txt：提示语;
@@ -65,7 +59,7 @@ turnplate.drawRouletteWheel = function() {
 
           //----绘制奖品开始----
           ctx.fillStyle = '#E5302F';
-          let text = turnplate.restaraunts[i].prize_name;
+          let text = turnplate.restaraunts[i].award_name;
           let line_height = 17;
           //translate方法重新映射画布上的 (0,0) 位置
           ctx.translate(211 + Math.cos(angle + arc / 2) * turnplate.textRadius, 211 + Math.sin(angle + arc / 2) * turnplate.textRadius);
