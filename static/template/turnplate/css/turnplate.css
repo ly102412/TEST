@@ -253,3 +253,15 @@
   width: 100%;
 }
 @keyframes bgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@-webkit-keyframes bgRotate{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(360deg)}}
+
+
+/* 页面布局编辑 */
+.edit-layer{
+  border: transparent 1px solid;
+}
+.layer-border{
+  border: #fff 1px dashed;
+}
+.layer-border-active{
+  border: #329FEA 1px dashed;
+}
