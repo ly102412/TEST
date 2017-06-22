@@ -495,12 +495,16 @@
       // },
       // 重载 iframe 页面里的数据
       load (activity) {
+        window._setProperty = this.setProperty
         const app = this.$refs.iframe.contentWindow.app
         if (app && app.setContent){
           app.setContent(this.activity)
         } else {
           window._activity = this.activity
         }
+      },
+      setProperty (item) {
+        alert(item)
       },
       // 修改奖品tabs
       handleTabsEdit(targetName, action) {
@@ -618,5 +622,8 @@
     padding:0;
     margin:0;
   }
+}
+.check-border{
+  box-shadow: 1px 0 15px rgba(32,160,255,0.8), -1px 0 15px rgba(32,160,255,0.8), 0px 1px 15px rgba(32,160,255,0.8), 0px -1px 15px rgba(32,160,255,0.8);
 }
 </style>

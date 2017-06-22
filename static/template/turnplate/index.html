@@ -32,22 +32,22 @@
       </div>
       <!-- 活动规则按钮 end-->
       <!-- 大转盘 begin-->
-      <div class="turnplate">
+      <div class="turnplate edit-layer">
         <canvas id="wheelcanvas" style="width:100%;z-index:1;position:relative" width="422" height="422"></canvas>
         <img id="btn_start" src="images/turnplate-pointer.png"/>
-        <img class="turnplate-bg edit-layer" src="images/turnplate-bg.png"/>
+        <img class="turnplate-bg" src="images/turnplate-bg.png"/>
       </div>
       <!-- 大转盘 end-->
       <!-- 参与人数 begin-->
       <div class="join-num">
-        <p class="edit-layer">已有<strong>{{activity.base_setting.fictitious_join_num}}</strong>人参与</p>
-        <p class="edit-layer">今天还有<strong>{{activity.lottery_setting.total_lottery_time}}</strong>次抽奖机会</p>
-        <p class="edit-layer" v-if="activity.lottery_setting.is_total_lottery == '1'">您还有<strong>{{activity.lottery_setting.daily_lottery_time}}</strong>次抽奖机会</p>
+        <p class="edit-layer" data-layer="fictitious_join_num">已有<strong>{{activity.base_setting.fictitious_join_num}}</strong>人参与</p>
+        <p class="edit-layer" data-layer="total_lottery_time">今天还有<strong>{{activity.lottery_setting.total_lottery_time}}</strong>次抽奖机会</p>
+        <p class="edit-layer" data-layer="daily_lottery_time" v-if="activity.lottery_setting.is_total_lottery == '1'">您还有<strong>{{activity.lottery_setting.daily_lottery_time}}</strong>次抽奖机会</p>
       </div>
       <!-- 参与人数 end-->
       <!-- 版权 begin-->
       <div class="copyright">
-        页面技术由elemenT提供
+        页面技术由若为提供
       </div>
       <!-- 版权 end-->
     </div>
@@ -143,8 +143,8 @@
     </div>
     <!-- 中奖页面 end-->
     <div class="result-failed" v-show="activity.main_tab == 5">
-      <div class="failed-img">
-        <img src="images/faiImg.png" alt="" class="edit-layer">
+      <div class="failed-img edit-layer">
+        <img src="images/faiImg.png" alt="">
         <div class="contract">
             <a class="btn-contract">再来一次</a></br>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
@@ -277,6 +277,15 @@
         $('.edit-layer').click(function(){
           $('.edit-layer').removeClass('layer-border-active');
           $(this).addClass('layer-border-active');
+          if($('.tool-bar')){
+            $('.tool-bar').remove();
+          }
+          $(this).append('<div class="tool-bar"><span>编辑</span></div>');
+          $('.edit-layer .tool-bar').on('click',function(e){
+            e.stopPropagation();
+            alert($(this).parent().attr('data-layer'))
+            // parent._setProperty('22222')
+          });
         });
       }else{
       }

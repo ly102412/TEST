@@ -21,12 +21,11 @@
   height: auto;
 }
 .rules-icon{
-  position: absolute;
-  top: .3rem;
+  position: absolute!important;
+  top: .5rem;
   right: .3rem;
   width: 1.2rem;
   height: 1.2rem;
-  overflow: hidden;
 }
 .rules-icon img{
   width: 100%
@@ -35,7 +34,7 @@
   width: 80%;
   font-size:1em;
   box-sizing:border-box;
-  position: absolute;
+  position: absolute!important;
   top:13%;
   left:10%;
 }
@@ -142,18 +141,17 @@
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  padding: 0 .3rem;
+  padding: .3rem .3rem;
   padding-bottom: 2rem;
 }
 .rules-content .module{
-  padding: .2rem 0;
+  margin: .4rem 0;
 }
 .rules-content .module h3{
   padding: 0 .3rem;
   background: #fff;
   color: #000;
   display: inline-block;
-  margin: .2rem 0;
 }
 .rules-content .module .info strong{
   color: #fff500
@@ -244,10 +242,9 @@
   color: #ffdb12;
 }
 .result-failed .failed-img{
-  padding-top: 1.2rem;
   width: 80%;
   text-align: center;
-  margin: 0 auto;
+  margin: 1rem auto;
 }
 .result-failed .failed-img img{
   width: 100%;
@@ -258,10 +255,29 @@
 /* 页面布局编辑 */
 .edit-layer{
   border: transparent 1px solid;
+  position: relative;
 }
 .layer-border{
   border: #fff 1px dashed;
 }
 .layer-border-active{
   border: #329FEA 1px dashed;
+}
+.home-bg .tool-bar{
+  top: 0!important;
+}
+.tool-bar{
+  display: block;
+  position: absolute;
+  right: 0;
+  top: -26px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  font-size: 12px;
+  z-index: 10;
+  background: #329FEA;
+  color: #fff;
+  padding: 2px 5px;
+  cursor: pointer;
 }
