@@ -40,9 +40,9 @@
       <!-- 大转盘 end-->
       <!-- 参与人数 begin-->
       <div class="join-num">
-        <p class="edit-layer" data-layer="fictitious_join_num">已有<strong>{{activity.base_setting.fictitious_join_num}}</strong>人参与</p>
-        <p class="edit-layer" data-layer="total_lottery_time">今天还有<strong>{{activity.lottery_setting.total_lottery_time}}</strong>次抽奖机会</p>
-        <p class="edit-layer" data-layer="daily_lottery_time" v-if="activity.lottery_setting.is_total_lottery == '1'">您还有<strong>{{activity.lottery_setting.daily_lottery_time}}</strong>次抽奖机会</p>
+        <p class="edit-layer" data-type="2" data-layer="fictitious_join_num">已有<strong>{{activity.base_setting.fictitious_join_num}}</strong>人参与</p>
+        <p class="edit-layer" data-type="2" data-layer="total_lottery_time">今天还有<strong>{{activity.lottery_setting.total_lottery_time}}</strong>次抽奖机会</p>
+        <p class="edit-layer" data-type="2" data-layer="daily_lottery_time" v-if="activity.lottery_setting.is_total_lottery == '1'">您还有<strong>{{activity.lottery_setting.daily_lottery_time}}</strong>次抽奖机会</p>
       </div>
       <!-- 参与人数 end-->
       <!-- 版权 begin-->
@@ -68,7 +68,7 @@
       </div>
 
       <div class="rules-content" v-show="activity.main_tab == 2">
-        <div class="module edit-layer">
+        <div class="module edit-layer" data-type="2" data-layer="award_setting">
           <h3>活动奖品</h3>
           <div class="info">
             <p>一等奖：价值10元礼品</p>
@@ -76,28 +76,28 @@
             <p>三等奖：价值30元礼品</p>
           </div>
         </div>
-        <div class="module edit-layer">
+        <div class="module edit-layer" data-type="2" data-layer="base_setting_date">
           <h3>活动时间</h3>
           <div class="info">
             <p>{{activity.base_setting.begin_date}} - {{activity.base_setting.end_date}}</p>
           </div>
         </div>
-        <div class="module edit-layer">
+        <div class="module edit-layer" data-type="2" data-layer="enterprise_setting">
           <h3>主办单位</h3>
           <div class="info">
             <p>本次活动主办单位为<a :href="activity.advanced_setting.enterprise_setting.website_url"><strong>{{activity.advanced_setting.enterprise_setting.organizers}}</strong></a></p>
           </div>
         </div>
-        <div class="module edit-layer">
+        <div class="module">
           <h3>技术支持</h3>
           <div class="info">
-            <p>页面技术由<strong>口粮APP</strong>提供，技术支持方仅提供页面技术，不承担由活动引起的相关法律责任</p>
+            <p>页面技术由<strong>若为</strong>提供，技术支持方仅提供页面技术，不承担由活动引起的相关法律责任</p>
           </div>
         </div>
-        <div class="module edit-layer">
+        <div class="module edit-layer" data-type="2" data-layer="activity_des">
           <h3>活动及兑奖说明</h3>
           <div class="info">
-            <p>没人每日有3次抽奖机会</p>
+            <p>每人每日有3次抽奖机会</p>
             <p>{{activity.base_setting.activity_des}}</p>
           </div>
         </div>
@@ -116,7 +116,7 @@
             </li>
           </ul>
         </div>
-        <div class="contract">
+        <div class="contract edit-layer" data-type="2" data-layer="button_link_text">
             <a class="btn-contract">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
         </div>
       </div>
@@ -136,8 +136,8 @@
         </div>
         <div class="contract">
             <a class="btn-contract">领取奖品</a></br>
-            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
-            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
+            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
+            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
         </div>
       </div>
     </div>
@@ -147,8 +147,8 @@
         <img src="images/faiImg.png" alt="">
         <div class="contract">
             <a class="btn-contract">再来一次</a></br>
-            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
-            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
+            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
+            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
         </div>
       </div>
     </div>
@@ -280,11 +280,15 @@
           if($('.tool-bar')){
             $('.tool-bar').remove();
           }
+          setTimeout(function(){
+            $(this).removeClass('layer-border-active');
+          }, 3000);
           $(this).append('<div class="tool-bar"><span>编辑</span></div>');
           $('.edit-layer .tool-bar').on('click',function(e){
             e.stopPropagation();
-            alert($(this).parent().attr('data-layer'))
-            // parent._setProperty('22222')
+            var label_name = $(this).parent().attr('data-layer');
+            var label_type = $(this).parent().attr('data-type');
+            parent._setProperty(label_name,label_type)
           });
         });
       }else{
@@ -298,7 +302,7 @@
         // turnplate.getLottery(work_id,workData);
         // 奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
         // console.log(turnplate.restaraunts[item-1]);
-        turnplate.rotateFn(20000);
+        turnplate.rotateFn(2000);
       });
 
       // 活动说明tab

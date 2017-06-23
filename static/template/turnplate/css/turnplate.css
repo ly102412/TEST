@@ -270,14 +270,17 @@
   display: block;
   position: absolute;
   right: 0;
-  top: -26px;
+  top: -27px;
   height: 22px;
   line-height: 22px;
   text-align: center;
   font-size: 12px;
   z-index: 10;
-  background: #329FEA;
+  background: #20a0ff;
   color: #fff;
   padding: 2px 5px;
   cursor: pointer;
+}
+.tool-bar:hover{
+  background: #4db3ff
 }
