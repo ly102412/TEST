@@ -2,6 +2,19 @@
   <div class="animated fadeIn">
     <el-table :data="activityList" highlight-current-row v-loading="listloading">
       <el-table-column prop="id" label="活动编号" fixed width="120"></el-table-column>
+      <el-table-column
+      label=""
+      width="60">
+      <template scope="scope">
+        <el-popover trigger="hover" placement="top">
+            <div v-html="scope.row.qccode_url" class="bigerweima"></div>
+            <p class="info">微信扫二维码预览</p>
+          <div slot="reference" class="name-wrapper">
+            <div  class="erweima" style=""></div>
+          </div>
+        </el-popover>
+      </template>
+    </el-table-column>
       <el-table-column prop="activity_name" label="活动标题" width="120"></el-table-column>
       <el-table-column prop="activity_desc" label="活动描述" width="150"></el-table-column>
       <el-table-column prop="activity_type" label="活动类型" :formatter="formatType" width="120"></el-table-column>
@@ -67,7 +80,7 @@ export default {
       this.listloading = true
       NProgress.start()
       getActivityList(params).then((res) => {
-        console.log(res)
+//        console.log(res)
         this.listloading = false
         NProgress.done()
         if(res.status === 0){
@@ -127,4 +140,20 @@ export default {
 </script>
 
 <style lang="css">
+    .erweima{
+        width:22px;height:22px ;background: url('../../static/img/icon-erweima.png')no-repeat;background-size: 100% 100%;
+    }
+    .bigerweima{
+        width:135px;height: 135px;
+        margin: 0 auto;
+    }
+    .info{
+        width:100%;
+        height:40px;
+        background: #263238;
+        color: #fff;
+        font-size: 16px;
+        line-height: 40px;
+        text-align: center;
+    }
 </style>
