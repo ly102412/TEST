@@ -376,8 +376,15 @@
         activity: {
           // 基础设置
           main_tab: '1',                  // 当前导航栏状态
-          upload_image_url: '',
-          activity_tab: '0',
+          upload_image_url: '',           // 上传图片地址
+          activity_tab: '0',              // 活动设置导航状态
+          activity_img_upload: {          // 活动图片素材上传
+            main_bg: require('../../../../static/template/turnplate/images/active-bg.jpg'),                      // 活动背景图
+            rules_icon: '',                   // 活动图标
+            turnplate_bg: '',                 // 大转盘背景
+            lottery_success: '',              // 抽奖成功图片
+            lottery_faild: ''                 // 抽奖失败图片
+          },
           base_setting: {
             activity_name: '大转盘活动',    // 活动名称
             begin_date: '',               // 活动开始时间

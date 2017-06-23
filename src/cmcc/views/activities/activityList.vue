@@ -10,7 +10,7 @@
             <div v-html="scope.row.qccode_url" class="bigerweima"></div>
             <p class="info">微信扫二维码预览</p>
           <div slot="reference" class="name-wrapper">
-            <div  class="erweima" style=""></div>
+            <div class="erweima" style=""></div>
           </div>
         </el-popover>
       </template>
