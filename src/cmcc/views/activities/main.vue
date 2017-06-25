@@ -3,17 +3,17 @@
     <el-dialog title="上传图片" v-model="is_dialog_show" size="tiny">
       <el-upload
         class="avatar-uploader"
-        action="//jsonplaceholder.typicode.com/posts/"
+        action="/cmcc/mmt/img/upload"
         :show-file-list="false"
-        :on-success="handleAvatarScucess"
-        :on-error="handleAvatarFaild"
+        :on-success="handleUploadScucess"
+        :on-error="handleUploadFaild"
         >
         <img v-if="activity.upload_image_url" :src="activity.upload_image_url" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="is_dialog_show = false">取 消</el-button>
-        <el-button type="primary" @click="is_dialog_show = false">使用并替换</el-button>
+        <!-- <el-button @click="is_dialog_show = false">取 消</el-button> -->
+        <el-button type="primary" @click="resetImg">恢复默认</el-button>
       </span>
     </el-dialog>
     <div class="animated fadeIn">
@@ -377,13 +377,14 @@
           // 基础设置
           main_tab: '1',                  // 当前导航栏状态
           upload_image_url: '',           // 上传图片地址
+          upload_image_name: '',          // 需要上传的图片名称
           activity_tab: '0',              // 活动设置导航状态
           activity_img_upload: {          // 活动图片素材上传
             main_bg: require('../../../../static/template/turnplate/images/active-bg.jpg'),                      // 活动背景图
-            rules_icon: '',                   // 活动图标
-            turnplate_bg: '',                 // 大转盘背景
-            lottery_success: '',              // 抽奖成功图片
-            lottery_faild: ''                 // 抽奖失败图片
+            rules_icon: require('../../../../static/template/turnplate/images/ruleImg_yellow.png'),                   // 活动图标
+            turnplate_bg: require('../../../../static/template/turnplate/images/turnplate-bg.png'),                 // 大转盘背景
+            lottery_success: require('../../../../static/template/turnplate/images/gift.png'),              // 抽奖成功图片
+            lottery_faild: require('../../../../static/template/turnplate/images/faiImg.png')                 // 抽奖失败图片
           },
           base_setting: {
             activity_name: '大转盘活动',    // 活动名称
@@ -499,14 +500,54 @@
     methods: {
       handleClick(tab, event) {
       },
-      handleAvatarScucess(res, file) {
-        this.activity.upload_image_url = URL.createObjectURL(file.raw);
-        this.$message({
-          message: '图片上传成功',
-          type: 'success'
-        });
+      // 图片上传成功后的处理
+      handleUploadScucess(res, file) {
+        if(res.status == 0){
+          this.activity.upload_image_url = res.data.file
+          this.$message({
+            message: res.message,
+            type: 'success'
+          });
+          switch (this.activity.upload_image_name) {
+            case 'main_bg':
+              this.activity.activity_img_upload.main_bg = this.activity.upload_image_url
+            break
+            case 'rules_icon':
+              this.activity.activity_img_upload.rules_icon = this.activity.upload_image_url
+            break
+            case 'turnplate_bg':
+              this.activity.activity_img_upload.turnplate_bg = this.activity.upload_image_url
+            break
+            case 'lottery_success':
+              this.activity.activity_img_upload.lottery_success = this.activity.upload_image_url
+            break
+            case 'lottery_faild':
+              this.activity.activity_img_upload.lottery_faild = this.activity.upload_image_url
+            break
+          }
+        }
       },
-      handleAvatarFaild(res, filr) {
+      // 重置默认图片
+      resetImg () {
+        switch (this.activity.upload_image_name) {
+          case 'main_bg':
+            this.activity.activity_img_upload.main_bg = require('../../../../static/template/turnplate/images/active-bg.jpg')
+          break
+          case 'rules_icon':
+            this.activity.activity_img_upload.rules_icon = require('../../../../static/template/turnplate/images/ruleImg_yellow.png')
+          break
+          case 'turnplate_bg':
+            this.activity.activity_img_upload.turnplate_bg = require('../../../../static/template/turnplate/images/turnplate-bg.png')
+          break
+          case 'lottery_success':
+            this.activity.activity_img_upload.lottery_success = require('../../../../static/template/turnplate/images/gift.png')
+          break
+          case 'lottery_faild':
+            this.activity.activity_img_upload.lottery_faild = require('../../../../static/template/turnplate/images/faiImg.png')
+          break
+        }
+      },
+      handleUploadFaild(res, filr) {
         this.$message.error('上传失败,请重试');
       },
       // 切换选项卡tab
@@ -539,6 +580,7 @@
       },
       // 设置当前选中活动属性 type:1 图片上传  type:2 文字内容
       setProperty (name,type) {
+        this.activity.upload_image_name = name
         let self = this
         if(type == '2'){
           let list = $('.el-form-item');
@@ -561,6 +603,12 @@
           // 图片上传
           this.is_dialog_show = true
         }
+      },
+      // 保存并替换图片
+      setBackgroundImg(file,name){
+        console.log(file)
+        console.log(name)
+
       },
       // 修改奖品tabs
       handleTabsEdit(targetName, action) {

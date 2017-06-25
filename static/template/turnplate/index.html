@@ -22,20 +22,20 @@
     <!-- 首页 begin-->
     <div class="main" v-show="activity.main_tab == 1">
       <!-- 活动背景图 begin-->
-      <div class="home-bg edit-layer">
+      <div class="home-bg edit-layer" data-type="1" data-layer="main_bg">
         <img :src="activity.activity_img_upload.main_bg" alt="">
       </div>
       <!-- 活动背景图 begin-->
       <!-- 活动规则按钮 begin-->
-      <div class="rules-icon edit-layer" id="btn">
-        <img src="images/ruleImg_yellow.png" alt="">
+      <div class="rules-icon edit-layer" id="btn" data-type="1" data-layer="rules_icon">
+        <img :src="activity.activity_img_upload.rules_icon" alt="">
       </div>
       <!-- 活动规则按钮 end-->
       <!-- 大转盘 begin-->
-      <div class="turnplate edit-layer">
+      <div class="turnplate edit-layer" data-type="1" data-layer="turnplate_bg">
         <canvas id="wheelcanvas" style="width:100%;z-index:1;position:relative" width="422" height="422"></canvas>
         <img id="btn_start" src="images/turnplate-pointer.png"/>
-        <img class="turnplate-bg" src="images/turnplate-bg.png"/>
+        <img class="turnplate-bg" :src="activity.activity_img_upload.turnplate_bg"/>
       </div>
       <!-- 大转盘 end-->
       <!-- 参与人数 begin-->
@@ -127,8 +127,8 @@
       <div class="result-gift-scroll">
         <div class="result-bglight"></div>
         <h1 class="title">恭喜您获得了</h1>
-        <div class="result-img edit-layer">
-          <img src="images/gift.png" alt="">
+        <div class="result-img edit-layer" data-type="1" data-layer="lottery_success">
+          <img :src="activity.activity_img_upload.lottery_success" alt="">
         </div>
         <div class="result-footer">
           <p><strong>一等奖</strong></p>
@@ -143,8 +143,8 @@
     </div>
     <!-- 中奖页面 end-->
     <div class="result-failed" v-show="activity.main_tab == 5">
-      <div class="failed-img edit-layer">
-        <img src="images/faiImg.png" alt="">
+      <div class="failed-img edit-layer" data-type="1" data-layer="lottery_faild">
+        <img :src="activity.activity_img_upload.lottery_faild" alt="">
         <div class="contract">
             <a class="btn-contract">再来一次</a></br>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
