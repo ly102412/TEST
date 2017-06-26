@@ -22,6 +22,9 @@
           <div class="card">
             <div class="card-header">
               活动编辑
+              <span class="float-right">
+                <el-button type="success" icon="check" @click.native.prevent="saveActivity('activity.base_setting')"  :loading="loading">立即创建</el-button>
+              </span>
             </div>
             <div class="card-block">
               <el-tabs v-model="activity.main_tab" @tab-click="handleClick">
@@ -48,7 +51,7 @@
                     <el-tab-pane>
                       <span slot="label"><i class="el-icon-setting"></i> 基础设置</span>
                       <el-form :model="activity.base_setting" :rules="base_setting_rules" ref="activity.base_setting" label-width="120px">
-                        <el-form-item label="活动名称" porp="activity_name" required>
+                        <el-form-item label="活动名称" prop="activity_name" required>
                           <el-input v-model="activity.base_setting.activity_name"></el-input>
                         </el-form-item>
                         <el-form-item label="开始时间" required data-source="base_setting_date">
@@ -66,7 +69,7 @@
                             </el-form-item>
                           </el-col>
                         </el-form-item>
-                        <el-form-item label="参与人数" prop="is_join_num" data-source="fictitious_join_num">
+                        <el-form-item label="参与人数" data-source="fictitious_join_num">
                           <el-switch on-text="隐藏" off-text="显示" v-model="activity.base_setting.is_join_num"></el-switch>
                         </el-form-item>
                         <el-form-item data-source="fictitious_join_num" label="" v-if="activity.base_setting.is_join_num">
@@ -77,7 +80,7 @@
                             </el-input>
                           </el-col>
                         </el-form-item>
-                        <el-form-item label="参与人数限制" prop="is_join_num_limit">
+                        <el-form-item label="参与人数限制">
                           <el-switch on-text="限制" off-text="不限" v-model="activity.base_setting.is_join_num_limit"></el-switch>
                         </el-form-item>
                         <el-form-item label="" v-if="activity.base_setting.is_join_num_limit">
@@ -87,7 +90,7 @@
                             </el-input>
                           </el-col>
                         </el-form-item>
-                        <el-form-item label="活动说明" prop="activity_des" data-source="activity_des">
+                        <el-form-item label="活动说明"  data-source="activity_des">
                             <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 8}" v-model="activity.base_setting.activity_des"></el-input>
                         </el-form-item>
                       </el-form>
@@ -95,7 +98,7 @@
                     <el-tab-pane>
                       <span slot="label"><i class="el-icon-menu"></i> 派奖方式</span>
                       <el-form :model="activity.lottery_setting" :rules="lottery_setting_rules" ref="activity.lottery_setting" label-width="120px">
-                        <el-form-item label="总抽奖机会" porp="activity.lottery_setting.is_total_lottery" data-source="total_lottery_time">
+                        <el-form-item label="总抽奖机会"  data-source="total_lottery_time">
                             <el-radio label="0" v-model="activity.lottery_setting.is_total_lottery">不限</el-radio>
                             <el-radio label="1" v-model="activity.lottery_setting.is_total_lottery">限制</el-radio>
                         </el-form-item>
@@ -118,7 +121,7 @@
                           </el-input>
                         </el-form-item>
 
-                        <!-- <el-form-item label="好友助力" prop="is_join_num_limit">
+                        <!-- <el-form-item label="好友助力" >
                           <el-col :span="12">
                             <el-radio label="0" v-model="activity.lottery_setting.friend_booster">关闭</el-radio>
                             <el-radio label="1" v-model="activity.lottery_setting.friend_booster">分享奖励</el-radio>
@@ -161,17 +164,28 @@
                           :label="item.award_level"
                           :name="item.name"
                         >
-                        <el-form :rules="award_setting_rules" ref="activity.award_setting" label-width="120px">
-                          <el-form-item label="奖品等级" data-source="award_setting">
-                            <el-input v-model="item.award_level" disabled></el-input>
-                          </el-form-item>
+                        <el-form :rules="award_setting_rules" ref="activity.award_setting" label-width="120px" data-source="award_setting">
                           <el-form-item label="奖品类型">
-                            <el-radio label="0" v-model="item.award_type">流量</el-radio>
-                            <el-radio label="1" v-model="item.award_type">流量券</el-radio>
-                            <el-radio label="2" v-model="item.award_type">实物</el-radio>
+                            <el-radio-group v-model="item.award_type" @change="clearAwardValue(item)">
+                              <el-radio-button label="0">流量</el-radio-button>
+                              <el-radio-button label="1">流量券</el-radio-button>
+                              <el-radio-button label="2">实物</el-radio-button>
+                            </el-radio-group>
                           </el-form-item>
                           <el-form-item label="奖品名称">
                             <el-input v-model="item.award_name"></el-input>
+                          </el-form-item>
+                          <el-form-item label="奖品大小" v-if="item.award_type == '0' && item.award_value !== '-1'">
+                            <el-input v-model="item.award_value"></el-input>
+                          </el-form-item>
+                          <el-form-item label="奖品大小" v-if="item.award_type == '1' && item.award_value !== '-1'">
+                            <el-select v-model="item.award_value" placeholder="请选择">
+                              <el-option
+                                v-for="list in award_list_value"
+                                :label="list.label"
+                                :value="list.value">
+                              </el-option>
+                            </el-select>
                           </el-form-item>
                           <el-form-item label="奖品数量">
                             <el-input v-model="item.award_num"></el-input>
@@ -180,14 +194,6 @@
                             <el-input v-model="item.winning_rate">
                               <template slot="append">%</template>
                             </el-input>
-                          </el-form-item>
-                          <el-form-item label="有效期开始时间" data-source="base_setting_date">
-                            <el-date-picker v-model="item.limit_begin_time" type="datetime" placeholder="选择开始时间" style="width:100%;">
-                           </el-date-picker>
-                          </el-form-item>
-                          <el-form-item label="有效期结束时间" data-source="base_setting_date">
-                            <el-date-picker v-model="item.limit_end_time" type="datetime" placeholder="选择结束时间" style="width:100%;">
-                           </el-date-picker>
                           </el-form-item>
                         </el-form>
                         </el-tab-pane>
@@ -365,6 +371,8 @@
 </template>
 <script>
   import $ from 'jquery'
+  import { createActivity } from '../../api/api'
+  import NProgress from 'nprogress'
   export default {
     data() {
       return {
@@ -373,6 +381,17 @@
         edit_awards_tabs_value: '1',
         tab_awards_name_list: ['奖项一','奖项二','奖项三','奖项四','奖项五','奖项六','奖项七','奖项八'],
         tabIndex: 1,
+        loading: false,
+        award_list_value: [
+          {
+            value: '100',
+            label: '100M流量包'
+          },
+          {
+            value: '500',
+            label: '500M流量包'
+          }
+        ],
         activity: {
           // 基础设置
           main_tab: '1',                  // 当前导航栏状态
@@ -414,13 +433,12 @@
               name: '1',
               content: 'Tab 1 content',
               award_id: 1,
-              award_level: '奖项一',       // 奖品等级
+              award_level: '谢谢参与',       // 奖品等级
               award_type: '0',            // 奖品类型 0流量 1流量券 2实物   活动发布后类型无法修改
-              award_name: '100M流量',      // 奖品名称                    活动发布后名称无法修改
-              award_num: 100,             // 奖品数量
+              award_name: '谢谢参与',      // 奖品名称                    活动发布后名称无法修改
+              award_num: '',             // 奖品数量
+              award_value: '-1',           // 奖品值
               winning_rate: 10,           // 中奖概率
-              limit_begin_time: '',       // 限制有效期开始时间
-              limit_end_time: ''          // 限制有效期结束时间
             }
           ],
           // 分享设置
@@ -435,14 +453,14 @@
           // 高级设置
           advanced_setting: {
             enterprise_setting:{
-              organizers: '',             // 主办单位
-              website_url: '',            // 链接地址
-              is_showing_logo: '0',     // 是否显示企业Logo
-              logo_url: '',               // 企业logo
-              is_loading_img: '0',          // 页面加载图片
-              loading_img_url: '',        // 加载图片url
+              organizers: '',                 // 主办单位
+              website_url: '',                // 链接地址
+              is_showing_logo: '0',           // 是否显示企业Logo
+              logo_url: '',                   // 企业logo
+              is_loading_img: '0',            // 页面加载图片
+              loading_img_url: '',            // 加载图片url
               is_showing_function_button: '0', //功能按钮  0隐藏 1页面跳转 2一键关注
-              button_link_text: '企业官网',        // 点击按钮跳转链接地址
+              button_link_text: '企业官网', // 点击按钮跳转链接地址
               button_link_url: '',        // 点击按钮跳转链接地址
               button_flow_text: ''        // 点击按钮一键关注
             },
@@ -454,33 +472,22 @@
         },
         base_setting_rules: {
           activity_name: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            { required: true, message: '请输入活动名称', trigger: 'blur' }
           ],
+          begin_date: [
+				    { type: 'date', required: true, message: '请选择日期', trigger: 'change' },
+				  ],
+				  end_date: [
+				    { type: 'date', required: true, message: '请选择日期', trigger: 'change' },
+				  ],
         },
         lottery_setting_rules: {
-          activity_name: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          ],
         },
         award_setting_rules: {
-          activity_name: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          ],
         },
         sharing_setting_rules: {
-          activity_name: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          ],
         },
         advanced_setting_rules: {
-          activity_name: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          ],
         }
       }
     },
@@ -499,6 +506,35 @@
     // },
     methods: {
       handleClick(tab, event) {
+      },
+      clearAwardValue(item){
+        if(item.award_type == 1 && item.award_value != '-1'){
+          item.award_value = ''
+        }
+      },
+      // 保存活动
+      saveActivity(formName){
+        let _this = this
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$confirm('请核对您添加的信息','提示',{}).then(() => {
+              this.loading = true
+              NProgress.start()
+              let params = {'activity': this.activity}
+              createActivity(params).then((res) => {
+                this.loading = false
+                NProgress.done()
+                this.$notify({
+                  title: '成功',
+                  message: '添加活动成功',
+                  type: 'success'
+                })
+                this.$refs[formName].resetFields()
+              })
+            })
+          }
+        })
+
       },
       // 图片上传成功后的处理
       handleUploadScucess(res, file) {
@@ -630,8 +666,9 @@
               award_level: tab_name,
               award_type: '0',
               award_name: '',
-              award_num: 100,
-              winning_rate: 10,
+              award_num: '',
+              award_value: '',
+              winning_rate: '',
               limit_begin_time: '',
               limit_end_time: ''
             });

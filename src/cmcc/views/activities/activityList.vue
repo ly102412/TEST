@@ -28,8 +28,9 @@
         </template>
       </el-table-column>
       <el-table-column prop="create_time" label="创建时间"  width="120"></el-table-column>
-      <el-table-column label="操作" width="230"  fixed="right">
+      <el-table-column label="操作" width="280"  fixed="right">
 				<template scope="scope">
+          <el-button size="small" icon="check" type="success" @click="handleEdit(scope.row.id)"></el-button>
           <el-button size="small" icon="edit" type="warning" @click="handleEdit(scope.row.id)"></el-button>
           <el-button size="small" icon="warning" type="danger" @click="handleEdit(scope.row.id)"></el-button>
           <el-button size="small" icon="menu" type="Blue" @click="handleEdit(scope.row.id)"></el-button>
