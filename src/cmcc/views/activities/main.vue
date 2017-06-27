@@ -211,14 +211,19 @@
                           <el-radio label="1" v-model="activity.sharing_setting.is_wx_sharing_icon">自定义</el-radio>
                           <el-col v-if="activity.sharing_setting.is_wx_sharing_icon == '1'">
                             <el-upload
-                              class="upload-demo"
-                              drag
-                              action="//jsonplaceholder.typicode.com/posts/"
-                              mutiple>
-                              <i class="el-icon-upload"></i>
-                              <div class="el-upload__text">将图片拖到此处，或<em>点击上传</em></div>
-                              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                              class="avatar-uploader"
+                              action="/cmcc/mmt/img/upload"
+                              :show-file-list="false"
+                              :on-success="handleUploadWX"
+                              :on-error="handleUploadFaild"
+                              >
+                              <img v-if="activity.upload_image_url" :src="activity.upload_image_url" class="avatar">
+                              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>
+                            <span slot="footer" class="dialog-footer">
+                              <!-- <el-button @click="is_dialog_show = false">取 消</el-button> -->
+                              <el-button type="primary" @click="resetImg">恢复默认</el-button>
+                            </span>
                           </el-col>
                         </el-form-item>
                         <el-form-item label="微信分享内容" v-if="activity.sharing_setting.is_allow_sharing == '0'">
@@ -373,6 +378,7 @@
   import $ from 'jquery'
   import { createActivity } from '../../api/api'
   import NProgress from 'nprogress'
+  import moment from 'moment'
   export default {
     data() {
       return {
@@ -520,6 +526,8 @@
             this.$confirm('请核对您添加的信息','提示',{}).then(() => {
               this.loading = true
               NProgress.start()
+              this.activity.base_setting.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
+              this.activity.base_setting.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
               let params = {'activity': this.activity}
               createActivity(params).then((res) => {
                 this.loading = false
@@ -535,6 +543,17 @@
           }
         })
 
+      },
+      // 上传微信分享图片
+      handleUploadWX (res, file) {
+        if (res.status == 0) {
+          this.activity.upload_image_url = res.data.file
+          this.$message({
+            message: res.message,
+            type: 'success'
+          });
+          this.activity.sharing_setting.wx_sharing_icon_url = this.activity.upload_image_url
+        }
       },
       // 图片上传成功后的处理
       handleUploadScucess(res, file) {

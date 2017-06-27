@@ -31,8 +31,8 @@ module.exports = {
     assetsPublicPath: '/', // 编译发布的根目录，可配置为资源服务器域名或 CDN 域名
     cssSourceMap: false,// 是否开启 cssSourceMap
     proxyTable: {
-      '/cmcc': {
-        target: 'http://192.168.199.189:7012/', // 目标地址 http://ruowei.ap.ngrok.io/     http://app.m.ruwe.cn/api/  内网环境http://m.ruowei.cn/  瑞清：192.168.199.204:7040
+      '/api': {
+        target: 'http://192.168.199.186:7012/', // 目标地址 http://ruowei.ap.ngrok.io/     http://app.m.ruwe.cn/api/  内网环境http://m.ruowei.cn/  瑞清：192.168.199.204:7040
         changeOrigin: true,               // needed for virtual hosted sites
         ws: true,                         // websockets代理
         pathRewrite: {

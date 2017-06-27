@@ -30,16 +30,21 @@
       <el-table-column prop="create_time" label="创建时间"  width="120"></el-table-column>
       <el-table-column label="操作" width="280"  fixed="right">
 				<template scope="scope">
-          <el-button size="small" icon="check" type="success" @click="handleEdit(scope.row.id)"></el-button>
-          <el-button size="small" icon="edit" type="warning" @click="handleEdit(scope.row.id)"></el-button>
-          <el-button size="small" icon="warning" type="danger" @click="handleEdit(scope.row.id)"></el-button>
+          <el-tooltip class="item" effect="dark" content="发布活动" placement="top" >
+            <el-button :disabled="scope.row.activity_status == 1" size="small" icon="upload2" type="success" @click="handleRlease(scope.row.code)"></el-button>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="编辑活动" placement="top">
+            <el-button size="small" icon="edit" type="warning" @click="handleEdit(scope.row.id)"></el-button>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="删除活动" placement="top">
+            <el-button size="small" icon="delete" type="danger" @click="handleDel(scope.row.code)"></el-button>
+          </el-tooltip>
           <el-button size="small" icon="menu" type="Blue" @click="handleEdit(scope.row.id)"></el-button>
           <el-dropdown trigger="click" @command="handleMenuCommand">
             <el-button type="small">
              操作<i class="el-icon-caret-bottom el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="del">删除</el-dropdown-item>
               <el-dropdown-item><span @click="goToRecords(scope.row.id)">查看中奖记录</span></el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -56,7 +61,7 @@
 </template>
 
 <script>
-import {getActivityList} from '../../api/api'
+import {getActivityList, delActivity, releaseActivity} from '../../api/api'
 import NProgress from 'nprogress'
 export default {
   data () {
@@ -69,6 +74,79 @@ export default {
     }
   },
   methods: {
+    // 发布活动
+    handleRlease (code) {
+      this.$confirm('发布后的活动有部分信息不可修改, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let params = {
+          code: code
+        }
+        this.listloading = true
+        NProgress.start()
+        alert(JSON.stringify(params))
+        releaseActivity(params).then((res) => {
+          this.listloading = false
+          NProgress.done()
+          if (res.data.status == 0) {
+            this.$message({
+              message: res.data.message,
+              type: 'success'
+            });
+            this.getRecords()
+            this.releaseStatus = 1
+          }else{
+            this.$message({
+              message: res.data.message,
+              type: 'error'
+            });
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消发布'
+        });
+      });
+    },
+    // 删除活动
+    handleDel (code) {
+      this.$confirm('此操作将删除该活动, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let params = {
+          code: code
+        }
+        this.listloading = true
+        NProgress.start()
+        delActivity(params).then((res) => {
+          this.listloading = false
+          NProgress.done()
+          if (res.data.status == 0) {
+            this.$message({
+              message: res.data.message,
+              type: 'success'
+            });
+            this.getRecords()
+          }else{
+            this.$message({
+              message: res.data.message,
+              type: 'error'
+            })
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    // 跳转至中奖纪录页
     goToRecords (id) {
       this.$router.push({path:'activityRecord',query:{'id':id}})
     },
@@ -81,12 +159,16 @@ export default {
       this.listloading = true
       NProgress.start()
       getActivityList(params).then((res) => {
-//        console.log(res)
         this.listloading = false
         NProgress.done()
         if(res.status === 0){
           this.activityList = res.data.list
           this.rows = res.data.rows
+        }else{
+          this.$message({
+            message: res.message,
+            type: 'error'
+          })
         }
       })
     },

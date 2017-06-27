@@ -1,21 +1,78 @@
 import axios from 'axios'
 
-let base = '/cmcc/business'
-let mmt = '/cmcc/mmt'
+let base = '/api/business'
+let mmt = '/api/mmt'
 
-// 获取商家信息
+/**
+ * [getBussinessInfo 获取商家信息]
+ * @param  {[type]} params [description]
+ * @return {[Object]}        [data]
+ */
 export const getBussinessInfo = params => {return axios.get(`${base}/info`, { params: params}).then(res => res.data)}
-// 获取活动列表
+/**
+ * [getActivityList 获取活动列表]
+ * @param  {[type]} params [description]
+ * @return {[Object]}        [data]
+ */
 export const getActivityList = params => {return axios.get(`${base}/activity/info/list`, { params: params}).then(res => res.data)}
-// 查询中奖纪录
+/**
+ * [getActivityRecord 查询中奖纪录]
+ * @param  {[String]} params [business_activity_info_id]
+ * @return {[Object]}        [data]
+ */
 export const getActivityRecord = params => {return axios.get(`${base}/activity/code/list`, { params: params}).then(res => res.data)}
-// 查询账户信息
+/**
+ * [getAccountInfo 查询账户信息]
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
 export const getAccountInfo = params => {return axios.get(`${base}/account/detail/info`, { params: params}).then(res => res.data)}
-// 采购记录
+/**
+ * [getOrderList 采购记录]
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
 export const getOrderList = params => {return axios.get(`${base}/order/list`, { params: params}).then(res => res.data)}
-// 消耗记录
+/**
+ * [getRecordList 消耗记录]
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
 export const getRecordList = params => {return axios.get(`${base}/money/record/list`, { params: params}).then(res => res.data)}
-// 图片上传
+/**
+ * [imgUpload 图片上传]
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
 // export const imgUpload = params => {return axios.post(`${mmt}/img/upload`, { params: params}).then(res => res.data)}
-// 创建活动
+/**
+ * [createActivity description]
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
 export const createActivity = params => { return axios.post(`${mmt}/create/activity/info`, params)}
+
+/**
+ * [delActivity 删除活动]
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
+export const delActivity = params => { return axios.get(`${mmt}/del/activity`, { params: params})}
+/**
+ * [getActivityById 获取活动信息]
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
+export const getActivityById = params => { return axios.get(`${mmt}/get/activity`, { params: params})}
+/**
+ * [getActivityById 修改活动]
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
+export const editActivity = params => { return axios.post(`${mmt}/update/activity`, params)}
+/**
+ * [releaseActivity 发布活动]
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
+export const releaseActivity = params => { return axios.get(`${mmt}/release/activity`, { params: params})}
