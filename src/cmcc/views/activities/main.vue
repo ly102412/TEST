@@ -57,7 +57,7 @@
                         <el-form-item label="开始时间" required data-source="base_setting_date">
                           <el-col :span="12">
                             <el-form-item prop="begin_date">
-                              <el-date-picker v-model="activity.base_setting.begin_date" type="datetime" placeholder="选择开始时间" format="yyyy-MM-dd hh:mm:ss" style="width:100%;">
+                              <el-date-picker v-model="activity.base_setting.begin_date" type="datetime" placeholder="选择开始时间" style="width:100%;">
                              </el-date-picker>
                             </el-form-item>
                           </el-col>
@@ -164,7 +164,7 @@
                           :label="item.award_level"
                           :name="item.name"
                         >
-                        <el-form :rules="award_setting_rules" ref="activity.award_setting" label-width="120px" data-source="award_setting">
+                        <el-form :rules="award_setting_rules" ref="activity.award_setting" label-width="120px">
                           <el-form-item label="奖品类型">
                             <el-radio-group v-model="item.award_type" @change="clearAwardValue(item)">
                               <el-radio-button label="0">流量</el-radio-button>
@@ -172,7 +172,7 @@
                               <el-radio-button label="2">实物</el-radio-button>
                             </el-radio-group>
                           </el-form-item>
-                          <el-form-item label="奖品名称">
+                          <el-form-item label="奖品名称" data-source="award_setting">
                             <el-input v-model="item.award_name"></el-input>
                           </el-form-item>
                           <el-form-item label="奖品大小" v-if="item.award_type == '0' && item.award_value !== '-1'">
@@ -412,7 +412,7 @@
             lottery_faild: require('../../../../static/template/turnplate/images/faiImg.png')                 // 抽奖失败图片
           },
           base_setting: {
-            activity_name: '大转盘活动',    // 活动名称
+            activity_name: '',    // 活动名称
             begin_date: '',               // 活动开始时间
             end_date: '',                 // 活动结束时间
             is_join_num: false,           // 是否显示参与人数 boolean

@@ -74,6 +74,18 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label for="hf-email" class="col-md-3 form-control-label">手机号</label>
+                <div class="col-md-9">
+                  {{accountInfo.manager_mobile}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="hf-email" class="col-md-3 form-control-label">座机号</label>
+                <div class="col-md-9">
+                  {{accountInfo.manager_phone}}
+                </div>
+              </div>
+              <div class="form-group row">
                 <label for="hf-email" class="col-md-3 form-control-label">职位</label>
                 <div class="col-md-9">
                   {{accountInfo.manager_position}}

@@ -69,12 +69,10 @@
 
       <div class="rules-content" v-show="activity.main_tab == 2">
         <div class="module edit-layer" data-type="2" data-layer="award_setting">
-          <h3>活动奖品</h3>
-          <div class="info">
-            <p>一等奖：价值10元礼品</p>
-            <p>二等奖：价值20元礼品</p>
-            <p>三等奖：价值30元礼品</p>
-          </div>
+            <h3>活动奖品</h3>
+            <div class="info" v-for="(item,index) in activity.award_setting">
+              <p v-if="index > 0">{{item.award_level}} : {{item.award_name}}</p>
+            </div>
         </div>
         <div class="module edit-layer" data-type="2" data-layer="base_setting_date">
           <h3>活动时间</h3>

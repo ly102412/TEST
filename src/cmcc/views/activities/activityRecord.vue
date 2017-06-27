@@ -6,13 +6,15 @@
           <el-input placeholder="手机号" v-model="formRecord.phone_number"></el-input>
         </el-form-item>
         <el-form-item>
-					<el-date-picker type="date"   placeholder="选择日期" v-model="formRecord.start_time" style="width: 100%;"></el-date-picker>
+          <el-date-picker v-model="formRecord.start_time" type="datetime" placeholder="选择开始时间"  style="width:100%;">
+         </el-date-picker>
 				</el-form-item>
         <el-form-item>
-					<el-date-picker type="date"   placeholder="选择日期" v-model="formRecord.end_time" style="width: 100%;"></el-date-picker>
+          <el-date-picker v-model="formRecord.end_time" type="datetime" placeholder="选择开始时间"  style="width:100%;">
+         </el-date-picker>
 				</el-form-item>
         <el-form-item>
-					<el-button type="primary" @click="getRecords(this.id)">查询</el-button>
+					<el-button type="primary" @click="getRecords(id)">查询</el-button>
 				</el-form-item>
       </el-form>
     </el-col>
@@ -36,6 +38,7 @@
 <script>
 import {getActivityRecord} from '../../api/api'
 import NProgress from 'nprogress'
+import moment from 'moment'
 export default {
   data () {
     return {
