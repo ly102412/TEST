@@ -16,7 +16,8 @@
                   </div>
                   <div class="bottom">
                     <strong>超级大转盘</strong>
-                    <span><router-link :to="{path:'main'}"><el-button type="primary" size="mini" icon="plus">创建活动</el-button></router-link></span>
+                    <span><el-button type="primary" size="mini" icon="plus"
+                      @click="goToCreate()">创建活动</el-button></span>
                   </div>
                 </div>
               </div><!--/.col-->
@@ -126,9 +127,17 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
+  data () {
+    return {}
+  },
+  methods: {
+    // 跳转编辑活动
+    goToCreate () {
+      this.$router.push({ path:'main',query:{code:'0',act: 'create'}})
+    },
+  }
 }
 </script>
 

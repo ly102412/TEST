@@ -28,18 +28,17 @@
         </template>
       </el-table-column>
       <el-table-column prop="create_time" label="创建时间"  width="120"></el-table-column>
-      <el-table-column label="操作" width="280"  fixed="right">
+      <el-table-column label="操作" width="240"  fixed="right">
 				<template scope="scope">
           <el-tooltip class="item" effect="dark" content="发布活动" placement="top" >
             <el-button :disabled="scope.row.activity_status == 1" size="small" icon="upload2" type="success" @click="handleRlease(scope.row.code)"></el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" content="编辑活动" placement="top">
-            <el-button size="small" icon="edit" type="warning" @click="handleEdit(scope.row.id)"></el-button>
+            <el-button size="small" icon="edit" type="warning" @click="handleEdit(scope.row.code)"></el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" content="删除活动" placement="top">
             <el-button size="small" icon="delete" type="danger" @click="handleDel(scope.row.code)"></el-button>
           </el-tooltip>
-          <el-button size="small" icon="menu" type="Blue" @click="handleEdit(scope.row.id)"></el-button>
           <el-dropdown trigger="click" @command="handleMenuCommand">
             <el-button type="small">
              操作<i class="el-icon-caret-bottom el-icon--right"></i>
@@ -110,6 +109,10 @@ export default {
           message: '已取消发布'
         });
       });
+    },
+    // 跳转编辑活动
+    handleEdit (code) {
+      this.$router.push({path:'main',query:{code: code, act: 'edit'}})
     },
     // 删除活动
     handleDel (code) {

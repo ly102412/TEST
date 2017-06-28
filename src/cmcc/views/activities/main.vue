@@ -424,7 +424,7 @@
           // 派奖方式
           lottery_setting: {
             is_total_lottery: '0',        // 是否限制总抽奖机会 boolean
-            total_lottery_time: 6,        // 总抽奖次数
+            total_lottery_time: 0,        // 总抽奖次数
             daily_lottery_time: 3,        // 每人每日抽奖次数
             winning_time: 1,              // 每人中奖次数
             // total_winning_rate: 10,       // 总中奖概率 百分比
@@ -674,7 +674,7 @@
           let tab_name = ''
           let tab_targetName = ++this.tabIndex + ''
           for (let i = 0;i<tab_length;i++){
-            tab_name = this.tab_awards_name_list[i+1]
+            tab_name = this.tab_awards_name_list[i]
           }
           // 最多添加8个奖品
           if (tab_length < 8){
