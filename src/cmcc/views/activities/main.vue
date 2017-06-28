@@ -3,7 +3,7 @@
     <el-dialog title="上传图片" v-model="is_dialog_show" size="tiny">
       <el-upload
         class="avatar-uploader"
-        action="/cmcc/mmt/img/upload"
+        action="/api/mmt/img/upload"
         :show-file-list="false"
         :on-success="handleUploadScucess"
         :on-error="handleUploadFaild"
@@ -23,7 +23,8 @@
             <div class="card-header">
               活动编辑
               <span class="float-right">
-                <el-button type="success" icon="check" @click.native.prevent="saveActivity('activity.base_setting')"  :loading="loading">立即创建</el-button>
+                <el-button v-if="this.act == 'create'" type="success" icon="check" @click.native.prevent="saveActivity('activity.base_setting')"  :loading="loading">立即创建</el-button>
+                <el-button v-if="this.act == 'edit'" type="info" icon="setting" @click.native.prevent="updateActivity()"  :loading="loading">保存活动</el-button>
               </span>
             </div>
             <div class="card-block">
@@ -56,7 +57,7 @@
                         </el-form-item>
                         <el-form-item label="开始时间" required data-source="base_setting_date">
                           <el-col :span="12">
-                            <el-form-item prop="begin_date">
+                            <el-form-item>
                               <el-date-picker v-model="activity.base_setting.begin_date" type="datetime" placeholder="选择开始时间" style="width:100%;">
                              </el-date-picker>
                             </el-form-item>
@@ -64,7 +65,7 @@
                         </el-form-item>
                         <el-form-item label="结束时间" required data-source="base_setting_date">
                           <el-col :span="12">
-                            <el-form-item prop="end_date">
+                            <el-form-item>
                               <el-date-picker v-model="activity.base_setting.end_date" type="datetime" placeholder="选择结束时间" style="width:100%;">
                             </el-form-item>
                           </el-col>
@@ -212,7 +213,7 @@
                           <el-col v-if="activity.sharing_setting.is_wx_sharing_icon == '1'">
                             <el-upload
                               class="avatar-uploader"
-                              action="/cmcc/mmt/img/upload"
+                              action="/api/mmt/img/upload"
                               :show-file-list="false"
                               :on-success="handleUploadWX"
                               :on-error="handleUploadFaild"
@@ -376,12 +377,14 @@
 </template>
 <script>
   import $ from 'jquery'
-  import { createActivity } from '../../api/api'
+  import { createActivity,getActivityById,editActivity } from '../../api/api'
   import NProgress from 'nprogress'
   import moment from 'moment'
   export default {
     data() {
       return {
+        code: '',
+        act: '',
         is_dialog_show: false,
         advanced_tab: '1',
         edit_awards_tabs_value: '1',
@@ -497,6 +500,13 @@
         }
       }
     },
+    created () {
+      this.code = this.$route.query.code
+      this.act = this.$route.query.act
+      if (this.act === 'edit'){
+        this.getActivityInfo(this.code)
+      }
+    },
     watch: {
       'activity' : {
         handler: function(){
@@ -505,12 +515,9 @@
         deep: true
       }
     },
-    // computed: {
-    //     'activity.award_setting': function () {
-    //         return activity.award_setting
-    //     }
-    // },
     methods: {
+      formatDate (){
+      },
       handleClick(tab, event) {
       },
       clearAwardValue(item){
@@ -518,7 +525,53 @@
           item.award_value = ''
         }
       },
-      // 保存活动
+      // 获取当前活动信息
+      getActivityInfo (code) {
+        NProgress.start()
+        let params = {
+          'code': code
+        }
+        getActivityById(params).then((res) => {
+          NProgress.done()
+          if (res.data.status === 0){
+            this.$notify({
+              title: '成功',
+              message: '成功获取活动信息',
+              type: 'success'
+            })
+            console.log(res.data.data)
+            this.activity = res.data.data
+          }else{
+            this.$notify({
+              title: '失败',
+              message: res.data.message,
+              type: 'error'
+            })
+          }
+        })
+      },
+      // 保存编辑活动
+      updateActivity () {
+        this.loading = true
+        NProgress.start()
+        this.activity.base_setting.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
+        this.activity.base_setting.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
+        let params = {
+          'code': this.code,
+          'activity': this.activity
+        }
+        editActivity(params).then((res) => {
+          this.loading = false
+          NProgress.done()
+          console.log(res)
+          this.$notify({
+            title: '成功',
+            message: '添加活动成功',
+            type: 'success'
+          })
+        })
+      },
+      // 创建活动
       saveActivity(formName){
         let _this = this
         this.$refs[formName].validate((valid) => {
