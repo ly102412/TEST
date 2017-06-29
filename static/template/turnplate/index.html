@@ -41,8 +41,8 @@
       <!-- 参与人数 begin-->
       <div class="join-num">
         <p class="edit-layer" data-type="2" data-layer="fictitious_join_num">已有<strong>{{activity.base_setting.fictitious_join_num}}</strong>人参与</p>
-        <p class="edit-layer" data-type="2" data-layer="total_lottery_time">今天还有<strong>{{activity.lottery_setting.total_lottery_time}}</strong>次抽奖机会</p>
-        <p class="edit-layer" data-type="2" data-layer="daily_lottery_time" v-if="activity.lottery_setting.is_total_lottery == '1'">您还有<strong>{{activity.lottery_setting.daily_lottery_time}}</strong>次抽奖机会</p>
+        <p class="edit-layer" data-type="2" data-layer="total_lottery_time">今天还有<strong>{{activity.lottery_setting.daily_lottery_time}}</strong>次抽奖机会</p>
+        <p class="edit-layer" data-type="2" data-layer="daily_lottery_time" v-if="activity.lottery_setting.is_total_lottery == '1'">您还有<strong>{{activity.lottery_setting.total_lottery_time}}</strong>次抽奖机会</p>
       </div>
       <!-- 参与人数 end-->
       <!-- 版权 begin-->
@@ -95,7 +95,7 @@
         <div class="module edit-layer" data-type="2" data-layer="activity_des">
           <h3>活动及兑奖说明</h3>
           <div class="info">
-            <p>每人每日有3次抽奖机会</p>
+            <p></p>
             <p>{{activity.base_setting.activity_des}}</p>
           </div>
         </div>
@@ -156,6 +156,7 @@
       el: '#app',
       data () {
         return {
+          code: '35204b8f-7e99-4079-8d56-24100787',
           activity: {
             main_tab: '1',                  // 当前导航栏状态
             upload_image_url: '',           // 上传图片地址
@@ -240,6 +241,7 @@
             this.setContent(window.parent.window._activity)
           }else{
             this.activity.main_tab = '1'
+            this.getUserInfo(this.code)
           }
         //  if(window.parent.window._activity){
         //
@@ -252,6 +254,37 @@
           this.activity = activity
           this.setAwardList(this.activity)
         },
+        // 获取用户信息
+        getUserInfo (code) {
+          var _this = this
+          $.ajax({
+              url: '/api/front/get/user/info',    //请求的url地址
+              dataType: 'json',
+              async: true,
+              data: {
+                'code': code
+              },
+              type: 'get',
+              beforeSend: function(){
+                  //请求前的处理
+              },
+              success: function(res){
+                if(res.status == 0){
+                  _this.activity = res.data.activity
+                  turnplate.restaraunts = _this.activity.award_setting
+                  turnplate.drawRouletteWheel();
+                }
+
+              },
+              complete: function(){
+                  //请求完成的处理
+              },
+              error: function(){
+                  //请求出错处理
+              }
+          });
+        },
+        // 设置奖品列表
         setAwardList (activity) {
           // console.log(activity.award_setting)
           turnplate.restaraunts = []
@@ -268,6 +301,30 @@
   </script>
   <script>
   $(function(){
+      // 开始抽奖
+      $('#btn_start').click(function (){
+        if(turnplate.bRotate) return;
+        if(!turnplate.restaraunts) return;
+        turnplate.bRotate = !turnplate.bRotate;
+        // 点击抽奖
+        // turnplate.getLottery(work_id,workData);
+        // 奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
+        // console.log(turnplate.restaraunts[item-1]);
+        turnplate.rotateFn(2000);
+      });
+
+      // 活动说明tab
+      $(".rules-tab li").click(function(){
+          $(".rules-tab li").eq($(this).index()).addClass("cur").siblings().removeClass('cur');
+          $(".rules-content").hide().eq($(this).index()).show();
+      });
+      $('.rules-icon').click(function(){
+        $('.rules-box').show()
+      });
+      $('.close').click(function(){
+        $('.rules-box').hide()
+        $('.main').show()
+      });
       // 判断当前页面环境是否是在iframe中
       if(location != top.location){
         // 移入添加border
@@ -299,23 +356,7 @@
         });
       }else{
       }
-      // 开始抽奖
-      $('#btn_start').click(function (){
-        if(turnplate.bRotate) return;
-        if(!turnplate.restaraunts) return;
-        turnplate.bRotate = !turnplate.bRotate;
-        // 点击抽奖
-        // turnplate.getLottery(work_id,workData);
-        // 奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
-        // console.log(turnplate.restaraunts[item-1]);
-        turnplate.rotateFn(2000);
-      });
 
-      // 活动说明tab
-      $(".rules-tab li").click(function(){
-          $(".rules-tab li").eq($(this).index()).addClass("cur").siblings().removeClass('cur');
-          $(".rules-content").hide().eq($(this).index()).show();
-      });
     })
   </script>
 </body>

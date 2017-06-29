@@ -516,8 +516,6 @@
       }
     },
     methods: {
-      formatDate (){
-      },
       handleClick(tab, event) {
       },
       clearAwardValue(item){
@@ -556,6 +554,7 @@
         NProgress.start()
         this.activity.base_setting.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
         this.activity.base_setting.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
+        this.activity.main_tab = '1'
         let params = {
           'code': this.code,
           'activity': this.activity
@@ -566,7 +565,7 @@
           console.log(res)
           this.$notify({
             title: '成功',
-            message: '添加活动成功',
+            message: '保存活动成功',
             type: 'success'
           })
         })
