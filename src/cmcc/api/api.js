@@ -76,3 +76,15 @@ export const editActivity = params => { return axios.post(`${mmt}/update/activit
  * @return {[type]}        [description]
  */
 export const releaseActivity = params => { return axios.get(`${mmt}/release/activity`, { params: params})}
+/**
+ * [getLotteryRecord 获取中奖信息]
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
+export const getLotteryRecord = params => { return axios.get(`${mmt}/front/user/lottery/list`, { params: params})}
+/**
+ * [lotteryEnd 结束活动]
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
+export const lotteryEnd = params => { return axios.get(`${mmt}/end/activity`, { params: params})}

@@ -135,7 +135,7 @@ export default {
   methods: {
     // 跳转编辑活动
     goToCreate () {
-      this.$router.push({ path:'main',query:{code:'0',act: 'create'}})
+      this.$router.push({ path:'main',query:{code:'0',act: 'create',activity_type: '1'}})
     },
   }
 }

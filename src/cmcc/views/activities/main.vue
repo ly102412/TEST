@@ -31,7 +31,7 @@
               <el-tabs v-model="activity.main_tab" @tab-click="handleClick">
                 <el-tab-pane label="首页" name="1"></el-tab-pane>
                 <el-tab-pane label="活动奖品" name="2"></el-tab-pane>
-                <el-tab-pane label="我的奖品" name="3"></el-tab-pane>
+                <!-- <el-tab-pane label="我的奖品" name="3"></el-tab-pane> -->
                 <!-- <el-tab-pane label="奖品详情" name="4"></el-tab-pane> -->
                 <el-tab-pane label="中奖页面" name="4"></el-tab-pane>
                 <el-tab-pane label="没中奖页" name="5"></el-tab-pane>
@@ -238,14 +238,6 @@
                             </div>
                           </el-col>
                           <el-col v-if="activity.sharing_setting.is_wx_sharing_content == '1'">
-                            <div class="card card-accent-primary">
-                              <div class="card-header">
-                                分享内容(没有获奖的内容)
-                              </div>
-                              <div class="card-block">
-                                <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 8}" v-model="activity.sharing_setting.wx_sharing_loser_content"></el-input>
-                              </div>
-                            </div>
                             <div class="card card-accent-warning">
                               <div class="card-header">
                                 分享内容(获奖的玩家)
@@ -416,6 +408,7 @@
           },
           base_setting: {
             activity_name: '',    // 活动名称
+            activity_type: '1',           // 活动类型
             begin_date: '',               // 活动开始时间
             end_date: '',                 // 活动结束时间
             is_join_num: false,           // 是否显示参与人数 boolean
@@ -503,6 +496,7 @@
     created () {
       this.code = this.$route.query.code
       this.act = this.$route.query.act
+      this.activity.base_setting.activity_type = this.$route.query.activity_type
       if (this.act === 'edit'){
         this.getActivityInfo(this.code)
       }

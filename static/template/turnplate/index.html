@@ -100,16 +100,14 @@
           </div>
         </div>
       </div>
-      <div class="rules-content" v-show="activity.main_tab == 3">
+      <div class="rules-content">
         <div class="rules-card-list">
           <ul>
-            <li>
+            <li v-for="item in lottery.record_list">
               <div class="card-content">
-                <h1 class="price-name">一等奖</h1>
-                <p>兑奖期限: {{activity.base_setting.begin_date}} 至 {{activity.base_setting.begin_date}}</p>
-              </div>
-              <div class="status">
-                未兑换
+                <h1 class="price-name">{{item.prize_name}}</h1>
+                <p>中奖日期:{{item.create_time}}</p>
+                <!-- <p>兑奖期限: {{activity.base_setting.begin_date}} 至 {{activity.base_setting.begin_date}}</p> -->
               </div>
             </li>
           </ul>
@@ -129,8 +127,8 @@
           <img :src="activity.activity_img_upload.lottery_success" alt="">
         </div>
         <div class="result-footer">
-          <p><strong>一等奖</strong></p>
-          <p>价值100元礼品</p>
+          <!-- <p><strong>一等奖</strong></p> -->
+          <p>{{lottery.award_name}}</p>
         </div>
         <div class="contract">
             <a class="btn-contract" href="http://www.baidu.com">领取奖品</a></br>
@@ -156,7 +154,11 @@
       el: '#app',
       data () {
         return {
-          code: '35204b8f-7e99-4079-8d56-24100787',
+          code: '',
+          lottery: {
+            award_name:'',
+            record_list: []
+          },
           activity: {
             main_tab: '1',                  // 当前导航栏状态
             upload_image_url: '',           // 上传图片地址
@@ -240,8 +242,10 @@
           if(top.location != location){
             this.setContent(window.parent.window._activity)
           }else{
+            this.code = this.getUrl('code')
             this.activity.main_tab = '1'
             this.getUserInfo(this.code, true)
+            this.getLotteryRecord(this.code)
           }
         //  if(window.parent.window._activity){
         //
@@ -253,6 +257,20 @@
         setContent (activity) {
           this.activity = activity
           this.setAwardList(this.activity)
+        },
+       getUrl (paras) {
+          var url = location.href;
+          var paraString = url.substring(url.indexOf("?")+1,url.length).split("&");
+          var paraObj = {}
+          for (var i= 0,j; j=paraString[i]; i++){
+              paraObj[j.substring(0,j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=")+1,j.length);
+          }
+          var returnValue = paraObj[paras.toLowerCase()];
+          if(typeof(returnValue)=="undefined"){
+              return "";
+          }else{
+              return returnValue;
+          }
         },
         // 抽奖接口
         goLottery (code) {
@@ -283,6 +301,7 @@
                     turnplate.rotateFn(award_index+1, 1000, function(){
                       if(res.data.prize_denomination !== -1){
                         _this.activity.main_tab = 4
+                        _this.lottery.award_name = res.data.prize_name
                       }else{
                         _this.activity.main_tab = 5
                       }
@@ -305,6 +324,25 @@
           }
 
           turnplate.rotateFn(2000);
+        },
+        // 获取中奖纪录
+        getLotteryRecord (code) {
+          var _this = this
+          $.ajax({
+              url: '/api/front/user/lottery/list',    //请求的url地址
+              dataType: 'json',
+              async: true,
+              data: {
+                'code': code
+              },
+              type: 'get',
+              success: function(res){
+                console.log(res)
+                if(res.status == 0){
+                  _this.lottery.record_list = res.data.list
+                }
+              }
+          });
         },
         // 获取用户信息
         getUserInfo (code,bRepaint) {
@@ -403,5 +441,49 @@
 
     })
   </script>
+  <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script>
+      var shareUrl = window.location.href.replace(/#.*$/,"");
+      // var token = window.location.href.match(/[^/]*$/,'');
+      //     console.log('微信=========================='+token);
+      $.ajax({
+          url: "/api/wechat/jsapi/signature?url="+encodeURIComponent(shareUrl),
+          type: "get",
+          dataType:"json",
+          success: function (result) {
+              wx.config({
+                  debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                  appId: result.data.appid, // 必填，公众号的唯一标识
+                  timestamp: result.data.timestamp, // 必填，生成签名的时间戳
+                  nonceStr: result.data.noncestr, // 必填，生成签名的随机串
+                  signature: result.data.signature,// 必填，签名，见附录1
+                  jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+              });
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            // alert(textStatus)
+          }
+      });
+      wx.ready(function(){
+          var option =  {
+              title: activity.activity_name, // 分享标题
+              desc: activity.sharing_setting.wx_sharing_winner_content, // 分享描述
+              link: location.protocol + "//"+location.host+"/v2/gift/share/1/",
+              imgUrl: activity.sharing_setting.upload_image_url, // 分享图标
+              success: function () {// 用户确认分享后执行的回调函数
+              },
+              cancel: function () {// 用户取消分享后执行的回调函
+              }
+          };
+          wx.onMenuShareTimeline(option);
+          wx.onMenuShareAppMessage(option);
+          wx.onMenuShareQQ(option);
+          wx.onMenuShareQZone(option);
+      });
+      wx.error(function(res){
+          // alert("error:"+JSON.stringify(res));
+          console.log('error:'+JSON.stringify(res));
+      });
+    </script>
 </body>
 </html>

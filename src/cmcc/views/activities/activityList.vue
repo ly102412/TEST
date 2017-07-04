@@ -30,8 +30,11 @@
       <el-table-column prop="create_time" label="创建时间"  width="120"></el-table-column>
       <el-table-column label="操作" width="240"  fixed="right">
 				<template scope="scope">
-          <el-tooltip class="item" effect="dark" content="发布活动" placement="top" >
+          <el-tooltip class="item" effect="dark" content="发布活动" placement="top" v-if="scope.row.activity_status == 0">
             <el-button :disabled="scope.row.activity_status == 1" size="small" icon="upload2" type="success" @click="handleRlease(scope.row.code)"></el-button>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="结束活动" placement="top" v-if="scope.row.activity_status == 1">
+            <el-button size="small" icon="upload2" type="error" @click="handleEnd(scope.row.code)"></el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" content="编辑活动" placement="top">
             <el-button size="small" icon="edit" type="warning" @click="handleEdit(scope.row.code)"></el-button>
@@ -60,7 +63,7 @@
 </template>
 
 <script>
-import {getActivityList, delActivity, releaseActivity} from '../../api/api'
+import {getActivityList, delActivity, releaseActivity, lotteryEnd} from '../../api/api'
 import NProgress from 'nprogress'
 export default {
   data () {
@@ -85,7 +88,6 @@ export default {
         }
         this.listloading = true
         NProgress.start()
-        alert(JSON.stringify(params))
         releaseActivity(params).then((res) => {
           this.listloading = false
           NProgress.done()
@@ -113,6 +115,41 @@ export default {
     // 跳转编辑活动
     handleEdit (code) {
       this.$router.push({path:'main',query:{code: code, act: 'edit'}})
+    },
+    // 结束活动
+    handleEnd (code) {
+      this.$confirm('此活动已发布, 确定要结束?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let params = {
+          code: code
+        }
+        this.listloading = true
+        NProgress.start()
+        lotteryEnd(params).then((res) => {
+          this.listloading = false
+          NProgress.done()
+          if (res.data.status == 0) {
+            this.$message({
+              message: res.data.message,
+              type: 'success'
+            });
+            this.getRecords()
+          }else{
+            this.$message({
+              message: res.data.message,
+              type: 'error'
+            })
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消操作'
+        })
+      })
     },
     // 删除活动
     handleDel (code) {
