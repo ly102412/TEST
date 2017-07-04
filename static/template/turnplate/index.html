@@ -34,7 +34,7 @@
       <!-- 大转盘 begin-->
       <div class="turnplate edit-layer" data-type="1" data-layer="turnplate_bg">
         <canvas id="wheelcanvas" style="width:100%;z-index:1;position:relative" width="422" height="422"></canvas>
-        <img id="btn_start" src="images/turnplate-pointer.png"/>
+        <img id="btn_start" src="images/turnplate-pointer.png" @click="goLottery(code)"/>
         <img class="turnplate-bg" :src="activity.activity_img_upload.turnplate_bg"/>
       </div>
       <!-- 大转盘 end-->
@@ -71,7 +71,7 @@
         <div class="module edit-layer" data-type="2" data-layer="award_setting">
             <h3>活动奖品</h3>
             <div class="info" v-for="(item,index) in activity.award_setting">
-              <p v-if="index > 0">{{item.award_level}} : {{item.award_name}}</p>
+              <p v-if="index > 0">{{item.award_name}}</p>
             </div>
         </div>
         <div class="module edit-layer" data-type="2" data-layer="base_setting_date">
@@ -133,7 +133,7 @@
           <p>价值100元礼品</p>
         </div>
         <div class="contract">
-            <a class="btn-contract">领取奖品</a></br>
+            <a class="btn-contract" href="http://www.baidu.com">领取奖品</a></br>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
         </div>
@@ -144,7 +144,7 @@
       <div class="failed-img edit-layer" data-type="1" data-layer="lottery_faild">
         <img :src="activity.activity_img_upload.lottery_faild" alt="">
         <div class="contract">
-            <a class="btn-contract">再来一次</a></br>
+            <a class="btn-contract" @click="activity.main_tab = '1'">再来一次</a></br>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
         </div>
@@ -241,7 +241,7 @@
             this.setContent(window.parent.window._activity)
           }else{
             this.activity.main_tab = '1'
-            this.getUserInfo(this.code)
+            this.getUserInfo(this.code, true)
           }
         //  if(window.parent.window._activity){
         //
@@ -254,8 +254,60 @@
           this.activity = activity
           this.setAwardList(this.activity)
         },
+        // 抽奖接口
+        goLottery (code) {
+          var _this = this
+          if(turnplate.bRotate) return;
+          if(!turnplate.restaraunts) return;
+          turnplate.bRotate = !turnplate.bRotate;
+          // 点击抽奖
+          // turnplate.getLottery(work_id,workData);
+          // 奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
+          // console.log(turnplate.restaraunts[item-1]);
+          if(location == top.location){
+            $.ajax({
+                url: '/api/front/lottery',    //请求的url地址
+                dataType: 'json',
+                async: true,
+                data: {
+                  'code': code
+                },
+                type: 'get',
+                beforeSend: function(){
+                    //请求前的处理
+                },
+                success: function(res){
+                  if(res.status == 0){
+                    turnplate.award_id = res.data.id
+                    var award_index = turnplate.getPrizeIndex(turnplate.award_id,turnplate.restaraunts)
+                    turnplate.rotateFn(award_index+1, 1000, function(){
+                      if(res.data.prize_denomination !== -1){
+                        _this.activity.main_tab = 4
+                      }else{
+                        _this.activity.main_tab = 5
+                      }
+                      _this.getUserInfo(code)
+                      // alert(res.data.prize_name)
+                      // _this.activity.main_tab = 4
+                    });
+                  }else{
+                    $('#wheelcanvas').stopRotate();
+                    alert(res.message)
+                  }
+                },
+                complete: function(){
+                    //请求完成的处理
+                },
+                error: function(){
+                    //请求出错处理
+                }
+            });
+          }
+
+          turnplate.rotateFn(2000);
+        },
         // 获取用户信息
-        getUserInfo (code) {
+        getUserInfo (code,bRepaint) {
           var _this = this
           $.ajax({
               url: '/api/front/get/user/info',    //请求的url地址
@@ -270,9 +322,12 @@
               },
               success: function(res){
                 if(res.status == 0){
+                  res.data.activity.main_tab = _this.activity.main_tab
                   _this.activity = res.data.activity
                   turnplate.restaraunts = _this.activity.award_setting
-                  turnplate.drawRouletteWheel();
+                  if(bRepaint){
+                    turnplate.drawRouletteWheel();
+                  }
                 }
 
               },
@@ -289,7 +344,7 @@
           // console.log(activity.award_setting)
           turnplate.restaraunts = []
           var award_length = activity.award_setting.length
-          for(var i=0; i<award_length;i++){
+          for(var i = 0; i < award_length; i++){
             turnplate.restaraunts.push(
               {'award_id':activity.award_setting[i].award_id,'award_name':activity.award_setting[i].award_name}
             )
@@ -301,17 +356,6 @@
   </script>
   <script>
   $(function(){
-      // 开始抽奖
-      $('#btn_start').click(function (){
-        if(turnplate.bRotate) return;
-        if(!turnplate.restaraunts) return;
-        turnplate.bRotate = !turnplate.bRotate;
-        // 点击抽奖
-        // turnplate.getLottery(work_id,workData);
-        // 奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
-        // console.log(turnplate.restaraunts[item-1]);
-        turnplate.rotateFn(2000);
-      });
 
       // 活动说明tab
       $(".rules-tab li").click(function(){

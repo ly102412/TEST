@@ -31,6 +31,14 @@ turnplate.rotateFn = function (item, duration, fn){
     });
 };
 
+turnplate.getPrizeIndex = function(id, arr){
+  for(var i = 0;i < arr.length; i++){
+    if(id == arr[i].award_id){
+      return i
+    }
+  }
+  return -1;
+};
 //页面所有元素加载完毕后执行drawRouletteWheel()方法对转盘进行渲染
 
 turnplate.drawRouletteWheel = function() {
