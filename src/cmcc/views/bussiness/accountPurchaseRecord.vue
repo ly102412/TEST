@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="animated fadeIn">
     <el-table :data="orderList" highlight-current-row v-loading="listloading">
-      <el-table-column prop="id" label="订单编号"></el-table-column>
+      <el-table-column prop="order_id" label="订单编号"></el-table-column>
       <el-table-column prop="money" label="商家ID"></el-table-column>
       <el-table-column prop="flow_money" label="流量消费金额(元)"></el-table-column>
       <el-table-column prop="desc" label="描述"></el-table-column>

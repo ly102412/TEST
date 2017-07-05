@@ -1,10 +1,10 @@
 <template lang="html">
   <div class="animated fadeIn">
     <el-table :data="activityList" highlight-current-row v-loading="listloading">
-      <el-table-column prop="id" label="活动编号" fixed width="120"></el-table-column>
+      <!-- <el-table-column prop="id" label="活动编号" fixed width="120"></el-table-column> -->
       <el-table-column
       label=""
-      width="60">
+      width="60" fixed>
       <template scope="scope">
         <el-popover trigger="hover" placement="top">
             <div v-html="scope.row.qccode_url" class="bigerweima"></div>
@@ -16,7 +16,7 @@
       </template>
     </el-table-column>
       <el-table-column prop="activity_name" label="活动标题" width="120"></el-table-column>
-      <el-table-column prop="activity_desc" label="活动描述" width="150"></el-table-column>
+      <!-- <el-table-column prop="activity_desc" label="活动描述" width="150"></el-table-column> -->
       <el-table-column prop="activity_type" label="活动类型" :formatter="formatType" width="120"></el-table-column>
       <el-table-column prop="start_time" label="活动开始时间" width="120"></el-table-column>
       <el-table-column prop="end_time" label="活动结束时间" width="120"></el-table-column>
@@ -34,13 +34,10 @@
             <el-button :disabled="scope.row.activity_status == 1" size="small" icon="upload2" type="success" @click="handleRlease(scope.row.code)"></el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" content="结束活动" placement="top" v-if="scope.row.activity_status == 1">
-            <el-button size="small" icon="upload2" type="error" @click="handleEnd(scope.row.code)"></el-button>
+            <el-button size="small" icon="warning" type="primay" @click="handleEnd(scope.row.code)"></el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" content="编辑活动" placement="top">
             <el-button size="small" icon="edit" type="warning" @click="handleEdit(scope.row.code)"></el-button>
-          </el-tooltip>
-          <el-tooltip class="item" effect="dark" content="删除活动" placement="top">
-            <el-button size="small" icon="delete" type="danger" @click="handleDel(scope.row.code)"></el-button>
           </el-tooltip>
           <el-dropdown trigger="click" @command="handleMenuCommand">
             <el-button type="small">
@@ -48,6 +45,7 @@
             </el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item><span @click="goToRecords(scope.row.id)">查看中奖记录</span></el-dropdown-item>
+              <el-dropdown-item v-if="scope.row.activity_status == 0"><span @click="handleDel(scope.row.code)">删除活动</span></el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
 				</template>

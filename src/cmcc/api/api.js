@@ -88,3 +88,9 @@ export const getLotteryRecord = params => { return axios.get(`${mmt}/front/user/
  * @return {[type]}        [description]
  */
 export const lotteryEnd = params => { return axios.get(`${mmt}/end/activity`, { params: params})}
+/**
+ * [lotteryEnd 结束活动]
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
+export const getFlowPrice = params => { return axios.get(`${mmt}/activity/price`, { params: params})}

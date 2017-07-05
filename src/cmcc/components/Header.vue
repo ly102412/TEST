@@ -9,12 +9,12 @@
       <li class="nav-item px-3">
         <a class="nav-link" href="#">首页</a>
       </li>
-      <li class="nav-item px-3">
+      <!-- <li class="nav-item px-3">
         <a class="nav-link" href="#">用户中心</a>
       </li>
       <li class="nav-item px-3">
         <a class="nav-link" href="#">设置</a>
-      </li>
+      </li> -->
     </ul>
     <ul class="nav navbar-nav ml-auto">
       <li class="nav-item d-md-down-none">
