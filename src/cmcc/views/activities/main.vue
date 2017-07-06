@@ -199,6 +199,7 @@
                         </el-form>
                         </el-tab-pane>
                       </el-tabs>
+                      
                     </el-tab-pane>
                     <el-tab-pane>
                       <span slot="label"><i class="el-icon-share"></i> 分享设置</span>
