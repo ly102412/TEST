@@ -199,7 +199,9 @@
                         </el-form>
                         </el-tab-pane>
                       </el-tabs>
-                      
+                      <div class="row">
+                        <div class="col-12 col-lg-12"><div class="card"><div class="card-block p-3 clearfix"><i class="fa fa-moon-o bg-warning p-3 font-2xl mr-3 float-left"></i> <div class="h5 text-warning mb-0 mt-2">活动预计需要费用{{freeze_money}}元</div> <div class="text-muted text-uppercase font-weight-bold font-xs">账户可用余额为{{business_info.money}}元</div></div></div></div>
+                      </div>
                     </el-tab-pane>
                     <el-tab-pane>
                       <span slot="label"><i class="el-icon-share"></i> 分享设置</span>
@@ -370,7 +372,7 @@
 </template>
 <script>
   import $ from 'jquery'
-  import { createActivity,getActivityById,editActivity } from '../../api/api'
+  import { createActivity,getActivityById,editActivity,getBussinessInfo,getFlowPrice } from '../../api/api'
   import NProgress from 'nprogress'
   import moment from 'moment'
   export default {
@@ -384,6 +386,9 @@
         tab_awards_name_list: ['奖项一','奖项二','奖项三','奖项四','奖项五','奖项六','奖项七','奖项八'],
         tabIndex: 1,
         loading: false,
+        business_info: {},
+        flow_price_info: {},
+        freeze_money: '',    //消费金额
         award_list_value: [
           {
             value: '100',
@@ -498,6 +503,8 @@
       this.code = this.$route.query.code
       this.act = this.$route.query.act
       this.activity.base_setting.activity_type = this.$route.query.activity_type
+      this.getBussiness()
+      this.getPrice()
       if (this.act === 'edit'){
         this.getActivityInfo(this.code)
       }
@@ -508,9 +515,59 @@
           this.load()
         },
         deep: true
+      },
+      'activity.award_setting' : {
+        handler: function(){
+        var freeze_money = 0;
+         let scores = 0;
+         let coupon_size_100 = 0;
+         let coupon_size_500 = 0;
+         for (let item of this.activity.award_setting) {
+             if (item.award_value <= 0) {
+                 continue;
+             }
+             if (item.award_type == 0) {
+                 scores += item.award_value * item.award_num;
+                 freeze_money += Number(Math.abs(Number(item.award_value) * item.award_num * this.flow_price_info.flow));
+             }
+             if (item.award_type == 1 && item.award_value == 100) {
+                 coupon_size_100 += item.award_num;
+                 freeze_money += Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_100));
+             }
+             if (item.award_type == 1 && item.award_value == 500) {
+                 coupon_size_500 += item.award_num;
+                 freeze_money +=  Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_500));
+             }
+         }
+         this.freeze_money = freeze_money
+         console.log(this.freeze_money)
+       },
+       deep: true
       }
     },
     methods: {
+      // 获取商家信息
+      getBussiness() {
+        let params = {}
+        NProgress.start()
+        getBussinessInfo(params).then((res) => {
+          NProgress.done()
+          if (res.status === 0) {
+            this.business_info = res.data
+          }
+        })
+      },
+      getPrice() {
+        let params = {}
+        NProgress.start()
+        getFlowPrice(params).then((res) => {
+          NProgress.done()
+          if (res.data.status === 0) {
+            console.log(res.data.data)
+            this.flow_price_info = res.data.data
+          }
+        })
+      },
       handleClick(tab, event) {
       },
       clearAwardValue(item){

@@ -131,7 +131,7 @@
           <p>{{lottery.award_name}}</p>
         </div>
         <div class="contract">
-            <a class="btn-contract" href="http://www.baidu.com">领取奖品</a></br>
+            <a class="btn-contract" :href="activity.bank_url">领取奖品</a></br>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
         </div>
