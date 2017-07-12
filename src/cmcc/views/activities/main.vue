@@ -165,7 +165,7 @@
                           :label="item.award_level"
                           :name="item.name"
                         >
-                        <el-form :rules="award_setting_rules" ref="activity.award_setting" label-width="120px">
+                        <el-form :rules="award_setting_rules" ref="activity.award_setting" label-width="120px" style="padding:0 10px">
                           <el-form-item label="奖品类型">
                             <el-radio-group v-model="item.award_type" @change="clearAwardValue(item)">
                               <el-radio-button label="0">流量</el-radio-button>
@@ -173,7 +173,7 @@
                               <!-- <el-radio-button label="2">实物</el-radio-button> -->
                             </el-radio-group>
                           </el-form-item>
-                          <el-form-item label="奖品名称" data-source="award_setting">
+                          <el-form-item label="奖品名称" data-source="award_setting" data-type="2">
                             <el-input v-model="item.award_name"></el-input>
                           </el-form-item>
                           <el-form-item label="奖品大小" v-if="item.award_type == '0' && item.award_value !== '-1'">
@@ -255,9 +255,9 @@
                     </el-tab-pane>
                     <el-tab-pane>
                       <span slot="label"><i class="el-icon-more"></i> 高级设置</span>
-                      <el-form :model="activity.advanced_setting" :rules="advanced_setting_rules" ref="activity.advanced_setting" label-width="100px">
+                      <el-form :model="activity.advanced_setting" :rules="advanced_setting_rules" ref="activity.advanced_setting" label-width="100px" >
                         <el-tabs v-model="advanced_tab" @tab-click="handleClick">
-                          <el-tab-pane label="企业信息" name="1">
+                          <el-tab-pane label="企业信息" name="1" style="padding:10px">
                             <el-form-item label="主办单位" data-source="enterprise_setting">
                               <el-input v-model="activity.advanced_setting.enterprise_setting.organizers"></el-input>
                             </el-form-item>
@@ -755,6 +755,9 @@
               // $(item).parents('.el-form').parents('.el-tab-pane').show().siblings().hide();
               let pane_index = $(item).parents('.el-form').parents('.el-tab-pane').index();
               self.activity.activity_tab = pane_index + ''
+            }
+            if(name == 'award_setting'){
+              self.activity.activity_tab = '2'
             }
 
           })

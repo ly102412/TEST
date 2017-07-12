@@ -5,8 +5,8 @@
         <div class="col-md-6">
           <div class="clearfix">
             <h1 class="float-left display-3 mr-4">404</h1>
-            <h4 class="pt-3">Oops! 您访问的页面不存在！</h4>
-            <p class="text-muted">请确认您访问的地址是否正确</p>
+            <h4 class="pt-3">Oops! 服务器异常</h4>
+            <p class="text-muted">请您稍后访问</p>
           </div>
           <!-- <div class="input-prepend input-group">
             <span class="input-group-addon"><i class="fa fa-search"></i></span>
