@@ -453,7 +453,7 @@
           sharing_setting: {
             is_allow_sharing: '0',       // 是否允许分享
             is_wx_sharing_icon: '0',        // 微信分享图标 0默认 1自定义上传
-            wx_sharing_icon_url: '',      // 上传的微信图标url
+            wx_sharing_icon_url: require('../../../../static/template/turnplate/images/turnplate-bg.png'),      // 上传的微信图标urlturnplates.jpg
             is_wx_sharing_content: '0',     // 微信分享内容 0默认 1自定义
             wx_sharing_loser_content: '​轻轻松松就能抽到大奖，积攒多年的人品终于有用了，你也赶紧来抽奖吧！！', // 没有获奖的玩家分享的内容
             wx_sharing_winner_content: '​我已经在活动中抽到了奖品，你也快来抽大奖吧！',// 获奖玩家分享的内容
@@ -612,14 +612,17 @@
           'activity': this.activity
         }
         editActivity(params).then((res) => {
-          this.loading = false
-          NProgress.done()
-          console.log(res)
-          this.$notify({
-            title: '成功',
-            message: '保存活动成功',
-            type: 'success'
-          })
+          if(res.data.status == 0){
+            this.loading = false
+            NProgress.done()
+            console.log(res)
+            this.$notify({
+              title: '成功',
+              message: '保存活动成功',
+              type: 'success'
+            })
+            this.$router.push({ path:'activityList'})
+          }
         })
       },
       // 创建活动
@@ -634,14 +637,17 @@
               this.activity.base_setting.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
               let params = {'activity': this.activity}
               createActivity(params).then((res) => {
-                this.loading = false
-                NProgress.done()
-                this.$notify({
-                  title: '成功',
-                  message: '添加活动成功',
-                  type: 'success'
-                })
-                this.$refs[formName].resetFields()
+                if(res.data.status == 0){
+                  this.loading = false
+                  NProgress.done()
+                  this.$notify({
+                    title: '成功',
+                    message: '添加活动成功',
+                    type: 'success'
+                  })
+                  this.$refs[formName].resetFields()
+                  this.$router.push({ path:'activityList'})
+                }
               })
             })
           }

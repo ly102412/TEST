@@ -24,98 +24,10 @@
               <div class="col-sm-6 col-lg-3">
                 <div class="active-box">
                   <div class="pic">
-                    <img src="../../static/img/turnplates.jpg" alt="">
+                    <img src="../../static/img/guaguaka.jpg" alt="">
                   </div>
                   <div class="bottom">
-                    <strong>超级大转盘</strong>
-                    <span><el-button type="primary" size="mini" icon="plus">创建活动</el-button></span>
-                  </div>
-                </div>
-              </div><!--/.col-->
-              <div class="col-sm-6 col-lg-3">
-                <div class="active-box">
-                  <div class="pic">
-                    <img src="../../static/img/turnplates.jpg" alt="">
-                  </div>
-                  <div class="bottom">
-                    <strong>超级大转盘</strong>
-                    <span><el-button type="primary" size="mini" icon="plus">创建活动</el-button></span>
-                  </div>
-                </div>
-              </div><!--/.col-->
-              <div class="col-sm-6 col-lg-3">
-                <div class="active-box">
-                  <div class="pic">
-                    <img src="../../static/img/turnplates.jpg" alt="">
-                  </div>
-                  <div class="bottom">
-                    <strong>超级大转盘</strong>
-                    <span><el-button type="primary" size="mini" icon="plus">创建活动</el-button></span>
-                  </div>
-                </div>
-              </div><!--/.col-->
-              <div class="col-sm-6 col-lg-3">
-                <div class="active-box">
-                  <div class="pic">
-                    <img src="../../static/img/turnplates.jpg" alt="">
-                  </div>
-                  <div class="bottom">
-                    <strong>超级大转盘</strong>
-                    <span><el-button type="primary" size="mini" icon="plus">创建活动</el-button></span>
-                  </div>
-                </div>
-              </div><!--/.col-->
-              <div class="col-sm-6 col-lg-3">
-                <div class="active-box">
-                  <div class="pic">
-                    <img src="../../static/img/turnplates.jpg" alt="">
-                  </div>
-                  <div class="bottom">
-                    <strong>超级大转盘</strong>
-                    <span><el-button type="primary" size="mini" icon="plus">创建活动</el-button></span>
-                  </div>
-                </div>
-              </div><!--/.col-->
-              <div class="col-sm-6 col-lg-3">
-                <div class="active-box">
-                  <div class="pic">
-                    <img src="../../static/img/turnplates.jpg" alt="">
-                  </div>
-                  <div class="bottom">
-                    <strong>超级大转盘</strong>
-                    <span><el-button type="primary" size="mini" icon="plus">创建活动</el-button></span>
-                  </div>
-                </div>
-              </div><!--/.col-->
-              <div class="col-sm-6 col-lg-3">
-                <div class="active-box">
-                  <div class="pic">
-                    <img src="../../static/img/turnplates.jpg" alt="">
-                  </div>
-                  <div class="bottom">
-                    <strong>超级大转盘</strong>
-                    <span><el-button type="primary" size="mini" icon="plus">创建活动</el-button></span>
-                  </div>
-                </div>
-              </div><!--/.col-->
-              <div class="col-sm-6 col-lg-3">
-                <div class="active-box">
-                  <div class="pic">
-                    <img src="../../static/img/turnplates.jpg" alt="">
-                  </div>
-                  <div class="bottom">
-                    <strong>超级大转盘</strong>
-                    <span><el-button type="primary" size="mini" icon="plus">创建活动</el-button></span>
-                  </div>
-                </div>
-              </div><!--/.col-->
-              <div class="col-sm-6 col-lg-3">
-                <div class="active-box">
-                  <div class="pic">
-                    <img src="../../static/img/turnplates.jpg" alt="">
-                  </div>
-                  <div class="bottom">
-                    <strong>超级大转盘</strong>
+                    <strong>幸运刮刮卡</strong>
                     <span><el-button type="primary" size="mini" icon="plus">创建活动</el-button></span>
                   </div>
                 </div>

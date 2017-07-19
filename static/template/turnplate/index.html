@@ -67,7 +67,7 @@
         </div>
       </div>
 
-      <div class="rules-content" v-show="activity.main_tab == 2">
+      <div class="rules-content">
         <div class="module edit-layer" data-type="2" data-layer="award_setting">
             <h3>活动奖品</h3>
             <div class="info" v-for="(item,index) in activity.award_setting">
@@ -239,13 +239,18 @@
         }
       },
       mounted () {
+          // var url = window.location.href.match(/[^]*[?]/);
+          // alert(url)
           if(top.location != location){
             this.setContent(window.parent.window._activity)
           }else{
+            // 用户页面
             this.code = this.getUrl('code')
             this.activity.main_tab = '1'
             this.getUserInfo(this.code, true)
             this.getLotteryRecord(this.code)
+            window.code = this.code
+            window.activity = this.activity
           }
         //  if(window.parent.window._activity){
         //
@@ -394,7 +399,6 @@
   </script>
   <script>
   $(function(){
-
       // 活动说明tab
       $(".rules-tab li").click(function(){
           $(".rules-tab li").eq($(this).index()).addClass("cur").siblings().removeClass('cur');
@@ -442,48 +446,6 @@
     })
   </script>
   <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script>
-      var shareUrl = window.location.href.replace(/#.*$/,"");
-      // var token = window.location.href.match(/[^/]*$/,'');
-      //     console.log('微信=========================='+token);
-      $.ajax({
-          url: "/api/wechat/jsapi/signature?url="+encodeURIComponent(shareUrl),
-          type: "get",
-          dataType:"json",
-          success: function (result) {
-              wx.config({
-                  debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                  appId: result.data.appid, // 必填，公众号的唯一标识
-                  timestamp: result.data.timestamp, // 必填，生成签名的时间戳
-                  nonceStr: result.data.noncestr, // 必填，生成签名的随机串
-                  signature: result.data.signature,// 必填，签名，见附录1
-                  jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-              });
-          },
-          error: function (XMLHttpRequest, textStatus, errorThrown) {
-            // alert(textStatus)
-          }
-      });
-      wx.ready(function(){
-          var option =  {
-              title: activity.activity_name, // 分享标题
-              desc: activity.sharing_setting.wx_sharing_winner_content, // 分享描述
-              link: location.protocol + "//"+location.host+"/v2/gift/share/1/",
-              imgUrl: activity.sharing_setting.upload_image_url, // 分享图标
-              success: function () {// 用户确认分享后执行的回调函数
-              },
-              cancel: function () {// 用户取消分享后执行的回调函
-              }
-          };
-          wx.onMenuShareTimeline(option);
-          wx.onMenuShareAppMessage(option);
-          wx.onMenuShareQQ(option);
-          wx.onMenuShareQZone(option);
-      });
-      wx.error(function(res){
-          // alert("error:"+JSON.stringify(res));
-          console.log('error:'+JSON.stringify(res));
-      });
-    </script>
+  <script src="../common/js/share.js"></script>
 </body>
 </html>

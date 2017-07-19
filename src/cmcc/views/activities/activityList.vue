@@ -36,6 +36,9 @@
           <el-tooltip class="item" effect="dark" content="结束活动" placement="top" v-if="scope.row.activity_status == 1">
             <el-button size="small" icon="warning" type="primay" @click="handleEnd(scope.row.code)"></el-button>
           </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="复制链接" placement="top">
+            <el-button size="small" type="primary" icon="share" @click="handleCopy(scope.row.link)"></el-button>
+          </el-tooltip>
           <el-tooltip class="item" effect="dark" content="编辑活动" placement="top">
             <el-button size="small" icon="edit" type="warning" @click="handleEdit(scope.row.code)"></el-button>
           </el-tooltip>
@@ -70,7 +73,8 @@ export default {
       rows: 0,
       page_number: 1,
       page_size: 10,
-      listloading: false
+      listloading: false,
+      dialogVisible: false
     }
   },
   methods: {
@@ -148,6 +152,10 @@ export default {
           message: '取消操作'
         })
       })
+    },
+    // 复制链接
+    handleCopy (msg) {
+      this.$alert(msg,'复制以下链接')
     },
     // 删除活动
     handleDel (code) {
@@ -276,5 +284,10 @@ export default {
         font-size: 16px;
         line-height: 40px;
         text-align: center;
+    }
+    .el-message-box__message p {
+        margin: 0;
+        line-height: 1.4;
+        word-wrap: break-word;
     }
 </style>
