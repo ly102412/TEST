@@ -24,6 +24,7 @@
               <div class="col-sm-6 col-lg-3">
                 <div class="active-box">
                   <div class="pic">
+                    <span class="status">敬请期待</span>
                     <img src="../../static/img/guaguaka.jpg" alt="">
                   </div>
                   <div class="bottom">
@@ -74,12 +75,13 @@ export default {
       position: absolute;
       width:100px;
       height:24px;
+      line-height: 24px;
       color: #fff;
       text-align: center;
       transform: rotate(45deg);
       background: #39b2d5;
-      right: -30px;
-      top: 8px;
+      right: -20px;
+      top: 20px;
       z-index: 1
     }
   }
