@@ -120,6 +120,7 @@
     <!-- 活动说明 end-->
     <!-- 中奖页面 begin-->
     <div class="result-box" v-show="activity.main_tab == 4">
+      <div id="back-arrow"></div>
       <div class="result-gift-scroll">
         <div class="result-bglight"></div>
         <h1 class="title">恭喜您获得了</h1>
@@ -132,6 +133,7 @@
         </div>
         <div class="contract">
             <a class="btn-contract" :href="activity.bank_url">领取奖品</a></br>
+            <a class="btn-contract" @click="activity.main_tab = '1'">再来一次</a></br>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
         </div>
