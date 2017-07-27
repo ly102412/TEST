@@ -17,7 +17,7 @@
                   <div class="bottom">
                     <strong>超级大转盘</strong>
                     <span><el-button type="primary" size="mini" icon="plus"
-                      @click="goToCreate()">创建活动</el-button></span>
+                      @click="goToCreate(1)">创建活动</el-button></span>
                   </div>
                 </div>
               </div><!--/.col-->
@@ -29,7 +29,8 @@
                   </div>
                   <div class="bottom">
                     <strong>幸运刮刮卡</strong>
-                    <span><el-button type="primary" size="mini" icon="plus">创建活动</el-button></span>
+                    <span><el-button type="primary" size="mini" icon="plus"
+                      @click="goToCreate(2)">创建活动</el-button></span>
                   </div>
                 </div>
               </div><!--/.col-->
@@ -47,8 +48,8 @@ export default {
   },
   methods: {
     // 跳转编辑活动
-    goToCreate () {
-      this.$router.push({ path:'main',query:{code:'0',act: 'create',activity_type: '1'}})
+    goToCreate (type) {
+      this.$router.push({ path:'main',query:{code:'0',act: 'create',activity_type: type}})
     },
   }
 }

@@ -1,0 +1,323 @@
+.turnplate-lottery-body{
+  background-color: #572967;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 100%;
+}
+.page{
+  display: none
+}
+.main{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #a72058;
+  overflow: hidden;
+}
+.home-bg img{
+  width: 100%;
+  height: auto;
+}
+.rules-icon{
+  position: absolute!important;
+  top: .5rem;
+  right: .3rem;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.rules-icon img{
+  width: 100%
+}
+/* 刮刮卡样式 */
+.card_ggl{
+  position: absolute;
+  top: 40%;
+  left: 5%;
+  width: 90%;
+  height: 100px;
+  background: url(../images/ggl.png) no-repeat center center;
+  background-size: 100% 100%;
+  text-align: center;
+  font-size: .32rem;
+}
+.card_ggl .info{
+  position:absolute;
+  top: 6px;
+  left:2.5%;
+  width:95%;
+  height:90px;
+  text-align:center;
+}
+.card_ggl .info .result{
+  display: block;
+  line-height: 40px;
+}
+.card_ggl .info .btn_card_go,.card_ggl .info .btn_card_again{
+  display: inline-block;
+  position: relative;
+  width: 30%;
+  height: 35px;
+  line-height: 35px;
+  background: #df412b;
+  color: #fff;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin:0 10px;
+  z-index: 1;
+}
+.card_ggl .card_mask{
+  position:absolute;
+  top:6px;
+  left:2.5%;
+  width:95%;
+  height:82px;
+  line-height:82px;
+  text-align:center;
+  z-index: 2;
+}
+#btn_start{
+  position:absolute;
+  width:31.5%;
+  height:42.5%;
+  left:34.6%;
+  top:21%;
+  z-index: 1;
+}
+.join-num{
+  position: absolute;
+  width: 100%;
+  top: 70%;
+  text-align: center;
+  font-size: .32rem;
+  color: #fff;
+  line-height: .8rem;
+}
+.join-num strong{
+  font-size: .4rem;
+  color: #fff500;
+  margin: 0 .2rem;
+}
+.copyright{
+  position: fixed;
+  font-size: .32rem;
+  height: .6rem;
+  line-height: .6rem;
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  bottom: 0;
+  background: rgba(0,0,0,.4);
+}
+.hide{
+  display: none
+}
+
+/* 活动说明样式 */
+.rules-box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+  /*transform: scale(0,0);*/
+  transition: .4s;
+  color: #fff;
+  overflow: hidden;
+  z-index: 9999;
+}
+.rules-box .rules-box-top{
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,.6);
+  padding: .2rem 0 0;
+  overflow: hidden;
+}
+.rules-box .rules-box-top .rules-tab{
+  float: left;
+}
+.rules-box .rules-box-top .rules-tab li{
+  float: left;
+  line-height: .65rem;
+  padding: .36rem 0;
+  text-align: center;
+  cursor: pointer;
+  font-size: .36rem;
+}
+.rules-box .rules-box-top .rules-tab li:first-child strong{
+  border-left: none;
+}
+.rules-box .rules-box-top .rules-tab li  strong{
+  border-left: 1px solid #fff;
+  padding: .2rem .8rem;
+}
+.rules-box .rules-box-top .rules-tab li.cur strong{
+  border-bottom: 7px solid #fff;
+}
+.rules-box .rules-box-top .close{
+  position: absolute;
+  right: 0.3rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url('../../common/images/close.png') no-repeat;
+  background-size: 50%;
+  background-position: center;
+}
+.rules-content{
+  width: 100%;
+  position: absolute;
+  top: 1.8rem;
+  bottom: 0;
+  font-size: .28rem;
+  line-height: .6rem;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding: .3rem .3rem;
+  padding-bottom: 2rem;
+}
+.rules-content .module{
+  margin: .4rem 0;
+}
+.rules-content .module h3{
+  padding: 0 .3rem;
+  background: #fff;
+  color: #000;
+  display: inline-block;
+}
+.rules-content .module .info strong{
+  color: #fff500
+}
+
+.rules-content .rules-card-list li{
+  font-size: .32rem;
+  border: #fff 5px solid;
+  padding: .2rem;
+  margin-bottom: .2rem;
+}
+.rules-content .rules-card-list li h1{
+  font-size: .4rem;
+}
+ .contract{
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 1rem;
+}
+ .btn-contract{
+  font-size: .32rem;
+  width: 100%;
+  display: block;
+  color: #fff;
+  background: #41bd43;
+  height: .8rem;
+  width:100%;
+  border-radius: .2rem;
+  text-align: center;
+  line-height: .8rem;
+}
+
+/* 中奖结果页 */
+.result-box,.result-failed{
+  position: absolute;
+  font-size: .32rem;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  overflow: scroll;
+  top: 0;
+  background: rgba(0,0,0,.85);
+  z-index: 999;
+}
+.result-box .result-gift-scroll{
+  padding: 0 .5rem;
+  word-wrap: break-word;
+  overflow-x: hidden;
+  padding-top: 1.8rem;
+  -webkit-overflow-scrolling: touch;
+}
+.result-box .result-bglight{
+  width: 100%;
+  height: 80%;
+  top: -0.5rem;
+  background-image: url('../../common/images/light.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  border-radius: 50%;
+  left: 0;
+  animation: bgRotate 6s linear infinite;
+}
+.result-box .result-gift-scroll .title{
+  font-size: .5rem;
+}
+.result-box .result-gift-scroll .result-img{
+  position: relative;
+  width: 2.5rem;
+  height: 2.6rem;
+  text-align:center;
+  margin: 0 auto;
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+  z-index: 1;
+}
+.result-box .result-gift-scroll .result-img img{
+  width: 100%;
+  height: 100%;
+}
+.result-box .result-footer{
+  line-height: .6rem;
+  font-size: .4rem;
+}
+.result-box .result-footer strong{
+  color: #ffdb12;
+}
+.result-failed .failed-img{
+  width: 80%;
+  text-align: center;
+  margin: 1rem auto;
+}
+.result-failed .failed-img img{
+  width: 100%;
+}
+@keyframes bgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@-webkit-keyframes bgRotate{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(360deg)}}
+
+
+/* 页面布局编辑 */
+.edit-layer{
+  border: transparent 1px solid;
+  position: relative;
+}
+.layer-border{
+  border: #fff 1px dashed;
+}
+.layer-border-active{
+  border: #329FEA 1px dashed;
+}
+.home-bg .tool-bar{
+  top: 0!important;
+}
+.tool-bar{
+  display: block;
+  position: absolute;
+  right: 0;
+  top: -27px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  font-size: 12px;
+  z-index: 10;
+  background: #20a0ff;
+  color: #fff;
+  padding: 2px 5px;
+  cursor: pointer;
+}
+.tool-bar:hover{
+  background: #4db3ff
+}

@@ -11,10 +11,9 @@
   <script src="../common/js/jquery.min.js"></script>
   <script src="../common/js/vue.min.js"></script>
   <script src="../common/js/rem.js"></script>
-  <script src="js/turnplate.js"></script>
-  <script src="js/awardRotate.js"></script>
+  <script src="js/ggl.js"></script>
   <link rel="stylesheet" href="../common/css/reset.css" />
-  <link rel="stylesheet" href="css/turnplate.css" />
+  <link rel="stylesheet" href="css/ggl.css" />
   <title></title>
 </head>
 <body class="turnplate-lottery-body">
@@ -31,13 +30,16 @@
         <img :src="activity.activity_img_upload.rules_icon" alt="">
       </div>
       <!-- 活动规则按钮 end-->
-      <!-- 大转盘 begin-->
-      <div class="turnplate edit-layer" data-type="1" data-layer="turnplate_bg">
-        <canvas id="wheelcanvas" style="width:100%;z-index:1;position:relative" width="422" height="422"></canvas>
-        <img id="btn_start" src="images/turnplate-pointer.png" @click="goLottery(code)"/>
-        <img class="turnplate-bg" :src="activity.activity_img_upload.turnplate_bg"/>
+      <!-- 刮刮卡 begin-->
+      <div class="card_ggl">
+          <div class="info">
+              <p class="result">您获得了200M流量</p>
+              <span class="btn_card_go cardButton">领取奖品</span>
+              <span class="btn_card_again cardButton">再来一次</span>
+          </div>
+          <canvas class="card_mask" id="card_canvas"></canvas>
       </div>
-      <!-- 大转盘 end-->
+      <!-- 刮刮卡 end-->
       <!-- 参与人数 begin-->
       <div class="join-num">
         <p class="edit-layer" data-type="2" data-layer="fictitious_join_num">已有<strong>{{activity.base_setting.fictitious_join_num}}</strong>人参与</p>
@@ -263,7 +265,6 @@
       methods: {
         setContent (activity) {
           this.activity = activity
-          this.setAwardList(this.activity)
         },
        getUrl (paras) {
           var url = location.href;
@@ -282,13 +283,6 @@
         // 抽奖接口
         goLottery (code) {
           var _this = this
-          if(turnplate.bRotate) return;
-          if(!turnplate.restaraunts) return;
-          turnplate.bRotate = !turnplate.bRotate;
-          // 点击抽奖
-          // turnplate.getLottery(work_id,workData);
-          // 奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
-          // console.log(turnplate.restaraunts[item-1]);
           if(location == top.location){
             $.ajax({
                 url: '/api/front/lottery',    //请求的url地址
@@ -303,21 +297,14 @@
                 },
                 success: function(res){
                   if(res.status == 0){
-                    turnplate.award_id = res.data.id
-                    var award_index = turnplate.getPrizeIndex(turnplate.award_id,turnplate.restaraunts)
-                    turnplate.rotateFn(award_index+1, 1000, function(){
-                      if(res.data.prize_denomination !== -1){
-                        _this.activity.main_tab = 4
-                        _this.lottery.award_name = res.data.prize_name
-                      }else{
-                        _this.activity.main_tab = 5
-                      }
-                      _this.getUserInfo(code)
-                      // alert(res.data.prize_name)
-                      // _this.activity.main_tab = 4
-                    });
+                    if(res.data.prize_denomination !== -1){
+                      _this.activity.main_tab = 4
+                      _this.lottery.award_name = res.data.prize_name
+                    }else{
+                      _this.activity.main_tab = 5
+                    }
+                    _this.getUserInfo(code)
                   }else{
-                    $('#wheelcanvas').stopRotate();
                     alert(res.message)
                   }
                 },
@@ -329,8 +316,6 @@
                 }
             });
           }
-
-          turnplate.rotateFn(2000);
         },
         // 获取中奖纪录
         getLotteryRecord (code) {
@@ -369,10 +354,6 @@
                 if(res.status == 0){
                   res.data.activity.main_tab = _this.activity.main_tab
                   _this.activity = res.data.activity
-                  turnplate.restaraunts = _this.activity.award_setting
-                  if(bRepaint){
-                    turnplate.drawRouletteWheel();
-                  }
                 }
 
               },
@@ -383,24 +364,13 @@
                   //请求出错处理
               }
           });
-        },
-        // 设置奖品列表
-        setAwardList (activity) {
-          // console.log(activity.award_setting)
-          turnplate.restaraunts = []
-          var award_length = activity.award_setting.length
-          for(var i = 0; i < award_length; i++){
-            turnplate.restaraunts.push(
-              {'award_id':activity.award_setting[i].award_id,'award_name':activity.award_setting[i].award_name}
-            )
-          }
-          turnplate.drawRouletteWheel();
         }
       }
   });
   </script>
   <script>
   $(function(){
+      ggl.init();
       // 活动说明tab
       $(".rules-tab li").click(function(){
           $(".rules-tab li").eq($(this).index()).addClass("cur").siblings().removeClass('cur');
@@ -442,9 +412,7 @@
             parent._setProperty(label_name,label_type)
           });
         });
-      }else{
       }
-
     })
   </script>
   <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>

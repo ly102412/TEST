@@ -43,7 +43,7 @@
                   <div class="device">
                     <div class="device-content">
                       <div class="device-title">{{activity.base_setting.activity_name}}</div>
-                      <iframe ref="iframe" frameborder="0" scrolling="no" style="width:100%;height:100%;" src="static/template/turnplate/index.html" width="320" height="560" @load="load"></iframe>
+                      <iframe ref="iframe" frameborder="0" scrolling="no" style="width:100%;height:100%;" :src="srcTemp" width="320" height="560" @load="load"></iframe>
                     </div>
                   </div>
                 </div>
@@ -381,6 +381,7 @@
         code: '',
         act: '',
         is_dialog_show: false,
+        srcTemp: '',
         advanced_tab: '1',
         edit_awards_tabs_value: '1',
         tab_awards_name_list: ['奖项一','奖项二','奖项三','奖项四','奖项五','奖项六','奖项七','奖项八'],
@@ -406,11 +407,11 @@
           upload_image_name: '',          // 需要上传的图片名称
           activity_tab: '0',              // 活动设置导航状态
           activity_img_upload: {          // 活动图片素材上传
-            main_bg: require('../../../../static/template/turnplate/images/active-bg.jpg'),                      // 活动背景图
-            rules_icon: require('../../../../static/template/turnplate/images/ruleImg_yellow.png'),                   // 活动图标
-            turnplate_bg: require('../../../../static/template/turnplate/images/turnplate-bg.png'),                 // 大转盘背景
-            lottery_success: require('../../../../static/template/turnplate/images/gift.png'),              // 抽奖成功图片
-            lottery_faild: require('../../../../static/template/turnplate/images/faiImg.png')                 // 抽奖失败图片
+            main_bg: require('../../../../static/template/common/images/active-bg.jpg'),                      // 活动背景图
+            rules_icon: require('../../../../static/template/common/images/ruleImg_yellow.png'),                   // 活动图标
+            turnplate_bg: require('../../../../static/template/common/images/turnplate-bg.png'),                 // 大转盘背景
+            lottery_success: require('../../../../static/template/common/images/gift.png'),              // 抽奖成功图片
+            lottery_faild: require('../../../../static/template/common/images/faiImg.png')                 // 抽奖失败图片
           },
           base_setting: {
             activity_name: '',    // 活动名称
@@ -451,9 +452,9 @@
           ],
           // 分享设置
           sharing_setting: {
-            is_allow_sharing: '0',       // 是否允许分享
+            is_allow_sharing: '0',          // 是否允许分享
             is_wx_sharing_icon: '0',        // 微信分享图标 0默认 1自定义上传
-            wx_sharing_icon_url: require('../../../../static/template/turnplate/images/turnplate-bg.png'),      // 上传的微信图标urlturnplates.jpg
+            wx_sharing_icon_url: require('../../../../static/template/common/images/turnplate-bg.png'),      // 上传的微信图标urlturnplates.jpg
             is_wx_sharing_content: '0',     // 微信分享内容 0默认 1自定义
             wx_sharing_loser_content: '​轻轻松松就能抽到大奖，积攒多年的人品终于有用了，你也赶紧来抽奖吧！！', // 没有获奖的玩家分享的内容
             wx_sharing_winner_content: '​我已经在活动中抽到了奖品，你也快来抽大奖吧！',// 获奖玩家分享的内容
@@ -502,7 +503,9 @@
     created () {
       this.code = this.$route.query.code
       this.act = this.$route.query.act
+      this.activity_type = this.$route.query.activity_type
       this.activity.base_setting.activity_type = this.$route.query.activity_type
+      this.setTemplate(this.activity_type)
       this.getBussiness()
       this.getPrice()
       if (this.act === 'edit'){
@@ -546,8 +549,16 @@
       }
     },
     methods: {
+      // 设置活动模板
+      setTemplate (type) {
+        if(type == '1'){
+          this.srcTemp = 'static/template/turnplate/index.html'
+        }else if(type == '2'){
+          this.srcTemp = 'static/template/scratch/index.html'
+        }
+      },
       // 获取商家信息
-      getBussiness() {
+      getBussiness () {
         let params = {}
         NProgress.start()
         getBussinessInfo(params).then((res) => {
@@ -696,19 +707,19 @@
       resetImg () {
         switch (this.activity.upload_image_name) {
           case 'main_bg':
-            this.activity.activity_img_upload.main_bg = require('../../../../static/template/turnplate/images/active-bg.jpg')
+            this.activity.activity_img_upload.main_bg = require('../../../../static/template/common/images/active-bg.jpg')
           break
           case 'rules_icon':
-            this.activity.activity_img_upload.rules_icon = require('../../../../static/template/turnplate/images/ruleImg_yellow.png')
+            this.activity.activity_img_upload.rules_icon = require('../../../../static/template/common/images/ruleImg_yellow.png')
           break
           case 'turnplate_bg':
-            this.activity.activity_img_upload.turnplate_bg = require('../../../../static/template/turnplate/images/turnplate-bg.png')
+            this.activity.activity_img_upload.turnplate_bg = require('../../../../static/template/common/images/turnplate-bg.png')
           break
           case 'lottery_success':
-            this.activity.activity_img_upload.lottery_success = require('../../../../static/template/turnplate/images/gift.png')
+            this.activity.activity_img_upload.lottery_success = require('../../../../static/template/common/images/gift.png')
           break
           case 'lottery_faild':
-            this.activity.activity_img_upload.lottery_faild = require('../../../../static/template/turnplate/images/faiImg.png')
+            this.activity.activity_img_upload.lottery_faild = require('../../../../static/template/common/images/faiImg.png')
           break
         }
       },
