@@ -100,7 +100,7 @@
                       <span slot="label"><i class="el-icon-menu"></i> 派奖方式</span>
                       <el-form :model="activity.lottery_setting" :rules="lottery_setting_rules" ref="activity.lottery_setting" label-width="120px">
                         <el-form-item label="总抽奖机会"  data-source="total_lottery_time">
-                            <el-radio label="0" v-model="activity.lottery_setting.is_total_lottery">不限</el-radio>
+                            <el-radio label="0" v-model="activity.lottery_setting.is_total_lottery" >不限</el-radio>
                             <el-radio label="1" v-model="activity.lottery_setting.is_total_lottery">限制</el-radio>
                         </el-form-item>
                         <el-form-item v-if="activity.lottery_setting.is_total_lottery == 1">
@@ -109,15 +109,15 @@
                             <template slot="append">次抽奖机会</template>
                           </el-input>
                         </el-form-item>
-                        <el-form-item label="每日抽奖机会" data-source="daily_lottery_time">
+                        <el-form-item label="每日抽奖机会" data-source="daily_lottery_time" prop="daily_lottery_time" required>
                           <el-input placeholder="请输入内容" v-model="activity.lottery_setting.daily_lottery_time">
                             <template slot="prepend">每人每日有</template>
                             <template slot="append">次抽奖机会</template>
                           </el-input>
                         </el-form-item>
-                        <el-form-item label="每人中奖次数">
+                        <el-form-item label="每人中奖次数" prop="winning_time" required>
                           <el-input placeholder="请输入内容" v-model="activity.lottery_setting.winning_time">
-                            <template slot="prepend">每人组多可中奖</template>
+                            <template slot="prepend">每人最多可中奖</template>
                             <template slot="append">次</template>
                           </el-input>
                         </el-form-item>
@@ -269,13 +269,14 @@
                               <el-radio label="1" v-model="activity.advanced_setting.enterprise_setting.is_showing_logo">显示</el-radio>
                               <el-col v-if="activity.advanced_setting.enterprise_setting.is_showing_logo == '1'">
                                 <el-upload
-                                  class="upload-demo"
-                                  drag
-                                  action="//jsonplaceholder.typicode.com/posts/"
-                                  mutiple>
-                                  <i class="el-icon-upload"></i>
-                                  <div class="el-upload__text">将图片拖到此处，或<em>点击上传</em></div>
-                                  <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                                  class="avatar-uploader"
+                                  action="/api/mmt/img/upload"
+                                  :show-file-list="false"
+                                  :on-success="handleUploadScucess"
+                                  :on-error="handleUploadFaild"
+                                  >
+                                  <img v-if="activity.upload_image_url" :src="activity.upload_image_url" class="avatar">
+                                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                 </el-upload>
                               </el-col>
                             </el-form-item>
@@ -284,13 +285,14 @@
                               <el-radio label="1" v-model="activity.advanced_setting.enterprise_setting.is_loading_img">自定义</el-radio>
                               <el-col v-if="activity.advanced_setting.enterprise_setting.is_loading_img == '1'">
                                 <el-upload
-                                  class="upload-demo"
-                                  drag
-                                  action="//jsonplaceholder.typicode.com/posts/"
-                                  mutiple>
-                                  <i class="el-icon-upload"></i>
-                                  <div class="el-upload__text">将图片拖到此处，或<em>点击上传</em></div>
-                                  <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                                  class="avatar-uploader"
+                                  action="/api/mmt/img/upload"
+                                  :show-file-list="false"
+                                  :on-success="handleUploadScucess"
+                                  :on-error="handleUploadFaild"
+                                  >
+                                  <img v-if="activity.upload_image_url" :src="activity.upload_image_url" class="avatar">
+                                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                 </el-upload>
                               </el-col>
                             </el-form-item>
@@ -377,6 +379,30 @@
   import moment from 'moment'
   export default {
     data() {
+      // 验证总每人每日抽奖次数
+      var validateDailyLotteryTime = (rule, value, callback) => {
+        if(this.activity.lottery_setting.is_total_lottery == 1){
+          if( value === '' || value == 0){
+            callback(new Error('请输入抽奖机会'))
+          }else if(value > this.activity.lottery_setting.total_lottery_time){
+            callback(new Error('每日抽奖机会不能大于总抽奖机会'))
+          }else {
+            callback()
+          }
+        }
+      };
+      // 验证每人总中奖次数
+      var validateWinningTime = (rule, value, callback) => {
+        if(this.activity.lottery_setting.is_total_lottery == 1){
+          if( value === '' || value == 0){
+            callback(new Error('请输入中奖次数'))
+          }else if(value > this.activity.lottery_setting.total_lottery_time){
+            callback(new Error('每人中奖次数不能大于总抽奖机会'))
+          }else {
+            callback()
+          }
+        }
+      };
       return {
         code: '',
         act: '',
@@ -491,6 +517,12 @@
 				  ],
         },
         lottery_setting_rules: {
+          daily_lottery_time: [
+            { validator: validateDailyLotteryTime, trigger: 'blur'}
+          ],
+          winning_time: [
+            { validator: validateWinningTime, trigger: 'blur'}
+          ]
         },
         award_setting_rules: {
         },

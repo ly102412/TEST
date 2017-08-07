@@ -56,7 +56,7 @@
         </div><!--/.row-->
 
       </div>
-      <div class="card-footer">
+      <!-- <div class="card-footer">
         <ul>
           <li>
             <div class="text-muted">微信</div>
@@ -73,7 +73,7 @@
             </div>
           </li>
         </ul>
-      </div>
+      </div> -->
     </div>
     <div class="row">
       <div class="col-sm-6 col-lg-6">

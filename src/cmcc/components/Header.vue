@@ -17,7 +17,7 @@
       </li> -->
     </ul>
     <ul class="nav navbar-nav ml-auto">
-      <li class="nav-item d-md-down-none">
+      <!-- <li class="nav-item d-md-down-none">
         <a class="nav-link" href="#"><i class="icon-bell"></i><span class="badge badge-pill badge-danger">5</span></a>
       </li>
       <li class="nav-item d-md-down-none">
@@ -25,13 +25,13 @@
       </li>
       <li class="nav-item d-md-down-none">
         <a class="nav-link" href="#"><i class="icon-location-pin"></i></a>
-      </li>
-      <span slot="button">
+      </li> -->
+      <!-- <span slot="button">
         <img src="../static/img/avatars/6.jpg" class="img-avatar">
         <span class="d-md-down-none">admin</span>
-      </span>
+      </span> -->
       <li class="nav-item d-md-down-none">
-        <a class="nav-link navbar-toggler aside-menu-toggler" href="#" @click="asideToggle">&#9776;</a>
+        <span class="d-md-down-none">admin</span>
       </li>
     </ul>
   </navbar>
