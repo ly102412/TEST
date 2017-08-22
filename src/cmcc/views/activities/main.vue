@@ -192,9 +192,13 @@
                             <el-input v-model="item.award_num"></el-input>
                           </el-form-item>
                           <el-form-item label="中奖概率">
-                            <el-input v-model="item.winning_rate">
+                            <!-- <el-input v-model="item.winning_rate">
                               <template slot="append">%</template>
-                            </el-input>
+                            </el-input> -->
+                            <el-slider
+                              v-model="item.winning_rate"
+                              show-input>
+                            </el-slider>
                           </el-form-item>
                         </el-form>
                         </el-tab-pane>
