@@ -70,7 +70,7 @@
                             </el-form-item>
                           </el-col>
                         </el-form-item>
-                        <el-form-item label="参与人数" data-source="fictitious_join_num">
+                        <el-form-item label="虚拟参与人数" data-source="fictitious_join_num">
                           <el-switch on-text="隐藏" off-text="显示" v-model="activity.base_setting.is_join_num"></el-switch>
                         </el-form-item>
                         <el-form-item data-source="fictitious_join_num" label="" v-if="activity.base_setting.is_join_num">
@@ -166,7 +166,7 @@
                           :name="item.name"
                         >
                         <el-form :rules="award_setting_rules" ref="activity.award_setting" label-width="120px" style="padding:0 10px">
-                          <el-form-item label="奖品类型">
+                          <el-form-item label="奖品类型" v-if="item.award_value !== '-1'">
                             <el-radio-group v-model="item.award_type" @change="clearAwardValue(item)">
                               <el-radio-button label="0">流量</el-radio-button>
                               <el-radio-button label="1">流量券</el-radio-button>
@@ -177,7 +177,9 @@
                             <el-input v-model="item.award_name"></el-input>
                           </el-form-item>
                           <el-form-item label="奖品大小" v-if="item.award_type == '0' && item.award_value !== '-1'">
-                            <el-input v-model="item.award_value" type="number"></el-input>
+                            <el-input v-model="item.award_value" type="number">
+                              <template slot="append">M</template>
+                            </el-input>
                           </el-form-item>
                           <el-form-item label="奖品大小" v-if="item.award_type == '1' && item.award_value !== '-1'">
                             <el-select v-model="item.award_value" placeholder="请选择">
