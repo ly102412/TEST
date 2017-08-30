@@ -177,7 +177,7 @@
                             <el-input v-model="item.award_name"></el-input>
                           </el-form-item>
                           <el-form-item label="奖品大小" v-if="item.award_type == '0' && item.award_value !== '-1'">
-                            <el-input v-model="item.award_value"></el-input>
+                            <el-input v-model="item.award_value" type="number"></el-input>
                           </el-form-item>
                           <el-form-item label="奖品大小" v-if="item.award_type == '1' && item.award_value !== '-1'">
                             <el-select v-model="item.award_value" placeholder="请选择">
@@ -189,7 +189,7 @@
                             </el-select>
                           </el-form-item>
                           <el-form-item label="奖品数量">
-                            <el-input v-model="item.award_num"></el-input>
+                            <el-input v-model="item.award_num" type="number"></el-input>
                           </el-form-item>
                           <el-form-item label="中奖概率">
                             <!-- <el-input v-model="item.winning_rate">
@@ -514,10 +514,10 @@
             { required: true, message: '请输入活动名称', trigger: 'blur' }
           ],
           begin_date: [
-				    { type: 'date', required: true, message: '请选择日期', trigger: 'change' },
+				    { type: 'date', required: true, message: '请选择日期', trigger: 'blur' },
 				  ],
 				  end_date: [
-				    { type: 'date', required: true, message: '请选择日期', trigger: 'change' },
+				    { type: 'date', required: true, message: '请选择日期', trigger: 'blur' },
 				  ],
         },
         lottery_setting_rules: {

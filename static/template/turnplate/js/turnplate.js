@@ -2,7 +2,7 @@
 // 大转盘初始参数
 var turnplate = {
   restaraunts:[],             //大转盘奖品名称
-  colors:['#FFF4D6', '#FFFFFF', '#FFF4D6', '#FFFFFF','#FFF4D6', '#FFFFFF', '#FFF4D6', '#FFFFFF','#FFF4D6', '#FFFFFF'],                  //大转盘奖品区块对应背景颜色
+  // colors:['#FFF4D6', '#FFFFFF', '#FFF4D6', '#FFFFFF','#FFF4D6', '#FFFFFF', '#FFF4D6', '#FFFFFF','#FFF4D6', '#FFFFFF'],                  //大转盘奖品区块对应背景颜色
   outsideRadius:192,          //大转盘外圆的半径
   textRadius:155,             //大转盘奖品位置距离圆心的距离
   insideRadius:68,            //大转盘内圆的半径
@@ -55,7 +55,34 @@ turnplate.drawRouletteWheel = function() {
       ctx.font = '16px Microsoft YaHei';
       for(let i = 0; i < turnplate.restaraunts.length; i++) {
           let angle = turnplate.startAngle + i * arc;
-          ctx.fillStyle = turnplate.colors[i];
+          switch(i){
+            case 0:
+              ctx.fillStyle = '#f74d2c'
+            break;
+            case 1:
+              ctx.fillStyle = '#ee8c00'
+            break;
+            case 2:
+              ctx.fillStyle = '#ef3435'
+            break;
+            case 3:
+              ctx.fillStyle = '#f6ce61'
+            break;
+            case 4:
+              ctx.fillStyle = '#fe5353'
+            break;
+            case 5:
+              ctx.fillStyle = '#f2cd22'
+            break;
+            case 6:
+              ctx.fillStyle = '#ff7c42'
+            break;
+            case 7:
+              ctx.fillStyle = '#f0b005'
+            break;
+          }
+          
+          // ctx.fillStyle = turnplate.colors[i];
           ctx.beginPath();
           //arc(x,y,r,起始角,结束角,绘制方向) 方法创建弧/曲线（用于创建圆或部分圆）
           ctx.arc(211, 211, turnplate.outsideRadius, angle, angle + arc, false);
@@ -66,7 +93,7 @@ turnplate.drawRouletteWheel = function() {
           ctx.save();
 
           //----绘制奖品开始----
-          ctx.fillStyle = '#E5302F';
+          ctx.fillStyle = '#ffffff';
           let text = turnplate.restaraunts[i].award_name;
           let line_height = 17;
           //translate方法重新映射画布上的 (0,0) 位置
