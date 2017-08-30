@@ -40,7 +40,7 @@
       <!-- 大转盘 end-->
       <!-- 参与人数 begin-->
       <div class="join-num">
-        <p class="edit-layer" data-type="2" data-layer="fictitious_join_num">已有<strong>{{activity.base_setting.fictitious_join_num}}</strong>人参与</p>
+        <p class="edit-layer" data-type="2" data-layer="fictitious_join_num">已有<strong>{{activity.base_setting.fictitious_join_num | filterJoinNum}}</strong>人参与</p>
         <p class="edit-layer" data-type="2" data-layer="total_lottery_time">今天还有<strong>{{activity.lottery_setting.daily_lottery_time}}</strong>次抽奖机会</p>
         <p class="edit-layer" data-type="2" data-layer="daily_lottery_time" v-if="activity.lottery_setting.is_total_lottery == '1'">您还有<strong>{{activity.lottery_setting.total_lottery_time}}</strong>次抽奖机会</p>
       </div>
@@ -259,6 +259,11 @@
         //  }else{
         //     // this.activity.base_setting.activity_name = '哈哈哈'
         //  }
+      },
+      filters: {
+        filterJoinNum: function (value){
+          return parseInt(value)
+        }
       },
       methods: {
         setContent (activity) {
