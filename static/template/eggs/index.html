@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <title>砸金蛋</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <link href="css/base.css" type="text/css" rel="stylesheet">
+  <link href="css/demos.css" type="text/css" rel="stylesheet">
+  <link href="css/carousel.css" type="text/css" rel="stylesheet">
+
+  <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="js/jquery.carousel.min.js"></script>
+  <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+  <script>
+  $(function(){
+      $("#body").css("height",($(window).height()));
+      $("#body").css('overflow-x','hidden');
+  });
+
+  $(document).ready(function($){
+    $('#carousel').carousel({
+      //width: 320, 
+      //height: 150, 
+      itemWidth:120, 
+      horizontalRadius:90, 
+      verticalRadius:40, 
+      resize:false, 
+      mouseScroll:false, 
+      mouseDrag:true, 
+      scaleRatio:0.635, 
+      scrollbar:true, 
+      tooltip:true, 
+      mouseWheel:true, 
+      mouseWheelReverse:true
+    });
+    
+  });
+  </script>
+</head>
+<body style="background:#FFE881">
+<div id="body" style="height: 736px; overflow-x: hidden;">
+
+ <div class="top-main"> 
+   <div class="phb_imgs">
+    <img src="images/hd.png" onclick="document.getElementById('artert_one').style.display=&#39;block&#39;;">
+   </div>
+    
+    <div class="tops"><img src="images/top.png"></div>
+    <div class="tops_pic"><img src="images/e.gif"></div>
+     
+    
+ </div>
+ <div class="center_sta ">
+ <section class="stage ">
+   <div id="wide-wrapper">
+    <ul id="carousel" class="carousel">
+      <li><img class="carousel-item out" src="images/egg.png" /></li>
+      <li><img class="carousel-item out" src="images/egg.png" /></li>
+      <li><img class="carousel-item out" src="images/egg.png" /></li>
+    </ul>
+  </div>
+ </section>
+ </div>
+
+ <div class="ftext">
+  
+   <div class="ftext_lmy">
+    <h2>已有 <span> 0 </span> 人参加</h2>
+    <p>您今天还有 <span> 3 </span> 次机会</p>
+   </div>
+ </div>
+
+
+<div style="height:2rem;"></div> 
+<div class="footer"><p>欢迎支持</p></div>
+
+</div>
+
+
+      
+
+ <div id="hdsm" class="dn">
+   <div class="sm_at">
+      <ul class="clearfix">
+       <li> <h2>很遗憾!</h2><p>你没有抽取到红包</p> </li>
+       <li><img src="images/q1.png" onclick="document.getElementById(&#39;hdsm&#39;).style.display=&#39;none&#39;;"> </li>
+      </ul>
+   </div>
+  </div>
+  
+  
+    
+  <div id="hdsm_tw" class="dn">
+    <div class="sm_at_zj">
+      <ul class="clearfix">
+       <li> <h2>恭喜您!</h2><p>中了 <b>10</b> 元红包</p> </li>
+       <li><img src="images/q1.png"> </li>
+      </ul>
+    </div>
+  </div>
+  <script type="text/javascript">    
+
+  $(function(){ 
+      $("#carousel img ").click(function(){
+      var gm=$(this).attr('src','images/egg2.gif');
+      setTimeout(function(){
+        alert(1)
+      },1000);
+     }); 
+   });      
+    
+</script>
+</body>
+</html>
