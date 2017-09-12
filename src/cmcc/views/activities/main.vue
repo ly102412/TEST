@@ -168,9 +168,9 @@
                         <el-form :rules="award_setting_rules" ref="activity.award_setting" label-width="120px" style="padding:0 10px">
                           <el-form-item label="奖品类型" v-if="item.award_value !== '-1'">
                             <el-radio-group v-model="item.award_type" @change="clearAwardValue(item)">
-                              <el-radio-button label="0">流量</el-radio-button>
-                              <el-radio-button label="1">流量券</el-radio-button>
-                              <!-- <el-radio-button label="2">实物</el-radio-button> -->
+                              <el-radio-button label="0">谢谢参与</el-radio-button>
+                              <el-radio-button label="1">流量</el-radio-button>
+                              <el-radio-button label="2">流量券</el-radio-button>
                             </el-radio-group>
                           </el-form-item>
                           <el-form-item label="奖品名称" data-source="award_setting" data-type="2">
