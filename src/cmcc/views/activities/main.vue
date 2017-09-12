@@ -168,7 +168,6 @@
                         <el-form :rules="award_setting_rules" ref="activity.award_setting" label-width="120px" style="padding:0 10px">
                           <el-form-item label="奖品类型" v-if="item.award_value !== '-1'">
                             <el-radio-group v-model="item.award_type" @change="clearAwardValue(item)">
-                              <el-radio-button label="0">谢谢参与</el-radio-button>
                               <el-radio-button label="1">流量</el-radio-button>
                               <el-radio-button label="2">流量券</el-radio-button>
                             </el-radio-group>
@@ -176,12 +175,12 @@
                           <el-form-item label="奖品名称" data-source="award_setting" data-type="2">
                             <el-input v-model="item.award_name"></el-input>
                           </el-form-item>
-                          <el-form-item label="奖品大小" v-if="item.award_type == '0' && item.award_value !== '-1'">
+                          <el-form-item label="奖品大小" v-if="item.award_type == '1' && item.award_value !== '-1'">
                             <el-input v-model="item.award_value" type="number">
                               <template slot="append">M</template>
                             </el-input>
                           </el-form-item>
-                          <el-form-item label="奖品大小" v-if="item.award_type == '1' && item.award_value !== '-1'">
+                          <el-form-item label="奖品大小" v-if="item.award_type == '2' && item.award_value !== '-1'">
                             <el-select v-model="item.award_value" placeholder="请选择">
                               <el-option
                                 v-for="list in award_list_value"
