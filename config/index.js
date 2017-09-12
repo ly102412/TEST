@@ -1,6 +1,6 @@
 var path = require('path');
 var arguments = process.argv;
-var directory = arguments[2]?arguments[2]:'cmcc';
+var directory = arguments[2]?arguments[2]:'cms';
 // var directory = arguments[2];
 // if(!directory){
 //     console.log('请输入项目目录名');
@@ -32,7 +32,7 @@ module.exports = {
     cssSourceMap: false,// 是否开启 cssSourceMap
     proxyTable: {
       '/api': {
-        target: 'http://192.168.199.190:7012/', // 目标地址 http://ruowei.ap.ngrok.io/     http://app.m.ruwe.cn/api/  内网环境http://m.ruowei.cn/  瑞清：192.168.199.204:7040
+        target: 'http://mas.tst.ruwe.cn', // 目标地址 http://ruowei.ap.ngrok.io/     http://app.m.ruwe.cn/api/  测试环境http://mas.tst.ruwe.cn  瑞清：'http://192.168.199.190:7012/
         changeOrigin: true,               // needed for virtual hosted sites
         ws: true,                         // websockets代理
         pathRewrite: {

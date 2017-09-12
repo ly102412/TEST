@@ -547,7 +547,8 @@
       this.getBussiness()
       this.getPrice()
       if (this.act === 'edit'){
-        this.getActivityInfo(this.code)
+          this.getActivityInfo(this.code)
+
       }
     },
     watch: {
@@ -589,11 +590,14 @@
     methods: {
       // 设置活动模板
       setTemplate (type) {
+          //alert(typeof type)
         if(type == '1'){
-          this.srcTemp = 'static/template/turnplate/index.html'
-        }else if(type == '2'){
-          this.srcTemp = 'static/template/scratch/index.html'
-        }
+              this.srcTemp = 'static/template/turnplate/index.html'
+          }else if(type == '2'){
+              this.srcTemp = 'static/template/scratch/index.html'
+          }else if(type == '3'){
+              this.srcTemp = 'static/template/eggs/index.html'
+          }
       },
       // 获取商家信息
       getBussiness () {
@@ -640,6 +644,7 @@
             })
             console.log(res.data.data)
             this.activity = res.data.data
+              this.setTemplate(this.activity.base_setting.activity_type)
           }else{
             this.$notify({
               title: '失败',
