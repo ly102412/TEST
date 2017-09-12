@@ -595,6 +595,8 @@
               this.srcTemp = 'static/template/turnplate/index.html'
           }else if(type == '2'){
               this.srcTemp = 'static/template/scratch/index.html'
+          }else if(type == '3'){
+              this.srcTemp = 'static/template/eggs/index.html'
           }
       },
       // 获取商家信息

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
   <title>砸金蛋</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -36,8 +34,8 @@
       mouseWheel:true, 
       mouseWheelReverse:true
     });
-    
   });
+
   </script>
 </head>
 <body style="background:#FFE881">
@@ -45,7 +43,7 @@
 
  <div class="top-main"> 
    <div class="phb_imgs">
-    <img src="images/hd.png" onclick="document.getElementById('artert_one').style.display=&#39;block&#39;;">
+    <img src="images/hd.png" onclick="document.getElementById('artert_one').style.display='block';">
    </div>
     
     <div class="tops"><img src="images/top.png"></div>
@@ -66,17 +64,10 @@
  </div>
 
  <div class="ftext">
-  
    <div class="ftext_lmy">
     <h2>已有 <span> 0 </span> 人参加</h2>
     <p>您今天还有 <span> 3 </span> 次机会</p>
    </div>
- </div>
-
-
-<div style="height:2rem;"></div> 
-<div class="footer"><p>欢迎支持</p></div>
-
 </div>
 
 
@@ -86,7 +77,7 @@
    <div class="sm_at">
       <ul class="clearfix">
        <li> <h2>很遗憾!</h2><p>你没有抽取到红包</p> </li>
-       <li><img src="images/q1.png" onclick="document.getElementById(&#39;hdsm&#39;).style.display=&#39;none&#39;;"> </li>
+       <li><img src="images/q1.png" onclick="document.getElementById('hdsm').style.display='none';"> </li>
       </ul>
    </div>
   </div>
@@ -102,14 +93,14 @@
     </div>
   </div>
   <script type="text/javascript">    
-
+  
   $(function(){ 
       $("#carousel img ").click(function(){
-      var gm=$(this).attr('src','images/egg2.gif');
-      setTimeout(function(){
-        alert(1)
-      },1000);
-     }); 
+        var gm = $(this).attr('src','images/egg2.gif');
+        setTimeout(function(){
+          //window.location.href = location.href+'?time='+((new Date()).getTime());
+        },3000)
+      });
    });      
     
 </script>

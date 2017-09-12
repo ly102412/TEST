@@ -34,6 +34,19 @@
                   </div>
                 </div>
               </div><!--/.col-->
+              <div class="col-sm-6 col-lg-3">
+                <div class="active-box">
+                  <div class="pic">
+                    <span class="status">正在开发</span>
+                    <img src="../../static/img/eggs.jpg" alt="">
+                  </div>
+                  <div class="bottom">
+                    <strong>砸金蛋</strong>
+                    <span><el-button type="primary" size="mini" icon="plus"
+                      @click="goToCreate(3)">创建活动</el-button></span>
+                  </div>
+                </div>
+              </div><!--/.col-->
             </div>
           </div>
         </div>
