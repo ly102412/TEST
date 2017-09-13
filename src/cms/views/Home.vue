@@ -17,7 +17,7 @@
                         <!--<el-dropdown-item>我的消息</el-dropdown-item>-->
                         <!--<el-dropdown-item>设置</el-dropdown-item>-->
                         <!--<el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>-->
-                        <el-dropdown-item  @click.native="logout">退出登录</el-dropdown-item>
+                        <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </el-col>
@@ -69,9 +69,9 @@
         <el-col :span="24" class="breadcrumb-container">
             <strong class="title">{{$route.name}}</strong>
             <!--<el-breadcrumb separator="/" class="breadcrumb-inner">-->
-                <!--<el-breadcrumb-item v-for="item in $route.matched">-->
-                    <!--{{ item.name }}-->
-                <!--</el-breadcrumb-item>-->
+            <!--<el-breadcrumb-item v-for="item in $route.matched">-->
+            <!--{{ item.name }}-->
+            <!--</el-breadcrumb-item>-->
             <!--</el-breadcrumb>-->
         </el-col>
         <el-col :span="24" class="content-wrapper">
@@ -86,77 +86,78 @@
 </template>
 
 <script>
-  import {requestLogout} from '../api/api';
-  import NProgress from 'nprogress';
-  export default {
-    data() {
-      return {
-        sysName: '工商银行',
-        collapsed: false,
-        sysUserName: '',
-        sysUserAvatar: '',
-        defaultName: 'admin',
-        defaultAvatar: require('../assets/logo.png')
-      }
-    },
-    methods: {
-      onSubmit() {
-        console.log('submit!');
-      },
-      handleopen() {
-        //console.log('handleopen');
-      },
-      handleclose() {
-        //console.log('handleclose');
-      },
-      handleselect: function (a, b) {
-      },
-      //退出登录
-      logout: function () {
-        this.$confirm('确认退出吗?', '提示', {
-          type: 'warning'
-        }).then(() => {
-          this.logining = true;
-          NProgress.start();
-          requestLogout().then(data => {
+    import {requestLogout} from '../api/api';
+    import NProgress from 'nprogress';
 
-            this.logining = false;
-            NProgress.done();
-            let {status, message} = data;
-            if (status !== 0) {
-              this.$notify({
-                title: '退出失败',
-                message: message,
-                type: 'error'
-              });
-            } else {
-              sessionStorage.removeItem('is_login');
-              this.$router.push('/login');
+    export default {
+        data() {
+            return {
+                sysName: '工商银行',
+                collapsed: false,
+                sysUserName: '',
+                sysUserAvatar: '',
+                defaultName: 'admin',
+                defaultAvatar: require('../assets/logo.png')
             }
-          });
+        },
+        methods: {
+            onSubmit() {
+                console.log('submit!');
+            },
+            handleopen() {
+                //console.log('handleopen');
+            },
+            handleclose() {
+                //console.log('handleclose');
+            },
+            handleselect: function (a, b) {
+            },
+            //退出登录
+            logout: function () {
+                this.$confirm('确认退出吗?', '提示', {
+                    type: 'warning'
+                }).then(() => {
+                    this.logining = true;
+                    NProgress.start();
+                    requestLogout().then(data => {
 
-        });
-      },
-      //折叠导航栏
-      collapse: function () {
-        this.collapsed = !this.collapsed;
-        localStorage.setItem('collapsed', this.collapsed);
-      },
-      showMenu(i, status){
-        this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-' + i)[0].style.display = status ? 'block' : 'none';
-      },
-    },
-    mounted() {
-      let user = sessionStorage.getItem('user');
-      if (user) {
-        user = JSON.parse(user);
-        this.sysUserName = user.name;
-        this.sysUserAvatar = user.avatar;
-      }
-      let collapsed = JSON.parse(localStorage.getItem('collapsed'));
-      this.collapsed = collapsed;
+                        this.logining = false;
+                        NProgress.done();
+                        let {status, message} = data;
+                        if (status !== 0) {
+                            this.$notify({
+                                title: '退出失败',
+                                message: message,
+                                type: 'error'
+                            });
+                        } else {
+                            sessionStorage.removeItem('is_login');
+                            this.$router.push('/login');
+                        }
+                    });
+
+                });
+            },
+            //折叠导航栏
+            collapse: function () {
+                this.collapsed = !this.collapsed;
+                localStorage.setItem('collapsed', this.collapsed);
+            },
+            showMenu(i, status) {
+                this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-' + i)[0].style.display = status ? 'block' : 'none';
+            },
+        },
+        mounted() {
+            let user = sessionStorage.getItem('user');
+            if (user) {
+                user = JSON.parse(user);
+                this.sysUserName = user.name;
+                this.sysUserAvatar = user.avatar;
+            }
+            let collapsed = JSON.parse(localStorage.getItem('collapsed'));
+            this.collapsed = collapsed;
+        }
     }
-  }
 </script>
 <style scoped>
 
