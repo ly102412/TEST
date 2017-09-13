@@ -1,22 +1,18 @@
 import axios from 'axios';
 
-let base = '/api/icbc/server';
+let base = '/api';
 
 export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data); };
 
-export const requestLogout = params => {return axios.get(`${base}/logout`, { params: params }).then(res => res.data); }
+export const requestLogout = params => {return axios.get(`${base}/logout`, { params: params }).then(res => res.data); };
 
-export const getCouponList = params => { return axios.get(`${base}/coupon/list`, { params: params }); };
 
-export const createCoupon = params => { return axios.post(`${base}/couponinfo/create`, params).then(res => res.data); };// 新增流量卡
+// 订单管理页面表单
+export const getOrderCodeList = params => { return axios.get(`${base}/service/business/order/list`, { params: params }); };
 
-export const getCouponInfo = params => { return axios.get(`${base}/coupon/info`, { params: params }); };
+//审核通过
+export const adoptOrder = params => { return axios.post(`${base}/service/busicess/order/confirm`, params); };
 
-export const editCoupon = params => { return axios.post(`${base}/couponinfo/editor`, params); };
+//上传文件成功后记录文件地址
+export const sendFile = params => { return axios.post(`${base}/service/send/file`, params); };
 
-export const getRedeemCodeList = params => { return axios.get(`${base}/coupon/list`, { params: params }); }; // 流量兑换码管理页面表单
-
-export const getRedeemCodeRecordList = params => { return axios.get(`${base}/flow/consume/record/10000003`, { params: params }); }; // 流量兑换码记录页面表单
-
-export const getOnlineOffline = params => { return axios.get(`${base}/coupon/online`, { params: params }); }; // 流量兑换码管理上架下架
-export const viewExchangeCodeList = params => { return axios.get(`${base}/export/coupon`, { params: params }); }; // 查看兑换码列表
