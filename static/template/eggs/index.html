@@ -7,8 +7,7 @@
   <link href="css/demos.css" type="text/css" rel="stylesheet">
   <link href="../common/css/reset.css" type="text/css" rel="stylesheet">
   <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-  <script src="../common/js/rem.js"></script>
-  <script type="text/javascript" src="../common/js/edit-layer.js"></script>
+  <script type="text/javascript" src="../common/js/rem.js"></script>
   <script type="text/javascript" src="js/jquery.carousel.min.js"></script>
   <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
   <script type="text/javascript" src="../common/js/vue.min.js"></script>
@@ -22,7 +21,7 @@
         <img :src="activity.activity_img_upload.main_bg" alt="">
       </div>
       <div class="center_sta">
-         <section class="stage ">
+         <section class="stage">
            <div id="wide-wrapper">
             <ul id="carousel" class="carousel">
               <li><img class="carousel-item out" src="images/egg.png" /></li>
@@ -288,7 +287,7 @@
         setContent (activity) {
           this.activity = activity
         },
-       getUrl (paras) {
+        getUrl (paras) {
           var url = location.href;
           var paraString = url.substring(url.indexOf("?")+1,url.length).split("&");
           var paraObj = {}
@@ -315,9 +314,6 @@
                   'code': code
                 },
                 type: 'get',
-                beforeSend: function(){
-                    //请求前的处理
-                },
                 success: function(res){
                   if(res.status == 0){
                     if(res.data.prize_denomination !== -1){
@@ -330,12 +326,6 @@
                     // alert(res.data.prize_name)
                     // _this.activity.main_tab = 4
                   }
-                },
-                complete: function(){
-                    //请求完成的处理
-                },
-                error: function(){
-                    //请求出错处理
                 }
             });
           }
@@ -370,21 +360,12 @@
                 'code': code
               },
               type: 'get',
-              beforeSend: function(){
-                  //请求前的处理
-              },
               success: function(res){
                 if(res.status == 0){
                   res.data.activity.main_tab = _this.activity.main_tab
                   _this.activity = res.data.activity
                 }
 
-              },
-              complete: function(){
-                  //请求完成的处理
-              },
-              error: function(){
-                  //请求出错处理
               }
           });
         }
@@ -393,5 +374,6 @@
   </script>
   <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
   <script src="../common/js/share.js"></script>
+  <script src="../common/js/edit-layer.js"></script>
 </body>
 </html>

@@ -15,7 +15,6 @@
       if(location != top.location){
         // 移入添加border
         $('.edit-layer').hover(function(){
-          alert(1)
           $('.edit-layer').removeClass('layer-border');
           $(this).addClass('layer-border');
           // 点击事件
