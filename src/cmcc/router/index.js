@@ -15,6 +15,8 @@ import AccountManage from '../views/bussiness/accountManage'
 import AccountPruchaseRecord from '../views/bussiness/accountPurchaseRecord'
 import BalanceInfo from '../views/bussiness/balanceInfo'
 
+// views - app商家接入
+import AppMerchant from '../views/merchant/appMerchant'
 // views - pages
 import Page404 from '../views/pages/404'
 
@@ -106,6 +108,22 @@ const routes = [
             component: BalanceInfo,
             hidden: true
           },
+        ]
+      },
+      {
+        path: '/merchant',
+        redirect: '/merchant/appMerchant',
+        name: '商家接入',
+        iconCls: 'fa fa-mobile',
+        component: {
+          render (c) { return c('router-view') }
+        },
+        children: [
+          {
+            path: '/merchant/appMerchant',
+            name: 'app接入',
+            component: AppMerchant
+          }
         ]
       }
     ]

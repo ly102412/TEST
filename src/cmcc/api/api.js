@@ -2,7 +2,6 @@ import axios from 'axios'
 
 let base = '/api/business'
 let mmt = '/api/mmt'
-
 /**
  * [getBussinessInfo 获取商家信息]
  * @param  {[type]} params [description]
@@ -94,3 +93,15 @@ export const lotteryEnd = params => { return axios.get(`${mmt}/end/activity`, { 
  * @return {[type]}        [description]
  */
 export const getFlowPrice = params => { return axios.get(`${mmt}/activity/price`, { params: params})}
+
+
+/**
+ * [getSecretKey 获取秘钥]
+ */
+export const getSecretKey = params => { return axios.get(`${base}/get/secretkey`, { params: params}).then(res => res.data)}
+
+/**
+ * [resetSecretKey 重置秘钥]
+ */
+export const resetSecretKey = params => { return axios.get(`${base}/reset/secretkey`, { params: params}).then(res => res.data)}
+
