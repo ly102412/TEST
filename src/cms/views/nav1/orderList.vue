@@ -9,7 +9,7 @@
                 <el-col :span="24">
                     <div class="grid-content  text-regular " align="center">
                         <el-col :span="4">
-                            <el-input style="width: 193px;" v-model="batch_name" placeholder="输入兑换码名称"></el-input>
+                            <el-input style="width: 193px;" v-model="order_id" placeholder="输入订单id"></el-input>
                         </el-col>
                         <el-col :span="2">
                             <p style="text-align: right;
@@ -33,9 +33,6 @@
                             <el-button class="blue-btn" @click="search" v-loading.fullscreen.lock="fullscreenLoading">
                                 查找
                             </el-button>
-                        </el-col>
-                        <el-col :span="3">
-                            <el-button type="success" @click="dialogFormVisible = true">创建流量兑换码</el-button>
                         </el-col>
                     </div>
                 </el-col>
@@ -158,7 +155,7 @@
                 startTime: '',
                 endTime: '',
                 fullscreenLoading: '',
-                batch_name: '', // 批次号
+                order_id: '', // 订单号
                 total: 0,
                 page_number: 1,
                 page_size: 10,

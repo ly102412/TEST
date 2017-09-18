@@ -1,6 +1,6 @@
 var path = require('path');
 var arguments = process.argv;
-var directory = arguments[2]?arguments[2]:'cms';
+var directory = arguments[2]?arguments[2]:'cmcc';
 // var directory = arguments[2];
 // if(!directory){
 //     console.log('请输入项目目录名');
