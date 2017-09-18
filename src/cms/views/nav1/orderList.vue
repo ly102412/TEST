@@ -118,7 +118,7 @@
                     <template scope="scope">
                         <el-button type="primary" :disabled="statusDisable(scope.row.order_status)" class="colorGreen"
                                    @click="adoptOrder(scope.row)" size="small">
-                            {{scope.row.order_status|}}
+                            {{scope.row.order_status|filter_order_status}}
                         </el-button>
                         <el-upload
                                 class="upload"

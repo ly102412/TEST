@@ -236,3 +236,17 @@ Vue.filter('filter_recharge_status', function(num) {
  }
 })
 
+//过滤状态
+Vue.filter('filter_order_status', function(status) {
+  switch (status){
+    case 0:
+      return '确认'
+      break;
+    case 1:
+      return '通过'
+      break;
+    case 2:
+      return '重新确认'
+      break;
+  }
+})
