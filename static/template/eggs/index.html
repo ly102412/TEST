@@ -135,7 +135,7 @@
         </div>
         <div class="contract">
             <a class="btn-contract" :href="activity.bank_url">领取奖品</a></br>
-            <a class="btn-contract" @click="activity.main_tab = '1'">再来一次</a></br>
+            <a class="btn-contract" @click="window.location.href = location.href+'?time='+((new Date()).getTime())">再来一次</a></br>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
         </div>
@@ -147,7 +147,7 @@
         <img :src="activity.activity_img_upload.lottery_faild" alt="" data-type="1" data-layer="lottery_faild">
       </div>
       <div class="contract">
-          <a class="btn-contract" @click="activity.main_tab = '1'" style="width:80%;margin:0 auto">再来一次</a></br>
+          <a class="btn-contract" @click="window.location.href = location.href+'?time='+((new Date()).getTime())" style="width:80%;margin:0 auto">再来一次</a></br>
           <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" style="width:80%;margin:0 auto" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
           <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" style="width:80%;margin:0 auto" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
       </div>
@@ -263,6 +263,7 @@
           $("#carousel img ").click(function(){
             var gm = $(this).attr('src','images/egg2.gif');
             setTimeout(function(){  
+              goLottery(this.code);
               // window.location.href = location.href+'?time='+((new Date()).getTime());
             },3000)
           });

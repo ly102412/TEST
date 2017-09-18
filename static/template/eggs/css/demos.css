@@ -87,7 +87,16 @@
 .hide{
   display: none
 }
-
+.rules-icon{
+  position: absolute!important;
+  top: .5rem;
+  right: .3rem;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.rules-icon img{
+  width: 100%
+}
 /* 活动说明样式 */
 .rules-box {
   position: absolute;
