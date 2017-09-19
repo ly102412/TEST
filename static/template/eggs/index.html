@@ -263,7 +263,7 @@
           $("#carousel img ").click(function(){
             var gm = $(this).attr('src','images/egg2.gif');
             setTimeout(function(){  
-              goLottery(this.code);
+              this.goLottery(this.code);
               // window.location.href = location.href+'?time='+((new Date()).getTime());
             },3000)
           });
