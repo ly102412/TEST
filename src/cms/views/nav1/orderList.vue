@@ -133,7 +133,7 @@
                                 :on-success="(res)=>{return handleUploadSuccess(res,scope.row)}"
                                 :on-error="handleUploadFaild"
                                 style="display: inline-block"
-                                v-if="scope.row.order_status == 1?true:false"
+                                v-if="scope.row.order_note?true:false"
                         >
                             <el-button size="small" type="primary">点击上传</el-button>
                         </el-upload>
