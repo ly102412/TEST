@@ -2,6 +2,7 @@ src/assets/js/
 build/*.js
 config/*.js
 static/**/*.js
+static/**/*.html
 src/cms/assets/js/*.js
 src/cms/**/*.vue
 src/cms/*.js

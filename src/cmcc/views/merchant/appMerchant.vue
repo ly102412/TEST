@@ -126,7 +126,7 @@
                     </div>
               </div>
               <div class="form-group row">
-                <label for="hf-email" class="col-md-3 form-control-label">完整跳转路径样例：</label>
+                <label for="hf-email" class="col-md-9 form-control-label">完整跳转路径样例：（ <b style="color: red;">请求参数需转换成base64放到data里</b>）</label>
                 <div class="col-md-12" style="word-wrap: break-word;
 word-break: normal;">
                     <b>

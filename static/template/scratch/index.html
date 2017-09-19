@@ -33,8 +33,8 @@
       <!-- 刮刮卡 begin-->
       <div class="card_ggl">
           <div class="info">
-              <p class="result">您获得了200M流量</p>
-              <span class="btn_card_go cardButton">去领奖</span>
+              <p class="result">您获得了{{lottery.award_name}}</p>
+              <!--<span class="btn_card_go cardButton">去领奖</span>-->
           </div>
           <canvas class="card_mask" id="card_canvas"></canvas>
       </div>
@@ -255,6 +255,7 @@
             window.code = this.code
             window.activity = this.activity
           }
+          this.goLottery()
         //  if(window.parent.window._activity){
         //
         //  }else{
