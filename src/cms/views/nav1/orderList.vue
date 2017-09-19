@@ -58,29 +58,29 @@
                 </el-table-column>
                 <el-table-column
                         prop="business_id"
-                        label="兑换码名称"
+                        label="商户ID"
                         width="110"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="flow_money"
-                        label="优惠价（元）"
+                        label="流量总额（元）"
                         width="130"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="money"
-                        label="原价（元）"
+                        label="订单总价（元）"
                         width="130"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop=""
-                        label="优惠（元）"
+                        label="折扣"
                         width="130"
                         align="center">
                     <template scope="scope">
-                        {{scope.row.money - scope.row.flow_money}}元
+                        {{scope.row.discount?scope.row.discount:0}}
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -88,6 +88,15 @@
                         label="开始时间"
                         width="120"
                         align="center">
+                </el-table-column>
+                <el-table-column
+                        prop=""
+                        label="体验期"
+                        width="130"
+                        align="center">
+                    <template scope="scope">
+                        {{scope.row.exp_month?scope.row.exp_month:0}}
+                    </template>
                 </el-table-column>
                 <el-table-column
                         prop="order_status"
