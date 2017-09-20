@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './app'
+import App from './App'
 import routes from './router'
 import Router from 'vue-router'
 import ElementUI from 'element-ui'
