@@ -249,6 +249,7 @@
       },
       mounted () {
           // 初始化砸金蛋效果
+          var self = this;
           $('#carousel').carousel({
             //width: 320, 
             //height: 150, 
@@ -268,9 +269,9 @@
           $("#carousel img ").click(function(){
             var gm = $(this).attr('src','images/egg2.gif');
             setTimeout(function(){  
-              this.goLottery(this.code);
+              self.goLottery(this.code);
               // window.location.href = location.href+'?time='+((new Date()).getTime());
-            },3000)
+            },2000)
           });
           if(top.location != location){
             this.setContent(window.parent.window._activity)
