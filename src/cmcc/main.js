@@ -16,8 +16,6 @@ Vue.use(Router)
 const router  = new Router({
   routes
 })
-
-
 new Vue({
   router,
   render: h => h(App)
