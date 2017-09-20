@@ -8,6 +8,7 @@ import 'nprogress/nprogress.css'
 import $ from 'jquery'
 import 'element-ui/lib/theme-default/index.css'
 
+
 NProgress.configure({ showSpinner: false });
 
 Vue.use(ElementUI)
