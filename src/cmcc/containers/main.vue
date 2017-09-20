@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import AppHeader from '../components/header'
+import AppHeader from '../components/Header'
 import SideBar from '../components/Sidebar'
 import Breadcrumb from '../components/Breadcrumb'
-import AppFooter from '../components/footer'
+import AppFooter from '../components/Footer'
 export default {
   name: 'main',
   components: {
