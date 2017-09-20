@@ -29,12 +29,8 @@
             </div>
             <div class="card-block">
               <el-tabs v-model="activity.main_tab" @tab-click="handleClick">
-                <el-tab-pane label="首页" name="1"></el-tab-pane>
-                <el-tab-pane label="活动奖品" name="2"></el-tab-pane>
-                <!-- <el-tab-pane label="我的奖品" name="3"></el-tab-pane> -->
-                <!-- <el-tab-pane label="奖品详情" name="4"></el-tab-pane> -->
-                <el-tab-pane label="中奖页面" name="4"></el-tab-pane>
-                <el-tab-pane label="没中奖页" name="5"></el-tab-pane>
+                <el-tab-pane v-if="activity_type !=2" v-for="item of activity.tab_setting.tab" :label="item.lable" :name="item.name"></el-tab-pane>
+                <el-tab-pane v-if="activity_type ==2" v-for="item of activity.tab_setting.tab_1" :label="item.lable" :name="item.name"></el-tab-pane>
               </el-tabs>
               <!-- <input type="button" name="" value="prev" @click="tabPrev">
               <input type="button" name="" value="next" @click="tabNext"> -->
@@ -432,11 +428,27 @@
           }
         ],
         activity: {
+
           // 基础设置
           main_tab: '1',                  // 当前导航栏状态
           upload_image_url: '',           // 上传图片地址
           upload_image_name: '',          // 需要上传的图片名称
           activity_tab: '0',              // 活动设置导航状态
+          tab_setting:{
+              tab:[
+                  {lable:'首页',name:'1'},
+                  {lable:'活动奖品',name:'2'},
+                  {lable:'中奖页面',name:'4'},
+                  {lable:'没中奖页',name:'5'}
+              ],
+              tab_1:[
+                  {lable:'首页',name:'1'},
+                  {lable:'抽奖',name:'2'},
+                  {lable:'活动奖品',name:'3'},
+                  {lable:'中奖页面',name:'4'},
+                  {lable:'没中奖页',name:'5'}
+              ]
+          },
           activity_img_upload: {          // 活动图片素材上传
             main_bg: require('../../../../static/template/common/images/active-bg.jpg'),                      // 活动背景图
             rules_icon: require('../../../../static/template/common/images/ruleImg_yellow.png'),                   // 活动图标

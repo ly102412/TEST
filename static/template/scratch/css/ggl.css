@@ -7,7 +7,7 @@
 .page{
   display: none
 }
-.main{
+.main,.shake{
   position: absolute;
   top: 0;
   left: 0;
@@ -15,6 +15,67 @@
   height: 100%;
   background-color: #a72058;
   overflow: hidden;
+}
+.shake_tit{
+  width: 2.89rem;
+  height: 1.21rem;
+  background: url(../images/shake-tit.png) no-repeat center center;
+  background-size: 100% 100%;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  margin-left: -1.3rem;
+}
+.shake .prize_box{
+    width: 2.62rem;
+    height: 2.17rem;
+    background: url(../images/prize-box.png) no-repeat center center;
+    background-size: 100% 100%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    margin-left: -1.3rem;
+}
+.shake .startBtn{
+  width: 3.2rem;
+  height: 1.49rem;
+  background: url(../images/drawBg.png) no-repeat center center;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  margin-left: -1.7rem;
+}
+.shake .startBtn .tada{
+  width: 1.71rem;
+  height: 1.49rem;
+  background: url(../images/shake.png) no-repeat center center;
+  background-size: 100% 100%;
+  position: absolute;
+  top: 0;
+  left:0;
+  animation: tada 2s ease 0s infinite forwards
+}
+@keyframes tada {
+  0% {
+    -webkit-transform: scale3d(1,1,1)
+  }
+
+  10%,20% {
+    -webkit-transform: rotate3d(0,0,1,-10deg)
+  }
+
+  30%,50%,70%,90% {
+    -webkit-transform: rotate3d(0,0,1,10deg)
+  }
+
+  40%,60%,80% {
+    -webkit-transform: rotate3d(0,0,1,-10deg)
+  }
+
+  100% {
+    -webkit-transform: scale3d(1,1,1)
+  }
 }
 .home-bg img{
   width: 100%;
@@ -40,7 +101,7 @@
   background: url(../images/ggl.png) no-repeat center center;
   background-size: 100% 100%;
   text-align: center;
-  font-size: .32rem;
+  font-size: .5rem;
 }
 .card_ggl .info{
   position:absolute;
@@ -52,7 +113,10 @@
 }
 .card_ggl .info .result{
   display: block;
-  line-height: 40px;
+  line-height: 90px;
+}
+.card_ggl .info .result span{
+  color: #ffdb12;
 }
 .card_ggl .info .btn_card_go,.card_ggl .info .btn_card_again{
   display: inline-block;
