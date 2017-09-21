@@ -306,6 +306,20 @@
 }
 
 
-
+.tips{
+  position: absolute;
+  background: rgba(0,0,0,0.3);
+  width: 80%;
+  height: 2rem;
+  line-height: 2rem;
+  border-radius: .2rem;
+  text-align: center;
+  top: 25%;
+  left: 10%;
+  padding: .2rem .1rem;
+  z-index: 200;
+  color: #fff;
+  font-size: 0.48rem;
+}
 
 

@@ -110,8 +110,8 @@
       <div class="rules-content" style="display:none">
         <div class="rules-card-list">
           <ul>
-            <li v-for="item in lottery.record_list">
-              <div class="card-content">
+            <li v-for="item in lottery.record_list" v-if="item.prize_type!=0">
+              <div class="card-content" >
                 <h1 class="price-name">{{item.prize_name}}</h1>
                 <p>中奖日期:{{item.create_time}}</p>
                 <!-- <p>兑奖期限: {{activity.base_setting.begin_date}} 至 {{activity.base_setting.begin_date}}</p> -->
@@ -140,7 +140,7 @@
         </div>
         <div class="contract">
             <a class="btn-contract" :href="activity.bank_url">领取奖品</a></br>
-            <a class="btn-contract" @click="window.location.href = location.href+'?time='+((new Date()).getTime())">再来一次</a></br>
+            <a class="btn-contract" @click="window.location.reload()">再来一次</a></br>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
         </div>
@@ -152,11 +152,14 @@
         <img :src="activity.activity_img_upload.lottery_faild" alt="" data-type="1" data-layer="lottery_faild">
       </div>
       <div class="contract">
-          <a class="btn-contract" @click="window.location.href = location.href+'?time='+((new Date()).getTime())" style="width:80%;margin:0 auto">再来一次</a></br>
+          <a class="btn-contract" @click="window.location.reload()" style="width:80%;margin:0 auto">再来一次</a></br>
           <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" style="width:80%;margin:0 auto" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
           <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" style="width:80%;margin:0 auto" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
       </div>
     </div>
+    <div class="tips" v-if="activity.lottery_setting.daily_lottery_time == 0">
+        您已经抽过奖了！
+      </div>
   </div>
   <script>
   window.app = new Vue({
@@ -270,7 +273,7 @@
             var gm = $(this).attr('src','images/egg2.gif');
             setTimeout(function(){  
               self.goLottery(this.code);
-              // window.location.href = location.href+'?time='+((new Date()).getTime());
+              // window.location.reload();
             },2000)
           });
           if(top.location != location){
