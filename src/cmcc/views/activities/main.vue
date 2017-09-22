@@ -486,7 +486,7 @@
               content: 'Tab 1 content',
               award_id: 1,
               award_level: '谢谢参与',       // 奖品等级
-              award_type: '0',            // 奖品类型 0流量 1流量券 2实物   活动发布后类型无法修改
+              award_type: '0',            // 奖品类型 0谢谢参与 1流量 2流量券   活动发布后类型无法修改
               award_name: '谢谢参与',      // 奖品名称                    活动发布后名称无法修改
               award_num: '',             // 奖品数量
               award_value: '-1',           // 奖品值
@@ -579,15 +579,15 @@
              if (item.award_value <= 0) {
                  continue;
              }
-             if (item.award_type == 0) {
+             if (item.award_type == 1) {
                  scores += item.award_value * item.award_num;
                  freeze_money += Number(Math.abs(Number(item.award_value) * item.award_num * this.flow_price_info.flow));
              }
-             if (item.award_type == 1 && item.award_value == 100) {
+             if (item.award_type == 2 && item.award_value == 100) {
                  coupon_size_100 += item.award_num;
                  freeze_money += Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_100));
              }
-             if (item.award_type == 1 && item.award_value == 500) {
+             if (item.award_type == 2 && item.award_value == 500) {
                  coupon_size_500 += item.award_num;
                  freeze_money +=  Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_500));
              }
@@ -635,7 +635,7 @@
       handleClick(tab, event) {
       },
       clearAwardValue(item){
-        if(item.award_type == 1 && item.award_value != '-1'){
+        if(item.award_type == 2 && item.award_value != '-1'){
           item.award_value = ''
         }
       },
@@ -861,7 +861,7 @@
               content: 'New Tab content',
               award_id: this.activity.award_setting.length + 1,
               award_level: tab_name,
-              award_type: '0',
+              award_type: '1',
               award_name: '',
               award_num: '',
               award_value: '',

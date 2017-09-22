@@ -35,4 +35,7 @@ export default {
   .nav-link {
     cursor:pointer;
   }
+  .sidebar .nav .nav-item ul{
+    margin-left: 15px;
+  }
 </style>

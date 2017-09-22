@@ -25,6 +25,27 @@
   top: 10%;
   left: 50%;
   margin-left: -1.3rem;
+  animation: bounceInDown 1s ease 1s;
+}
+
+@keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px)
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(30px)
+  }
+
+  80% {
+    transform: translateY(-10px)
+  }
+
+  100% {
+    transform: translateY(0)
+  }
 }
 .shake .prize_box{
     width: 2.62rem;
@@ -58,23 +79,23 @@
 }
 @keyframes tada {
   0% {
-    -webkit-transform: scale3d(1,1,1)
+    transform: scale3d(1,1,1)
   }
 
   10%,20% {
-    -webkit-transform: rotate3d(0,0,1,-10deg)
+    transform: rotate3d(0,0,1,-10deg)
   }
 
   30%,50%,70%,90% {
-    -webkit-transform: rotate3d(0,0,1,10deg)
+    transform: rotate3d(0,0,1,10deg)
   }
 
   40%,60%,80% {
-    -webkit-transform: rotate3d(0,0,1,-10deg)
+    transform: rotate3d(0,0,1,-10deg)
   }
 
   100% {
-    -webkit-transform: scale3d(1,1,1)
+    transform: scale3d(1,1,1)
   }
 }
 .home-bg img{
@@ -384,4 +405,24 @@
 }
 .tool-bar:hover{
   background: #4db3ff
+}
+.toast{
+  max-width: 5.8rem;
+  min-width: 4.5rem;
+  min-height: 0.9rem;
+  text-align: center;
+  font-size: 0.28rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+  position: fixed;
+  left: 50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+  padding-left: 0.42rem;
+  padding-right:0.42rem;
+}
+.toast p{
+  margin: 0.2rem auto;
+  line-height: 0.5rem;
+  color: #fff;
 }

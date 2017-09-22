@@ -39,7 +39,7 @@
         <!-- 活动抽奖盒子 end-->
         <!-- 抽奖按钮 begin-->
         <div class="startBtn">
-            <div id="shake" class="tada" @click="shake()"></div>
+            <div id="shake" class="tada"></div>
         </div>
         <!-- 参与人数 begin-->
         <div class="join-num">
@@ -205,12 +205,19 @@
                data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
         </div>
     </div>
+    <div class="toast" v-show="toast">
+        <p>{{msssage}}</p>
+    </div>
 </div>
+
 <script>
     window.app = new Vue({
         el: '#app',
         data() {
             return {
+                isLottery:true,
+                msssage:'',
+                toast:false,
                 c1:null,
                 ctx:null,
                 ismousedown:false,//标志用户是否按下鼠标或开始触摸
@@ -305,6 +312,7 @@
             // var url = window.location.href.match(/[^]*[?]/);
             // alert(url)
                 this.init()
+
             if (top.location != location) {
                 this.setContent(window.parent.window._activity)
             } else {
@@ -316,6 +324,8 @@
                 this.getLotteryRecord(this.code)
                 window.code = this.code
                 window.activity = this.activity
+                this.shake()
+
             }
             //this.shake()
             //  if(window.parent.window._activity){
@@ -325,6 +335,11 @@
             //  }
         },
         methods: {
+            showToast () {
+                this.toast = true
+                if (this.toastTimer) clearTimeout(this.toastTimer)
+                this.toastTimer = setTimeout(() => { this.toast = false }, 2500)
+            },
             setContent(activity) {
                 this.activity = activity
             },
@@ -344,8 +359,8 @@
             },
             // 抽奖接口
             goLottery(code) {
+                alert('调用成功')
                 var _this = this
-                _this.activity.main_tab = 2
                 if (location == top.location) {
                     $.ajax({
                         url: '/api/front/lottery',    //请求的url地址
@@ -364,15 +379,12 @@
                                 //prize_denomination == -1 时 谢谢参与
                                 _this.lottery.award_type = res.data.prize_type
                                 _this.lottery.award_name = res.data.prize_name
-                                if (res.data.prize_denomination !== -1) {
-                                    // _this.activity.main_tab = 4
-
-                                } else {
-                                    //_this.activity.main_tab = 5
-                                }
+                                _this.activity.main_tab = 2
                                 _this.getUserInfo(code)
                             } else {
-                                alert(res.message)
+                                _this.msssage = res.message
+                                _this.showToast()
+
                             }
                         },
                         complete: function () {
@@ -502,11 +514,7 @@
 
                     },5000)
                 }
-                 this.ismousedown = false;
-
-                // if(isOk){
-                //   $('.cardButton').css('z-index','3');
-                // }
+                 this.ismousedown = false
             },
             //鼠标移动 和 触摸移动
             eventMove(e){
@@ -540,40 +548,43 @@
                 this.activity.main_tab = 1
             },
             shake(){
-                this.goLottery(this.code)
+
                 //摇一摇重力感应 start
-//                let lastX=0;
-//                let lastY=0;
-//                let lastZ=0;
-//                if(window.DeviceMotionEvent){
-//                    window.addEventListener('devicemotion',function(ev){
-//                        let acceleration=ev.accelerationIncludingGravity;
-//                        let audio = document.getElementById('shakeMusic');
-//
-//                        let x=acceleration.x;
-//                        let y=acceleration.y;
-//                        let z=acceleration.z;
-//
-//                        if(
-//                            Math.abs(x-lastX)>25 ||
-//                            Math.abs(y-lastY)>25 ||
-//                            Math.abs(z-lastZ)>25
-//                        ){
-//                            //摇的时候 调用
-//                            //this.goLottery(this.code)
-//                            audio.play();//播放音乐
-//                        }
-//
-//
-//                        lastX=x;
-//                        lastY=y;
-//                        lastZ=z;
-//                    },false);
-//                }else{
-//                    console.log('不支持重力感应');
-//                }
+                let _this = this
+                let lastX=0;
+                let lastY=0;
+                let lastZ=0;
+                if(window.DeviceMotionEvent && _this.activity.main_tab == 1){
+                    window.addEventListener('devicemotion',function(ev){
+                        let acceleration=ev.accelerationIncludingGravity;
+                        let audio = document.getElementById('shakeMusic');
+
+                        let x=acceleration.x;
+                        let y=acceleration.y;
+                        let z=acceleration.z;
+
+                        if(
+                            Math.abs(x-lastX)>25 ||
+                            Math.abs(y-lastY)>25 ||
+                            Math.abs(z-lastZ)>25
+                        ){
+                            audio.play()//播放音乐
+                            //摇的时候 调用
+                            _this.goLottery(_this.code)
+
+                        }
+
+
+                        lastX=x;
+                        lastY=y;
+                        lastZ=z;
+                    },false);
+                }else{
+                    console.log('不支持重力感应');
+                }
 //摇一摇重力感应 end
-            }
+            },
+
         }
     });
 </script>
