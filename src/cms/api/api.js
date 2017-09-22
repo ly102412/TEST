@@ -2,9 +2,9 @@ import axios from 'axios';
 
 let base = '/api';
 
-export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data); };
+export const requestLogin = params => { return axios.post(`${base}/service/login`, params).then(res => res.data); };
 
-export const requestLogout = params => {return axios.get(`${base}/logout`, { params: params }).then(res => res.data); };
+export const requestLogout = params => {return axios.get(`${base}/service/logout`, { params: params }).then(res => res.data); };
 
 
 // 订单管理页面表单

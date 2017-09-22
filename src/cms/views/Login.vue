@@ -56,13 +56,16 @@
               let { status, message, data:{is_login,phone_number,user_name,user_status}} = data;
               if (status !== 0) {
                 this.$notify({
-                  title: '登录失败',
-                  message: message,
+                  title:message,
                   type: 'error'
                 });
               } else {
                 sessionStorage.setItem('is_login', JSON.stringify(is_login));
-                this.$router.push({ path: '/redeemCode' });
+                  this.$notify({
+                      title: message,
+                      type: 'success'
+                  });
+                this.$router.push({ path: '/orderList' });
               }
             });
           } else {

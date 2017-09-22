@@ -126,12 +126,15 @@
                         let {status, message} = data;
                         if (status !== 0) {
                             this.$notify({
-                                title: '退出失败',
-                                message: message,
+                                title: message,
                                 type: 'error'
                             });
                         } else {
                             sessionStorage.removeItem('is_login');
+                            this.$notify({
+                                title: message,
+                                type: 'success'
+                            });
                             this.$router.push('/login');
                         }
                     });
