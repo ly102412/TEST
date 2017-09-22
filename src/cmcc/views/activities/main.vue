@@ -29,12 +29,8 @@
             </div>
             <div class="card-block">
               <el-tabs v-model="activity.main_tab" @tab-click="handleClick">
-                <el-tab-pane label="首页" name="1"></el-tab-pane>
-                <el-tab-pane label="活动奖品" name="2"></el-tab-pane>
-                <!-- <el-tab-pane label="我的奖品" name="3"></el-tab-pane> -->
-                <!-- <el-tab-pane label="奖品详情" name="4"></el-tab-pane> -->
-                <el-tab-pane label="中奖页面" name="4"></el-tab-pane>
-                <el-tab-pane label="没中奖页" name="5"></el-tab-pane>
+                <el-tab-pane v-if="activity_type !=2" v-for="item of activity.tab_setting.tab" :label="item.lable" :name="item.name"></el-tab-pane>
+                <el-tab-pane v-if="activity_type ==2" v-for="item of activity.tab_setting.tab_1" :label="item.lable" :name="item.name"></el-tab-pane>
               </el-tabs>
               <!-- <input type="button" name="" value="prev" @click="tabPrev">
               <input type="button" name="" value="next" @click="tabNext"> -->
@@ -432,11 +428,27 @@
           }
         ],
         activity: {
+
           // 基础设置
           main_tab: '1',                  // 当前导航栏状态
           upload_image_url: '',           // 上传图片地址
           upload_image_name: '',          // 需要上传的图片名称
           activity_tab: '0',              // 活动设置导航状态
+          tab_setting:{
+              tab:[
+                  {lable:'首页',name:'1'},
+                  {lable:'活动奖品',name:'2'},
+                  {lable:'中奖页面',name:'4'},
+                  {lable:'没中奖页',name:'5'}
+              ],
+              tab_1:[
+                  {lable:'首页',name:'1'},
+                  {lable:'抽奖',name:'2'},
+                  {lable:'活动奖品',name:'3'},
+                  {lable:'中奖页面',name:'4'},
+                  {lable:'没中奖页',name:'5'}
+              ]
+          },
           activity_img_upload: {          // 活动图片素材上传
             main_bg: require('../../../../static/template/common/images/active-bg.jpg'),                      // 活动背景图
             rules_icon: require('../../../../static/template/common/images/ruleImg_yellow.png'),                   // 活动图标
@@ -474,7 +486,7 @@
               content: 'Tab 1 content',
               award_id: 1,
               award_level: '谢谢参与',       // 奖品等级
-              award_type: '0',            // 奖品类型 0流量 1流量券 2实物   活动发布后类型无法修改
+              award_type: '0',            // 奖品类型 0谢谢参与 1流量 2流量券   活动发布后类型无法修改
               award_name: '谢谢参与',      // 奖品名称                    活动发布后名称无法修改
               award_num: '',             // 奖品数量
               award_value: '-1',           // 奖品值
@@ -567,15 +579,15 @@
              if (item.award_value <= 0) {
                  continue;
              }
-             if (item.award_type == 0) {
+             if (item.award_type == 1) {
                  scores += item.award_value * item.award_num;
                  freeze_money += Number(Math.abs(Number(item.award_value) * item.award_num * this.flow_price_info.flow));
              }
-             if (item.award_type == 1 && item.award_value == 100) {
+             if (item.award_type == 2 && item.award_value == 100) {
                  coupon_size_100 += item.award_num;
                  freeze_money += Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_100));
              }
-             if (item.award_type == 1 && item.award_value == 500) {
+             if (item.award_type == 2 && item.award_value == 500) {
                  coupon_size_500 += item.award_num;
                  freeze_money +=  Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_500));
              }
@@ -623,7 +635,7 @@
       handleClick(tab, event) {
       },
       clearAwardValue(item){
-        if(item.award_type == 1 && item.award_value != '-1'){
+        if(item.award_type == 2 && item.award_value != '-1'){
           item.award_value = ''
         }
       },
@@ -849,7 +861,7 @@
               content: 'New Tab content',
               award_id: this.activity.award_setting.length + 1,
               award_level: tab_name,
-              award_type: '0',
+              award_type: '1',
               award_name: '',
               award_num: '',
               award_value: '',

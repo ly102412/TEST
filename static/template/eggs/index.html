@@ -110,8 +110,8 @@
       <div class="rules-content" style="display:none">
         <div class="rules-card-list">
           <ul>
-            <li v-for="item in lottery.record_list">
-              <div class="card-content">
+            <li v-for="item in lottery.record_list" v-if="item.prize_type!=0">
+              <div class="card-content" >
                 <h1 class="price-name">{{item.prize_name}}</h1>
                 <p>中奖日期:{{item.create_time}}</p>
                 <!-- <p>兑奖期限: {{activity.base_setting.begin_date}} 至 {{activity.base_setting.begin_date}}</p> -->
@@ -157,6 +157,9 @@
           <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" style="width:80%;margin:0 auto" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
       </div>
     </div>
+    <div class="tips" v-if="activity.lottery_setting.daily_lottery_time == 0">
+        您已经抽过奖了！
+      </div>
   </div>
   <script>
   window.app = new Vue({
@@ -270,7 +273,7 @@
             var gm = $(this).attr('src','images/egg2.gif');
             setTimeout(function(){  
               self.goLottery(this.code);
-              // window.location.href = location.href+'?time='+((new Date()).getTime());
+              // window.location.reload();
             },2000)
           });
           if(top.location != location){

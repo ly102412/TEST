@@ -4,7 +4,7 @@
       <div class="col-sm-6 col-lg-4">
         <div class="card card-inverse card-primary">
           <div class="card-block pb-0">
-            <h4 class="mb-0">{{businessInfo.freeze_money + businessInfo.money}}元</h4>
+            <h4 class="mb-0">{{full_money}}元</h4>
             <p>账户总余额</p>
           </div>
         </div>
@@ -13,7 +13,7 @@
       <div class="col-sm-6 col-lg-4">
         <div class="card card-inverse card-info">
           <div class="card-block pb-0">
-            <h4 class="mb-0">{{businessInfo.money}}元</h4>
+            <h4 class="mb-0">{{money}}元</h4>
             <p>可用余额</p>
           </div>
         </div>
@@ -24,7 +24,7 @@
           <div class="card-block pb-0">
             <div class="btn-group float-right">
             </div>
-            <h4 class="mb-0">{{businessInfo.freeze_money}}元</h4>
+            <h4 class="mb-0">{{freeze_money}}元</h4>
             <p>锁定余额
               <el-tooltip placement="top">
                 <div slot="content">金额用于活动消耗<br/>活动结束后，剩余金额释放</div>
@@ -119,7 +119,10 @@ import NProgress from 'nprogress'
 export default {
   data () {
     return {
-      businessInfo: {}
+      businessInfo: {},
+      freeze_money:'',
+      money:'',
+      full_money:''
     }
   },
   mounted () {
@@ -135,6 +138,9 @@ export default {
         if(res.status === 0){
           console.log(res.data)
           this.businessInfo = res.data
+          this.freeze_money = res.data.freeze_money.toFixed(2)
+          this.money = res.data.money.toFixed(2)
+          this.full_money = Number(this.freeze_money) + Number(this.money)
         }
       })
     }
