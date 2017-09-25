@@ -7,7 +7,7 @@
       <div class="col-sm-6 col-lg-4">
         <div class="card card-inverse card-primary">
           <div class="card-block pb-0">
-            <h4 class="mb-0">{{business_info.freeze_money + business_info.money}}元</h4>
+            <h4 class="mb-0">{{full_money}}元</h4>
             <p>账户总余额</p>
           </div>
         </div>
@@ -96,7 +96,8 @@ export default {
   data() {
     return {
       business_info: {},
-      flow_price_info: {}
+      flow_price_info: {},
+      full_money:null
     }
   },
   mounted() {
@@ -112,6 +113,7 @@ export default {
         NProgress.done()
         if (res.status === 0) {
           this.business_info = res.data
+          this.full_money =  (Number(business_info.freeze_money) + Number(business_info.money)).toFixed(2)
         }
       })
     },

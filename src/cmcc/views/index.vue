@@ -140,7 +140,7 @@ export default {
           this.businessInfo = res.data
           this.freeze_money = res.data.freeze_money.toFixed(2)
           this.money = res.data.money.toFixed(2)
-          this.full_money = Number(this.freeze_money) + Number(this.money)
+          this.full_money = (Number(this.freeze_money) + Number(this.money)).toFixed(2)
         }
       })
     }
