@@ -2,9 +2,9 @@
   <div class="animated fadeIn">
     <el-table :data="orderList" highlight-current-row v-loading="listloading">
       <el-table-column prop="order_id" label="订单编号"></el-table-column>
-      <el-table-column prop="money" label="商家ID"></el-table-column>
-      <el-table-column prop="flow_money" label="流量消费金额(元)"></el-table-column>
-      <el-table-column prop="desc" label="描述"></el-table-column>
+      <el-table-column prop="business_id" label="商家ID"></el-table-column>
+      <el-table-column prop="money" label="充值金额(元)"></el-table-column>
+      <el-table-column prop="order_desc" label="描述"></el-table-column>
       <el-table-column prop="create_time" label="创建时间"></el-table-column>
     </el-table>
     <!--工具条-->
