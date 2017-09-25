@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="animated fadeIn">
     <el-table :data="recordList" highlight-current-row v-loading="listloading">
-      <el-table-column prop="id" label="活动名称"></el-table-column>
-      <el-table-column prop="activity_type" label="消耗方式" :formatter="formatType"></el-table-column>
+      <el-table-column prop="id" label="活动编号"></el-table-column>
+      <el-table-column prop="type" label="消耗方式" :formatter="formatType"></el-table-column>
       <el-table-column prop="money" label="金额(元)"></el-table-column>
       <el-table-column prop="scores" label="流量币(M)"></el-table-column>
       <el-table-column prop="coupon_size_100" label="100M流量包(个)"></el-table-column>
@@ -60,12 +60,12 @@ export default {
     // 转换消耗类型
     formatType (row, column) {
       let type = ''
-      switch (row.activity_type) {
+      switch (row.type) {
         case 1:
-          type = '大转盘'
+          type = '发布消耗'
         break;
         case 2:
-          type = '刮刮卡'
+          type = '结束退还'
         break;
         default:
           type = '过期清零'
