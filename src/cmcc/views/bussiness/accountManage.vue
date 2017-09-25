@@ -113,7 +113,7 @@ export default {
         NProgress.done()
         if (res.status === 0) {
           this.business_info = res.data
-          this.full_money =  (Number(business_info.freeze_money) + Number(business_info.money)).toFixed(2)
+          this.full_money =  (Number(this.business_info.freeze_money) + Number(this.business_info.money)).toFixed(2)
         }
       })
     },

@@ -86,7 +86,7 @@
                                                         </el-form-item>
                                                     </el-col>
                                                 </el-form-item>
-                                                <el-form-item label="虚拟参与人数" data-source="fictitious_join_num">
+                                                <el-form-item label="虚拟参与人数 （不计入统计）" data-source="fictitious_join_num">
                                                     <el-switch on-text="隐藏" off-text="显示"
                                                                v-model="activity.base_setting.is_join_num"></el-switch>
                                                 </el-form-item>
@@ -96,7 +96,7 @@
                                                         <el-input placeholder="请输入参与人数"
                                                                   v-model="activity.base_setting.fictitious_join_num">
                                                             <template slot="prepend">在实际参与人数基础上增加</template>
-                                                            <template slot="append">人(只展示不计入系统)</template>
+                                                            <template slot="append">人</template>
                                                         </el-input>
                                                     </el-col>
                                                 </el-form-item>
@@ -701,18 +701,18 @@
                         }
                         if (item.award_type == 1) {
                             scores += item.award_value * item.award_num;
-                            freeze_money += Number(Math.abs(Number(item.award_value) * item.award_num * this.flow_price_info.flow));
+                            freeze_money += Number(Math.abs(Number(item.award_value) * item.award_num * this.flow_price_info.flow)).toFixed(2);
                         }
                         if (item.award_type == 2 && item.award_value == 100) {
                             coupon_size_100 += item.award_num;
-                            freeze_money += Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_100));
+                            freeze_money += Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_100)).toFixed(2)
                         }
                         if (item.award_type == 2 && item.award_value == 500) {
                             coupon_size_500 += item.award_num;
-                            freeze_money += Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_500));
+                            freeze_money += Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_500)).toFixed(2);
                         }
                     }
-                    this.freeze_money = freeze_money
+                    this.freeze_money = Number(freeze_money)
                     console.log(this.freeze_money)
                 },
                 deep: true
