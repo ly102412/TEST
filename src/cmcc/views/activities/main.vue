@@ -226,8 +226,13 @@
                                                                 </el-option>
                                                             </el-select>
                                                         </el-form-item>
-                                                        <el-form-item label="奖品数量" v-if="item.award_type !=='0'">
-                                                            <el-input v-model="item.award_num" type="number"></el-input>
+                                                        <el-form-item label="奖品数量" v-if="item.award_type !=='0'"
+                                                        :rules="[
+                                                            { required: true, message: '奖品数量不能为空'},
+                                                            { type: 'number', message: '奖品数量必须为整数'}
+                                                        ]"
+                                                        >
+                                                            <el-input v-model.number="item.award_num" type="number"></el-input>
                                                         </el-form-item>
                                                         <el-form-item label="中奖概率">
                                                             <!-- <el-input v-model="item.winning_rate">
@@ -711,6 +716,7 @@
                             coupon_size_500 += item.award_num;
                             freeze_money += Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_500)).toFixed(2);
                         }
+
                     }
                     this.freeze_money = Number(freeze_money)
                     console.log(this.freeze_money)
@@ -719,7 +725,8 @@
             },
             'activity.base_setting.fictitious_join_num': function () {
                 this.activity.base_setting.fictitious_join_num = this.activity.base_setting.fictitious_join_num ? this0.activity.base_setting.fictitious_join_num : 0
-            }
+            },
+
         },
         methods: {
             // 设置活动模板

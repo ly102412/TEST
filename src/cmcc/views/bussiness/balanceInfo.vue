@@ -3,8 +3,9 @@
     <el-table :data="balanceInfo" highlight-current-row v-loading="listloading">
       <el-table-column prop="activity_name" label="活动名称"></el-table-column>
       <el-table-column prop="activity_type" label="活动类型" :formatter="formatType"></el-table-column>
-      <el-table-column prop="freeze_money" label="锁定金额"></el-table-column>
+      <el-table-column prop="freeze_money" label="活动金额"></el-table-column>
       <el-table-column prop="used_money" label="已使用金额"></el-table-column>
+       <el-table-column prop="lock_money" label="锁定金额"></el-table-column>
       <el-table-column prop="start_time" label="锁定开始时间"></el-table-column>
       <el-table-column prop="end_time" label="锁定结束时间"></el-table-column>
       <el-table-column label="奖品数量" width="120">
