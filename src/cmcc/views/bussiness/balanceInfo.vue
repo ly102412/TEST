@@ -82,7 +82,7 @@ export default {
           type = '刮刮卡'
         break;
         default:
-          type = '过期清零'
+          type = '砸金蛋'
         break;
       }
       return type
