@@ -256,7 +256,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
     .table,.table thead tr th{
         text-align: center;
     }

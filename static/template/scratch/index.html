@@ -180,7 +180,7 @@
                 </p>
             </div>
             <div class="contract">
-                <a class="btn-contract" :href="activity.bank_url">领取奖品</a></br>
+                <a class="btn-contract" @click.stop="goBank">领取奖品</a></br>
                 <a class="btn-contract" @click="goLotteryAngin">再来一次</a></br>
                 <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'"
                    class="btn-contract edit-layer" data-type="2" data-layer="button_link_text"
@@ -444,6 +444,11 @@
                     }
                 });
             },
+            // 领取奖品，跳转流量银行
+            goBank() {
+                window.location.href="/api/bank/user/auth"
+            },
+
             init(){
                 c1 = document.getElementById('card_canvas');
                 this.ctx = null;      //画笔

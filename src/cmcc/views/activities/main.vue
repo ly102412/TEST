@@ -7,6 +7,7 @@
                     :show-file-list="false"
                     :on-success="handleUploadScucess"
                     :on-error="handleUploadFaild"
+                    :disabled="isDisable"
             >
                 <img v-if="activity.upload_image_url" :src="activity.upload_image_url" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -60,7 +61,7 @@
                                                     <el-input v-model="activity.base_setting.activity_name"></el-input>
                                                 </el-form-item>
                                                 <el-form-item label="开始时间" required data-source="base_setting_date">
-                                                    <el-col :span="12">
+                                                    <el-col :span="14">
                                                         <el-form-item>
                                                             <el-date-picker
                                                                             v-model="activity.base_setting.begin_date"
@@ -74,7 +75,7 @@
                                                     </el-col>
                                                 </el-form-item>
                                                 <el-form-item label="结束时间" required data-source="base_setting_date">
-                                                    <el-col :span="12">
+                                                    <el-col :span="14">
                                                         <el-form-item>
                                                             <el-date-picker v-model="activity.base_setting.end_date"
                                                                             :rules="base_setting_rules"
@@ -88,7 +89,9 @@
                                                 </el-form-item>
                                                 <el-form-item label="虚拟参与人数 （不计入统计）" data-source="fictitious_join_num">
                                                     <el-switch on-text="隐藏" off-text="显示"
-                                                               v-model="activity.base_setting.is_join_num"></el-switch>
+                                                               v-model="activity.base_setting.is_join_num"
+
+                                                    ></el-switch>
                                                 </el-form-item>
                                                 <el-form-item data-source="fictitious_join_num" label=""
                                                               v-if="activity.base_setting.is_join_num">
@@ -124,15 +127,21 @@
                                                      ref="activity.lottery_setting" label-width="120px">
                                                 <el-form-item label="总抽奖机会" data-source="total_lottery_time">
                                                     <el-radio label="0"
-                                                              v-model="activity.lottery_setting.is_total_lottery">不限
+                                                              v-model="activity.lottery_setting.is_total_lottery"
+                                                              :disabled="isDisable"
+                                                    >不限
                                                     </el-radio>
                                                     <el-radio label="1"
-                                                              v-model="activity.lottery_setting.is_total_lottery">限制
+                                                              v-model="activity.lottery_setting.is_total_lottery"
+                                                              :disabled="isDisable"
+                                                    >限制
                                                     </el-radio>
                                                 </el-form-item>
                                                 <el-form-item v-if="activity.lottery_setting.is_total_lottery == 1">
                                                     <el-input placeholder="请输入内容"
-                                                              v-model="activity.lottery_setting.total_lottery_time">
+                                                              v-model="activity.lottery_setting.total_lottery_time"
+                                                              :disabled="isDisable"
+                                                    >
                                                         <template slot="prepend">每人最多有</template>
                                                         <template slot="append">次抽奖机会</template>
                                                     </el-input>
@@ -140,14 +149,18 @@
                                                 <el-form-item label="每日抽奖机会" data-source="daily_lottery_time"
                                                               prop="daily_lottery_time" required>
                                                     <el-input placeholder="请输入内容"
-                                                              v-model="activity.lottery_setting.daily_lottery_time">
+                                                              v-model="activity.lottery_setting.daily_lottery_time"
+                                                              :disabled="isDisable"
+                                                        >
                                                         <template slot="prepend">每人每日有</template>
                                                         <template slot="append">次抽奖机会</template>
                                                     </el-input>
                                                 </el-form-item>
                                                 <el-form-item label="每人中奖次数" prop="winning_time" required>
                                                     <el-input placeholder="请输入内容"
-                                                              v-model="activity.lottery_setting.winning_time">
+                                                              v-model="activity.lottery_setting.winning_time"
+                                                              :disabled="isDisable"
+                                                    >
                                                         <template slot="prepend">每人最多可中奖</template>
                                                         <template slot="append">次</template>
                                                     </el-input>
@@ -190,35 +203,37 @@
                                         </el-tab-pane>
                                         <el-tab-pane>
                                             <span slot="label"><i class="el-icon-star-on"></i> 奖项设置</span>
-                                            <el-tabs v-model="edit_awards_tabs_value" type="card" editable
-                                                     @edit="handleTabsEdit">
+                                            <el-tabs v-model="edit_awards_tabs_value" type="card"
+                                                     @edit="handleTabsEdit" :editable="!isDisable">
                                                 <el-tab-pane
                                                         v-for="(item, index) in activity.award_setting"
                                                         :label="item.award_level"
                                                         :name="item.name"
                                                 >
-                                                    <el-form :rules="award_setting_rules" ref="activity.award_setting"
+                                                    <el-form ref="activity.award_setting"
                                                              label-width="120px" style="padding:0 10px">
                                                         <el-form-item label="奖品类型" v-if="item.award_value !== '-1'">
                                                             <el-radio-group v-model="item.award_type"
-                                                                            @change="clearAwardValue(item)">
+                                                                            @change="clearAwardValue(item)"
+                                                                            :disabled="isDisable"
+                                                                >
                                                                 <el-radio-button label="1">流量</el-radio-button>
                                                                 <el-radio-button label="2">流量券</el-radio-button>
                                                             </el-radio-group>
                                                         </el-form-item>
                                                         <el-form-item label="奖品名称" data-source="award_setting"
                                                                       data-type="2">
-                                                            <el-input v-model="item.award_name"></el-input>
+                                                            <el-input v-model="item.award_name" :disabled="isDisable"></el-input>
                                                         </el-form-item>
                                                         <el-form-item label="奖品大小"
                                                                       v-if="item.award_type == '1' && item.award_value !== '-1'">
-                                                            <el-input v-model="item.award_value" type="number">
+                                                            <el-input v-model="item.award_value" type="number" :disabled="isDisable">
                                                                 <template slot="append">M</template>
                                                             </el-input>
                                                         </el-form-item>
                                                         <el-form-item label="奖品大小"
                                                                       v-if="item.award_type == '2' && item.award_value !== '-1'">
-                                                            <el-select v-model="item.award_value" placeholder="请选择">
+                                                            <el-select v-model="item.award_value" placeholder="请选择" :disabled="isDisable">
                                                                 <el-option
                                                                         v-for="list in award_list_value"
                                                                         :label="list.label"
@@ -226,13 +241,8 @@
                                                                 </el-option>
                                                             </el-select>
                                                         </el-form-item>
-                                                        <el-form-item label="奖品数量" v-if="item.award_type !=='0'"
-                                                        :rules="[
-                                                            { required: true, message: '奖品数量不能为空'},
-                                                            { type: 'number', message: '奖品数量必须为整数'}
-                                                        ]"
-                                                        >
-                                                            <el-input v-model.number="item.award_num" type="number"></el-input>
+                                                        <el-form-item label="奖品数量" v-if="item.award_type !=='0'">
+                                                            <el-input v-model.number="item.award_num" type="number" :disabled="isDisable"></el-input>
                                                         </el-form-item>
                                                         <el-form-item label="中奖概率">
                                                             <!-- <el-input v-model="item.winning_rate">
@@ -240,6 +250,7 @@
                                                             </el-input> -->
                                                             <el-slider
                                                                     v-model="item.winning_rate"
+                                                                    :disabled="isDisable"
                                                                     show-input>
                                                             </el-slider>
                                                         </el-form-item>
@@ -266,19 +277,27 @@
                                                      ref="activity.sharing_setting" label-width="120px">
                                                 <el-form-item label="分享活动">
                                                     <el-radio label="0"
-                                                              v-model="activity.sharing_setting.is_allow_sharing">允许分享
+                                                              v-model="activity.sharing_setting.is_allow_sharing"
+                                                              :disabled="isDisable"
+                                                    >允许分享
                                                     </el-radio>
                                                     <el-radio label="1"
-                                                              v-model="activity.sharing_setting.is_allow_sharing">禁止分享
+                                                              v-model="activity.sharing_setting.is_allow_sharing"
+                                                              :disabled="isDisable"
+                                                    >禁止分享
                                                     </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="微信分享图标"
                                                               v-if="activity.sharing_setting.is_allow_sharing == '0'">
                                                     <el-radio label="0"
-                                                              v-model="activity.sharing_setting.is_wx_sharing_icon">默认
+                                                              v-model="activity.sharing_setting.is_wx_sharing_icon"
+                                                              :disabled="isDisable"
+                                                    >默认
                                                     </el-radio>
                                                     <el-radio label="1"
-                                                              v-model="activity.sharing_setting.is_wx_sharing_icon">自定义
+                                                              v-model="activity.sharing_setting.is_wx_sharing_icon"
+                                                              :disabled="isDisable"
+                                                    >自定义
                                                     </el-radio>
                                                     <el-col v-if="activity.sharing_setting.is_wx_sharing_icon == '1'">
                                                         <el-upload
@@ -287,6 +306,7 @@
                                                                 :show-file-list="false"
                                                                 :on-success="handleUploadWX"
                                                                 :on-error="handleUploadFaild"
+                                                                :disabled="isDisable"
                                                         >
                                                             <img v-if="activity.upload_image_url"
                                                                  :src="activity.upload_image_url" class="avatar">
@@ -301,12 +321,14 @@
                                                 <el-form-item label="微信分享内容"
                                                               v-if="activity.sharing_setting.is_allow_sharing == '0'">
                                                     <el-radio label="0"
-                                                              v-model="activity.sharing_setting.is_wx_sharing_content">
-                                                        默认
+                                                              v-model="activity.sharing_setting.is_wx_sharing_content"
+                                                              :disabled="isDisable"
+                                                    >默认
                                                     </el-radio>
                                                     <el-radio label="1"
-                                                              v-model="activity.sharing_setting.is_wx_sharing_content">
-                                                        自定义
+                                                              v-model="activity.sharing_setting.is_wx_sharing_content"
+                                                              :disabled="isDisable"
+                                                    >自定义
                                                     </el-radio>
                                                     <el-col>
                                                         <div class="text-tips">
@@ -323,7 +345,9 @@
                                                             <div class="card-block">
                                                                 <el-input type="textarea"
                                                                           :autosize="{ minRows: 4, maxRows: 8}"
-                                                                          v-model="activity.sharing_setting.wx_sharing_winner_content"></el-input>
+                                                                          v-model="activity.sharing_setting.wx_sharing_winner_content"
+                                                                          :disabled="isDisable"
+                                                                ></el-input>
                                                             </div>
                                                         </div>
                                                     </el-col>
@@ -338,19 +362,27 @@
                                                     <el-tab-pane label="企业信息" name="1" style="padding:10px">
                                                         <el-form-item label="主办单位" data-source="enterprise_setting">
                                                             <el-input
-                                                                    v-model="activity.advanced_setting.enterprise_setting.organizers"></el-input>
+                                                                    v-model="activity.advanced_setting.enterprise_setting.organizers"
+                                                                    :disabled="isDisable"
+                                                            ></el-input>
                                                         </el-form-item>
                                                         <el-form-item label="链接地址">
                                                             <el-input
-                                                                    v-model="activity.advanced_setting.enterprise_setting.website_url"></el-input>
+                                                                    v-model="activity.advanced_setting.enterprise_setting.website_url"
+                                                                    :disabled="isDisable"
+                                                            ></el-input>
                                                         </el-form-item>
                                                         <el-form-item label="企业Logo">
                                                             <el-radio label="0"
-                                                                      v-model="activity.advanced_setting.enterprise_setting.is_showing_logo">
+                                                                      v-model="activity.advanced_setting.enterprise_setting.is_showing_logo"
+                                                                      :disabled="isDisable"
+                                                            >
                                                                 隐藏
                                                             </el-radio>
                                                             <el-radio label="1"
-                                                                      v-model="activity.advanced_setting.enterprise_setting.is_showing_logo">
+                                                                      v-model="activity.advanced_setting.enterprise_setting.is_showing_logo"
+                                                                      :disabled="isDisable"
+                                                            >
                                                                 显示
                                                             </el-radio>
                                                             <el-col v-if="activity.advanced_setting.enterprise_setting.is_showing_logo == '1'">
@@ -360,6 +392,7 @@
                                                                         :show-file-list="false"
                                                                         :on-success="handleUploadScucess"
                                                                         :on-error="handleUploadFaild"
+                                                                        :disabled="isDisable"
                                                                 >
                                                                     <img v-if="activity.upload_image_url"
                                                                          :src="activity.upload_image_url"
@@ -371,11 +404,15 @@
                                                         </el-form-item>
                                                         <el-form-item label="页面加载图片">
                                                             <el-radio label="0"
-                                                                      v-model="activity.advanced_setting.enterprise_setting.is_loading_img">
+                                                                      v-model="activity.advanced_setting.enterprise_setting.is_loading_img"
+                                                                      :disabled="isDisable"
+                                                            >
                                                                 隐藏
                                                             </el-radio>
                                                             <el-radio label="1"
-                                                                      v-model="activity.advanced_setting.enterprise_setting.is_loading_img">
+                                                                      v-model="activity.advanced_setting.enterprise_setting.is_loading_img"
+                                                                      :disabled="isDisable"
+                                                            >
                                                                 自定义
                                                             </el-radio>
                                                             <el-col v-if="activity.advanced_setting.enterprise_setting.is_loading_img == '1'">
@@ -385,6 +422,7 @@
                                                                         :show-file-list="false"
                                                                         :on-success="handleUploadScucess"
                                                                         :on-error="handleUploadFaild"
+                                                                        :disabled="isDisable"
                                                                 >
                                                                     <img v-if="activity.upload_image_url"
                                                                          :src="activity.upload_image_url"
@@ -396,15 +434,20 @@
                                                         </el-form-item>
                                                         <el-form-item label="功能按钮">
                                                             <el-radio label="0"
-                                                                      v-model="activity.advanced_setting.enterprise_setting.is_showing_function_button">
-                                                                隐藏
+                                                                      v-model="activity.advanced_setting.enterprise_setting.is_showing_function_button"
+                                                                      :disabled="isDisable"
+                                                            >隐藏
                                                             </el-radio>
                                                             <el-radio label="1"
-                                                                      v-model="activity.advanced_setting.enterprise_setting.is_showing_function_button">
+                                                                      v-model="activity.advanced_setting.enterprise_setting.is_showing_function_button"
+                                                                      :disabled="isDisable"
+                                                            >
                                                                 页面跳转
                                                             </el-radio>
                                                             <el-radio label="2"
-                                                                      v-model="activity.advanced_setting.enterprise_setting.is_showing_function_button">
+                                                                      v-model="activity.advanced_setting.enterprise_setting.is_showing_function_button"
+                                                                      :disabled="isDisable"
+                                                            >
                                                                 一键关注
                                                             </el-radio>
                                                             <div class="card card-accent-primary"
@@ -417,13 +460,17 @@
                                                                                   data-source="button_link_text">
                                                                         <el-col :span="12">
                                                                             <el-input
-                                                                                    v-model="activity.advanced_setting.enterprise_setting.button_link_text"></el-input>
+                                                                                    v-model="activity.advanced_setting.enterprise_setting.button_link_text"
+                                                                                    :disabled="isDisable"
+                                                                            ></el-input>
                                                                         </el-col>
                                                                     </el-form-item>
                                                                     <el-form-item label="按钮链接">
                                                                         <el-col :span="12">
                                                                             <el-input
-                                                                                    v-model="activity.advanced_setting.enterprise_setting.button_link_url"></el-input>
+                                                                                    v-model="activity.advanced_setting.enterprise_setting.button_link_url"
+                                                                                    :disabled="isDisable"
+                                                                            ></el-input>
                                                                         </el-col>
                                                                     </el-form-item>
                                                                 </div>
@@ -437,7 +484,9 @@
                                                                     <el-form-item label="按钮名称">
                                                                         <el-col :span="12">
                                                                             <el-input
-                                                                                    v-model="activity.advanced_setting.enterprise_setting.button_flow_text"></el-input>
+                                                                                    v-model="activity.advanced_setting.enterprise_setting.button_flow_text"
+                                                                                    :disabled="isDisable"
+                                                                            ></el-input>
                                                                         </el-col>
                                                                     </el-form-item>
                                                                     <el-form-item label="微信公众号">
@@ -446,12 +495,14 @@
                                                                                     class="upload-demo"
                                                                                     drag
                                                                                     action="//jsonplaceholder.typicode.com/posts/"
-                                                                                    mutiple>
+                                                                                    mutiple
+                                                                                    :disabled="isDisable"
+                                                                            >
                                                                                 <i class="el-icon-upload"></i>
                                                                                 <div class="el-upload__text">
                                                                                     将二维码图片拖到此处，或<em>点击上传</em></div>
                                                                                 <div class="el-upload__tip" slot="tip">
-                                                                                    只能上传jpg/png文件，且不超过500kb
+                                                                                    只能上传jpg/png文件，且不超过500KB
                                                                                 </div>
                                                                             </el-upload>
                                                                         </el-col>
@@ -464,11 +515,15 @@
                                                         <el-form-item label="广告">
                                                             <el-col>
                                                                 <el-radio label="0"
-                                                                          v-model="activity.advanced_setting.game_setting.is_showing_ad">
+                                                                          v-model="activity.advanced_setting.game_setting.is_showing_ad"
+                                                                          :disabled="isDisable"
+                                                                >
                                                                     显示
                                                                 </el-radio>
                                                                 <el-radio label="1"
-                                                                          v-model="activity.advanced_setting.game_setting.is_showing_ad">
+                                                                          v-model="activity.advanced_setting.game_setting.is_showing_ad"
+                                                                          :disabled="isDisable"
+                                                                >
                                                                     隐藏
                                                                 </el-radio>
                                                             </el-col>
@@ -476,11 +531,15 @@
                                                         <el-form-item label="轮播中奖信息">
                                                             <el-col>
                                                                 <el-radio label="0"
-                                                                          v-model="activity.advanced_setting.game_setting.is_play_award_info">
+                                                                          v-model="activity.advanced_setting.game_setting.is_play_award_info"
+                                                                          :disabled="isDisable"
+                                                                >
                                                                     关闭
                                                                 </el-radio>
                                                                 <el-radio label="1"
-                                                                          v-model="activity.advanced_setting.game_setting.is_play_award_info">
+                                                                          v-model="activity.advanced_setting.game_setting.is_play_award_info"
+                                                                          :disabled="isDisable"
+                                                                >
                                                                     开启
                                                                 </el-radio>
                                                             </el-col>
@@ -533,6 +592,7 @@
                 }
             };
             return {
+                isDisable:'',
                 code: '',
                 act: '',
                 is_dialog_show: false,
@@ -544,7 +604,7 @@
                 loading: false,
                 business_info: {},
                 flow_price_info: {},
-                freeze_money: '',    //消费金额
+                freeze_money: 0,    //消费金额
                 award_list_value: [
                     {
                         value: '100',
@@ -697,6 +757,7 @@
             'activity.award_setting': {
                 handler: function () {
                     var freeze_money = 0;
+                    console.log(typeof freeze_money)
                     let scores = 0;
                     let coupon_size_100 = 0;
                     let coupon_size_500 = 0;
@@ -706,25 +767,25 @@
                         }
                         if (item.award_type == 1) {
                             scores += item.award_value * item.award_num;
-                            freeze_money += Number(Math.abs(Number(item.award_value) * item.award_num * this.flow_price_info.flow)).toFixed(2);
+                            freeze_money += Math.abs(Number(item.award_value) * item.award_num * this.flow_price_info.flow)
                         }
                         if (item.award_type == 2 && item.award_value == 100) {
                             coupon_size_100 += item.award_num;
-                            freeze_money += Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_100)).toFixed(2)
+                            freeze_money += Math.abs(item.award_num * this.flow_price_info.coupon_size_100)
                         }
                         if (item.award_type == 2 && item.award_value == 500) {
                             coupon_size_500 += item.award_num;
-                            freeze_money += Number(Math.abs(item.award_num * this.flow_price_info.coupon_size_500)).toFixed(2);
+                            freeze_money += Math.abs(item.award_num * this.flow_price_info.coupon_size_500)
                         }
 
                     }
-                    this.freeze_money = Number(freeze_money)
+                    this.freeze_money = freeze_money.toFixed(2)
                     console.log(this.freeze_money)
                 },
                 deep: true
             },
             'activity.base_setting.fictitious_join_num': function () {
-                this.activity.base_setting.fictitious_join_num = this.activity.base_setting.fictitious_join_num ? this0.activity.base_setting.fictitious_join_num : 0
+                this.activity.base_setting.fictitious_join_num = this.activity.base_setting.fictitious_join_num ? this.activity.base_setting.fictitious_join_num : 0
             },
 
         },
@@ -785,6 +846,12 @@
                         })
                         console.log(res.data.data)
                         this.activity = res.data.data
+                        if(res.data.data.activity_status == 0){
+                            this.isDisable = false
+                        }else{
+                            this.isDisable = true
+                        }
+
                         this.setTemplate(this.activity.base_setting.activity_type)
                     } else {
                         this.$notify({

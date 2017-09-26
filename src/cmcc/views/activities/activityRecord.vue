@@ -5,12 +5,14 @@
         <el-form-item>
           <el-input placeholder="手机号" v-model="formRecord.phone_number"></el-input>
         </el-form-item>
+
         <el-form-item prop="start_time">
           <el-date-picker v-model="formRecord.start_time" type="datetime" placeholder="选择开始时间"  style="width:100%;">
          </el-date-picker>
 				</el-form-item>
         <el-form-item prop="end_time">
           <el-date-picker v-model="formRecord.end_time" type="datetime" placeholder="选择结束时间"  style="width:100%;">
+
          </el-date-picker>
 				</el-form-item>
         <el-form-item>
@@ -27,7 +29,7 @@
       <el-table-column prop="create_time" label="领取时间"></el-table-column>
     </el-table>
     <!--工具条-->
-		<el-col :span="24" class="toolbar">
+		<el-col :span="24" class="toolbar" v-if="recordList.length>0">
 			<!-- <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button> -->
 			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="10" :total="rows" style="float:right;">
 			</el-pagination>
@@ -87,8 +89,8 @@ export default {
             page_number: this.page_number,
             page_size: this.page_size,
             phone_number: this.formRecord.phone_number,
-            start_time: this.formRecord.start_time,
-            end_time: this.formRecord.end_time
+            start_time: moment(this.formRecord.start_time).format('YYYY-MM-DD HH:mm:ss'),
+            end_time: moment(this.formRecord.end_time).format('YYYY-MM-DD HH:mm:ss')
           }
           this.listloading = true
           NProgress.start()
@@ -122,9 +124,9 @@ export default {
     },
     // 分页回调
     handleCurrentChange (val) {
-			this.page_number = val;
-			this.getRecords(this.id);
-		},
+        this.page_number = val;
+        this.getRecords(this.id);
+    },
   },
   mounted () {
     this.id = this.$route.query.id
@@ -133,5 +135,5 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 </style>

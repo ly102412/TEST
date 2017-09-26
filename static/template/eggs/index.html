@@ -43,7 +43,7 @@
       </div>
       <!-- 活动规则按钮 end-->
       <!-- 大转盘 begin-->
-      
+
       <!-- 大转盘 end-->
       <!-- 参与人数 begin-->
       <div class="join-num">
@@ -139,7 +139,7 @@
           <p>{{lottery.award_name}}</p>
         </div>
         <div class="contract">
-            <a class="btn-contract" :href="activity.bank_url">领取奖品</a></br>
+            <a class="btn-contract" @click.stop="goBank()">领取奖品</a></br>
             <a class="btn-contract" @click="window.location.reload()">再来一次</a></br>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
@@ -254,24 +254,24 @@
           // 初始化砸金蛋效果
           var self = this;
           $('#carousel').carousel({
-            //width: 320, 
-            //height: 150, 
-            itemWidth:120, 
-            horizontalRadius:90, 
-            verticalRadius:40, 
-            resize:false, 
-            mouseScroll:false, 
-            mouseDrag:true, 
-            scaleRatio:0.635, 
-            scrollbar:true, 
-            tooltip:true, 
+            //width: 320,
+            //height: 150,
+            itemWidth:120,
+            horizontalRadius:90,
+            verticalRadius:40,
+            resize:false,
+            mouseScroll:false,
+            mouseDrag:true,
+            scaleRatio:0.635,
+            scrollbar:true,
+            tooltip:true,
             mouseWheel:true,
             mouseWheelReverse:true
           });
           // 点击金蛋抽奖
           $("#carousel img ").click(function(){
             var gm = $(this).attr('src','images/egg2.gif');
-            setTimeout(function(){  
+            setTimeout(function(){
               self.goLottery(this.code);
               // window.location.reload();
             },2000)
@@ -378,7 +378,12 @@
 
               }
           });
-        }
+        },
+        // 领取奖品，跳转流量银行
+        goBank() {
+            window.location.href="/api/bank/user/auth"
+        },
+
       }
   });
   </script>
