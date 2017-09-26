@@ -84,7 +84,7 @@
         <div class="module edit-layer" data-type="2" data-layer="base_setting_date">
           <h3>活动时间</h3>
           <div class="info">
-            <p>{{activity.base_setting.begin_date}} - {{activity.base_setting.end_date}}</p>
+            <p>{{begin_date}} - {{end_date}}</p>
           </div>
         </div>
         <div class="module edit-layer" data-type="2" data-layer="enterprise_setting">
@@ -166,6 +166,8 @@
       el: '#app',
       data () {
         return {
+          begin_date:'',
+          end_date:'',
           code: '',
           lottery: {
             award_name:'',
@@ -232,8 +234,8 @@
             advanced_setting: {
               enterprise_setting:{
                 organizers: '',             // 主办单位
-                website_url: '',            // 链接地址
-                is_showing_logo: '0',     // 是否显示企业Logo
+                website_url: 'javascript:;',// 链接地址
+                is_showing_logo: '0',       // 是否显示企业Logo
                 logo_url: '',               // 企业logo
                 is_loading_img: '0',          // 页面加载图片
                 loading_img_url: '',        // 加载图片url
@@ -296,6 +298,12 @@
       methods: {
         setContent (activity) {
           this.activity = activity
+          if(this.activity.base_setting.begin_date){
+              this.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
+          }
+          if(this.activity.base_setting.end_date){
+              this.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
+          }
         },
         getUrl (paras) {
           var url = location.href;
@@ -374,6 +382,8 @@
                 if(res.status == 0){
                   res.data.activity.main_tab = _this.activity.main_tab
                   _this.activity = res.data.activity
+                  _this.begin_date = moment(_this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
+                  _this.end_date = moment(_this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
                 }
 
               }

@@ -60,28 +60,29 @@
                                                 <el-form-item label="活动名称" prop="activity_name" required>
                                                     <el-input v-model="activity.base_setting.activity_name"></el-input>
                                                 </el-form-item>
-                                                <el-form-item label="开始时间" required data-source="base_setting_date">
+                                                <el-form-item label="开始时间" required prop="begin_date" required>
                                                     <el-col :span="14">
                                                         <el-form-item>
                                                             <el-date-picker
                                                                             v-model="activity.base_setting.begin_date"
-                                                                            :rules="base_setting_rules"
                                                                             type="datetime"
                                                                             placeholder="选择开始时间"
                                                                             style="width:100%"
-                                                                            :editable="false">
+                                                                            format="yyyy-MM-DD HH:mm:ss"
+                                                                            :editable="false"
+                                                                    >
                                                             </el-date-picker>
                                                         </el-form-item>
                                                     </el-col>
                                                 </el-form-item>
-                                                <el-form-item label="结束时间" required data-source="base_setting_date">
+                                                <el-form-item label="结束时间" required prop="end_date" required>
                                                     <el-col :span="14">
                                                         <el-form-item>
                                                             <el-date-picker v-model="activity.base_setting.end_date"
-                                                                            :rules="base_setting_rules"
                                                                             type="datetime"
                                                                             placeholder="选择结束时间"
                                                                             style="width:100%;"
+                                                                            format="yyyy-MM-DD HH:mm:ss"
                                                                             :editable="false">
                                                             </el-date-picker>
                                                         </el-form-item>
@@ -694,7 +695,7 @@
                     advanced_setting: {
                         enterprise_setting: {
                             organizers: '',                 // 主办单位
-                            website_url: '',                // 链接地址
+                            website_url: 'javascript:;',    // 链接地址
                             is_showing_logo: '0',           // 是否显示企业Logo
                             logo_url: '',                   // 企业logo
                             is_loading_img: '0',            // 页面加载图片
@@ -715,10 +716,10 @@
                         {required: true, message: '请输入活动名称', trigger: 'blur'}
                     ],
                     begin_date: [
-                        {type: 'date', required: true, message: '请选择日期', trigger: 'blur'},
+                        { type: 'date', required: true, message: '请选择开始日期', trigger: 'change' }
                     ],
                     end_date: [
-                        {type: 'date', required: true, message: '请选择日期', trigger: 'blur'},
+                        {type: 'date', required: true, message: '请选择结束日期', trigger: 'change'},
                     ],
                 },
                 lottery_setting_rules: {
@@ -866,8 +867,12 @@
             updateActivity() {
                 this.loading = true
                 NProgress.start()
-                this.activity.base_setting.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
-                this.activity.base_setting.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
+                if(this.activity.base_setting.begin_date){
+                    this.activity.base_setting.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
+                }
+                if(this.activity.base_setting.end_date){
+                    this.activity.base_setting.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
+                }
                 this.activity.main_tab = '1'
                 let params = {
                     'code': this.code,
