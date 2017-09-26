@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="animated fadeIn">
     <el-table :data="recordList" highlight-current-row v-loading="listloading">
-      <el-table-column prop="id" label="活动编号"></el-table-column>
+      <el-table-column prop="business_activity_info_id" label="活动编码"></el-table-column>
       <el-table-column prop="type" label="消耗方式" :formatter="formatType"></el-table-column>
       <el-table-column prop="money" label="金额(元)"></el-table-column>
       <el-table-column prop="scores" label="流量币(M)"></el-table-column>
