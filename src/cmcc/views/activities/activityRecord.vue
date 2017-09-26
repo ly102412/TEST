@@ -1,20 +1,20 @@
 <template lang="html">
   <div class="animated fadeIn">
     <el-col :span="24" class="toolbar">
-      <el-form :inline="true" :model="formRecord">
+      <el-form :inline="true" :model="formRecord" :rules="rules" ref="formRecordRules">
         <el-form-item>
           <el-input placeholder="手机号" v-model="formRecord.phone_number"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item prop="start_time">
           <el-date-picker v-model="formRecord.start_time" type="datetime" placeholder="选择开始时间"  style="width:100%;">
          </el-date-picker>
 				</el-form-item>
-        <el-form-item>
-          <el-date-picker v-model="formRecord.end_time" type="datetime" placeholder="选择开始时间"  style="width:100%;">
+        <el-form-item prop="end_time">
+          <el-date-picker v-model="formRecord.end_time" type="datetime" placeholder="选择结束时间"  style="width:100%;">
          </el-date-picker>
 				</el-form-item>
         <el-form-item>
-					<el-button type="primary" @click="getRecords(id)">查询</el-button>
+					<el-button type="primary" @click="getRecords(id)" style="margin-top:0!important">查询</el-button>
 				</el-form-item>
       </el-form>
     </el-col>
@@ -41,6 +41,20 @@ import NProgress from 'nprogress'
 import moment from 'moment'
 export default {
   data () {
+    var validate_start_time = (rule, value, callback) => {
+      if(value > this.formRecord.end_time && this.formRecord.end_time !== ''){
+        callback(new Error('开始时间不能大于结束时间'))
+      }else{
+        callback()
+      }
+    }
+    var validate_end_time = (rule, value, callback) => {
+      if(value < this.formRecord.start_time && this.formRecord.start_time !== ''){
+        callback(new Error('结束时间不能小于开始时间'))
+      }else{
+        callback()
+      }
+    }
     return {
       formRecord: {
         phone_number: '',
@@ -52,31 +66,46 @@ export default {
       rows: 0,
       page_number: 1,
       page_size: 10,
-      listloading: false
+      listloading: false,
+      rules: {
+        start_time: [
+          {validator: validate_start_time, trigger: 'blur'}
+        ],
+        end_time: [
+          {validator: validate_end_time, trigger: 'blur'}
+        ]
+      }
     }
   },
   methods: {
     // 获取中奖记录
-    getRecords (id) {
-      let params = {
-        business_activity_info_id: id,
-        page_number: this.page_number,
-				page_size: this.page_size,
-        phone_number: this.formRecord.phone_number,
-        start_time: this.formRecord.start_time,
-        end_time: this.formRecord.end_time
-      }
-      this.listloading = true
-      NProgress.start()
-      getActivityRecord(params).then((res) => {
-        console.log(res)
-        this.listloading = false
-        NProgress.done()
-        if(res.status === 0){
-          this.recordList = res.data.list
-          this.rows = res.data.rows
+    getRecords (id,formRecordRules) {
+      this.$refs.formRecordRules.validate((valid) => {
+        if (valid) {
+          let params = {
+            business_activity_info_id: id,
+            page_number: this.page_number,
+            page_size: this.page_size,
+            phone_number: this.formRecord.phone_number,
+            start_time: this.formRecord.start_time,
+            end_time: this.formRecord.end_time
+          }
+          this.listloading = true
+          NProgress.start()
+          getActivityRecord(params).then((res) => {
+            console.log(res)
+            this.listloading = false
+            NProgress.done()
+            if(res.status === 0){
+              this.recordList = res.data.list
+              this.rows = res.data.rows
+            }
+          })
+        } else {
+          this.$message.error('条件搜索有误');
+          return false;
         }
-      })
+      });
     },
     // 设置奖品类型
     formatPrizeType (row, column) {
