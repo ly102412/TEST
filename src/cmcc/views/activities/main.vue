@@ -592,7 +592,7 @@
                 }
             };
             return {
-                isDisable:'',
+                isDisable:false,
                 code: '',
                 act: '',
                 is_dialog_show: false,
