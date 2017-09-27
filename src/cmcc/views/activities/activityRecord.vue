@@ -21,7 +21,7 @@
       </el-form>
     </el-col>
     <el-table :data="recordList" highlight-current-row v-loading="listloading">
-      <el-table-column prop="id" label="中奖用户ID"></el-table-column>
+      <el-table-column prop="user_id" label="中奖用户ID"></el-table-column>
       <el-table-column prop="phone_number" label="手机号码"></el-table-column>
       <el-table-column prop="prize_name" label="奖项"></el-table-column>
       <el-table-column prop="prize_type" label="奖品类型" :formatter="formatPrizeType"></el-table-column>
