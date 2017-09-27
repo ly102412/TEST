@@ -570,11 +570,15 @@
             var validateDailyLotteryTime = (rule, value, callback) => {
                 if (this.activity.lottery_setting.is_total_lottery == 1) {
                     if (value === '' || value == 0) {
-                        callback(new Error('请输入抽奖机会'))
+                        callback(new Error('请输入每日抽奖机会'))
                     } else if (value > this.activity.lottery_setting.total_lottery_time) {
                         callback(new Error('每日抽奖机会不能大于总抽奖机会'))
                     } else {
                         callback()
+                    }
+                }else if(this.activity.lottery_setting.is_total_lottery == 0){
+                  if (value === '' || value == 0) {
+                        callback(new Error('请输入每日抽奖机会'))
                     }
                 }
             };
@@ -722,7 +726,7 @@
                 },
                 lottery_setting_rules: {
                     daily_lottery_time: [
-                        {validator: validateDailyLotteryTime, trigger: 'blur'}
+                        {validator: validateDailyLotteryTime, required: true, trigger: 'blur'}
                     ],
                     winning_time: [
                         {validator: validateWinningTime, trigger: 'blur'}
