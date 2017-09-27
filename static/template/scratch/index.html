@@ -128,7 +128,7 @@
             <div class="module edit-layer" data-type="2" data-layer="enterprise_setting">
                 <h3>主办单位</h3>
                 <div class="info">
-                    <p>本次活动主办单位为<a :href="activity.advanced_setting.enterprise_setting.website_url"><strong>{{activity.advanced_setting.enterprise_setting.organizers}}</strong></a>
+                    <p>本次活动主办单位为<a :href="activity.advanced_setting.enterprise_setting.website_url?activity.advanced_setting.enterprise_setting.website_url:'javascript:;'"><strong>{{activity.advanced_setting.enterprise_setting.organizers}}</strong></a>
                     </p>
                 </div>
             </div>

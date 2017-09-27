@@ -88,7 +88,7 @@
             <div class="module edit-layer" data-type="2" data-layer="enterprise_setting" v-if="activity.advanced_setting.enterprise_setting.organizers">
                 <h3>主办单位</h3>
                 <div class="info">
-                    <p>本次活动主办单位为<a :href="activity.advanced_setting.enterprise_setting.website_url"><strong>{{activity.advanced_setting.enterprise_setting.organizers}}</strong></a>
+                    <p>本次活动主办单位为<a :href="activity.advanced_setting.enterprise_setting.website_url?activity.advanced_setting.enterprise_setting.website_url:'javascript:;'"><strong>{{activity.advanced_setting.enterprise_setting.organizers}}</strong></a>
                     </p>
                 </div>
             </div>
@@ -239,7 +239,7 @@
                     advanced_setting: {
                         enterprise_setting: {
                             organizers: '',             // 主办单位
-                            website_url: 'javascript:;',            // 链接地址
+                            website_url: 'javascript:;', // 链接地址
                             is_showing_logo: '0',     // 是否显示企业Logo
                             logo_url: '',               // 企业logo
                             is_loading_img: '0',          // 页面加载图片
@@ -310,7 +310,7 @@
             // 抽奖接口
             goLottery(code) {
                 var _this = this
-                if (turnplate.bRotate) return;
+                //if (turnplate.bRotate) return;
                 if (!turnplate.restaraunts) return;
                 turnplate.bRotate = !turnplate.bRotate;
                 // 点击抽奖
@@ -341,12 +341,10 @@
                                         _this.activity.main_tab = 5
                                     }
                                     _this.getUserInfo(code)
-                                    // alert(res.data.prize_name)
-                                    // _this.activity.main_tab = 4
                                 });
                             } else {
-                                $('#wheelcanvas').stopRotate();
                                 alert(res.message)
+                                $('#wheelcanvas').stopRotate();
                             }
                         },
                         complete: function () {

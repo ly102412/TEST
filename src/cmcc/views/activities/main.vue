@@ -595,6 +595,7 @@
                 }
             };
             return {
+                defaultUrl:'javascript:;',
                 isDisable:false,
                 code: '',
                 act: '',
@@ -697,7 +698,7 @@
                     advanced_setting: {
                         enterprise_setting: {
                             organizers: '',                 // 主办单位
-                            website_url: 'javascript:;',    // 链接地址
+                            website_url: '',                // 链接地址
                             is_showing_logo: '0',           // 是否显示企业Logo
                             logo_url: '',                   // 企业logo
                             is_loading_img: '0',            // 页面加载图片
@@ -1064,9 +1065,12 @@
             handleTabsEdit(targetName, action) {
                 let tabs = this.activity.award_setting
                 let tab_length = this.activity.award_setting.length
+                //tabIndex tab总条数
+                this.tabIndex = tab_length
                 // 判断用户操作
                 if (action === 'add') {
                     let tab_name = ''
+                    console.log('tabIndex==='+this.tabIndex);
                     let tab_targetName = ++this.tabIndex + ''
                     for (let i = 0; i < tab_length; i++) {
                         tab_name = this.tab_awards_name_list[i]
@@ -1086,6 +1090,7 @@
                             limit_begin_time: '',
                             limit_end_time: ''
                         });
+
                         this.edit_awards_tabs_value = tab_targetName
                         // 回滚
                         this.activity.award_setting = this.activity.award_setting.filter(tab => true)
@@ -1099,6 +1104,7 @@
                 }
                 if (action === 'remove') {
                     let activeName = this.edit_awards_tabs_value
+                    if(targetName == '1'){return}
                     if (tab_length > 1) {
                         if (activeName === targetName) {
                             tabs.forEach((tab, index) => {
