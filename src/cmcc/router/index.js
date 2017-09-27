@@ -17,6 +17,7 @@ import BalanceInfo from '../views/bussiness/balanceInfo'
 
 // views - app商家接入
 import AppMerchant from '../views/merchant/appMerchant'
+import WxMerchant from '../views/merchant/wxMerchant'
 // views - pages
 import Page404 from '../views/pages/404'
 
@@ -123,6 +124,11 @@ const routes = [
             path: '/merchant/appMerchant',
             name: 'app接入',
             component: AppMerchant
+          },
+          {
+            path: '/merchant/wxMerchant',
+            name: '微信接入',
+            component: WxMerchant
           }
         ]
       }
