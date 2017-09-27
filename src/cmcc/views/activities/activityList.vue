@@ -16,7 +16,7 @@
       </template>
     </el-table-column>
       <el-table-column prop="activity_name" label="活动标题" width="120"></el-table-column>
-      <!-- <el-table-column prop="activity_desc" label="活动描述" width="150"></el-table-column> -->
+       <el-table-column prop="code" label="活动code" width="350"></el-table-column>
       <el-table-column prop="activity_type" label="活动类型" :formatter="formatType" width="120"></el-table-column>
       <el-table-column prop="start_time" label="活动开始时间" width="120"></el-table-column>
       <el-table-column prop="end_time" label="活动结束时间" width="120"></el-table-column>
