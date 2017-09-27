@@ -27,7 +27,7 @@
                 <el-button v-if="this.act == 'create'" type="success" icon="check"
                            @click.native.prevent="saveActivity('activity.base_setting')"
                            :loading="loading">立即创建</el-button>
-                <el-button v-if="this.act == 'edit'" type="info" icon="setting" @click.native.prevent="updateActivity()"
+                <el-button v-if="this.act == 'edit'" type="info" icon="setting" @click.native.prevent="updateActivity('activity.base_setting')"
                            :loading="loading">保存活动</el-button>
               </span>
                         </div>
@@ -60,7 +60,7 @@
                                                 <el-form-item label="活动名称" prop="activity_name" required>
                                                     <el-input v-model="activity.base_setting.activity_name"></el-input>
                                                 </el-form-item>
-                                                <el-form-item label="开始时间" required prop="begin_date" required>
+                                                <el-form-item label="开始时间" required>
                                                     <el-col :span="14">
                                                         <el-form-item>
                                                             <el-date-picker
@@ -74,7 +74,7 @@
                                                         </el-form-item>
                                                     </el-col>
                                                 </el-form-item>
-                                                <el-form-item label="结束时间" required prop="end_date" required>
+                                                <el-form-item label="结束时间" required>
                                                     <el-col :span="14">
                                                         <el-form-item>
                                                             <el-date-picker v-model="activity.base_setting.end_date"
@@ -210,7 +210,9 @@
                                                         :name="item.name"
                                                 >
                                                     <el-form ref="activity.award_setting"
-                                                             label-width="120px" style="padding:0 10px">
+                                                             label-width="120px" style="padding:0 10px"
+                                                             :rules="award_setting_rules"
+                                                    >
                                                         <el-form-item label="奖品类型" v-if="item.award_value !== '-1'">
                                                             <el-radio-group v-model="item.award_type"
                                                                             @change="clearAwardValue(item)"
@@ -240,8 +242,8 @@
                                                                 </el-option>
                                                             </el-select>
                                                         </el-form-item>
-                                                        <el-form-item label="奖品数量" v-if="item.award_type !=='0'">
-                                                            <el-input v-model.number="item.award_num" type="number" :disabled="isDisable"></el-input>
+                                                        <el-form-item label="奖品数量" v-if="item.award_type !=='0'" required>
+                                                            <el-input v-model.number="item.award_num" type="number" :disabled="isDisable" ></el-input>
                                                         </el-form-item>
                                                         <el-form-item label="中奖概率">
                                                             <!-- <el-input v-model="item.winning_rate">
@@ -594,6 +596,18 @@
                     }
                 }
             };
+            var validateAwardType = (rule, value, callback) => {
+                console.log(value)
+                let myreg = /^(0|\+?[1-9][0-9]*)$/
+                if (value === '') {
+                    callback(new Error('请输入奖品数量'))
+                } else if (!myreg.test(value)) {
+                    callback(new Error('奖品数量只能输入正整数'))
+                } else {
+                    callback()
+                }
+            };
+
             return {
                 isDisable:false,
                 code: '',
@@ -703,8 +717,8 @@
                             is_loading_img: '0',            // 页面加载图片
                             loading_img_url: '',            // 加载图片url
                             is_showing_function_button: '0', //功能按钮  0隐藏 1页面跳转 2一键关注
-                            button_link_text: '企业官网', // 点击按钮跳转链接地址
-                            button_link_url: '',        // 点击按钮跳转链接地址
+                            button_link_text: '企业官网',     // 点击按钮跳转链接地址
+                            button_link_url: '',            // 点击按钮跳转链接地址
                             button_flow_text: ''        // 点击按钮一键关注
                         },
                         game_setting: {
@@ -732,7 +746,11 @@
                         {validator: validateWinningTime, trigger: 'blur'}
                     ]
                 },
-                award_setting_rules: {},
+                award_setting_rules: {
+                    award_type:[
+                        {validator: validateAwardType, required: true, trigger: 'blur'}
+                    ]
+                },
                 sharing_setting_rules: {},
                 advanced_setting_rules: {}
             }
@@ -760,7 +778,6 @@
             'activity.award_setting': {
                 handler: function () {
                     var freeze_money = 0;
-                    console.log(typeof freeze_money)
                     let scores = 0;
                     let coupon_size_100 = 0;
                     let coupon_size_500 = 0;
@@ -866,44 +883,54 @@
                 })
             },
             // 保存编辑活动
-            updateActivity() {
-                this.loading = true
-                NProgress.start()
-                if(this.activity.base_setting.begin_date){
-                    this.activity.base_setting.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
-                }
-                if(this.activity.base_setting.end_date){
-                    this.activity.base_setting.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
-                }
-                this.activity.main_tab = '1'
-                let params = {
-                    'code': this.code,
-                    'activity': this.activity
-                }
-                editActivity(params).then((res) => {
-                    if (res.data.status == 0) {
-                        this.loading = false
-                        NProgress.done()
-                        console.log(res)
-                        this.$notify({
-                            title: '成功',
-                            message: '保存活动成功',
-                            type: 'success'
+            updateActivity(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.loading = true
+                        NProgress.start()
+                        if(this.activity.base_setting.begin_date){
+                            this.activity.base_setting.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
+                        }
+                        if(this.activity.base_setting.end_date){
+                            this.activity.base_setting.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
+                        }
+                        this.activity.main_tab = '1'
+                        let params = {
+                            'code': this.code,
+                            'activity': this.activity
+                        }
+                        editActivity(params).then((res) => {
+                            if (res.data.status == 0) {
+                                this.loading = false
+                                NProgress.done()
+                                console.log(res)
+                                this.$notify({
+                                    title: '成功',
+                                    message: '保存活动成功',
+                                    type: 'success'
+                                })
+                                this.$router.push({path: 'activityList'})
+                            }
                         })
-                        this.$router.push({path: 'activityList'})
                     }
                 })
+
             },
             // 创建活动
             saveActivity(formName) {
                 let _this = this
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+
                         this.$confirm('请核对您添加的信息', '提示', {}).then(() => {
                             this.loading = true
                             NProgress.start()
-                            this.activity.base_setting.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
-                            this.activity.base_setting.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
+                            if(this.activity.base_setting.begin_date){
+                                this.activity.base_setting.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
+                            }
+                            if(this.activity.base_setting.end_date) {
+                                this.activity.base_setting.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
+                            }
                             let params = {'activity': this.activity}
                             createActivity(params).then((res) => {
                                 this.loading = false

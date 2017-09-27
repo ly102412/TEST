@@ -157,7 +157,7 @@ export default {
     },
     // 复制链接
     handleCopy (msg) {
-      this.$alert(msg,'复制以下链接')
+      this.$alert(msg,'复制以下链接' ,{confirmButtonText: '关闭'})
     },
     // 删除活动
     handleDel (code) {
