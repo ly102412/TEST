@@ -3,16 +3,26 @@
      <div class="row">
       <div class="col-sm-12 col-lg-12">
         <div class="card">
-          <div class="card-header"><strong>秘钥</strong>
+          <div class="card-header"><strong>商户ID&秘钥</strong>
           </div>
           <div class="card-block">
             <form action="" method="post" class="form-horizontal">
               <div class="form-group row">
-                <div class="col-md-12">
-                    <input class="form-control" type="text" readonly="readonly" v-model="SecretKey">
-                    <el-button type="primary" @click="open">重置秘钥</el-button>
+                <div class="col-md-3">
+                    <b>商户ID（business_id）：</b>
                 </div>
+                <div class="col-md-9">
+                {{SecretData.business_id}}
+                </div>
+
               </div>
+              <div class="form-group row">
+                <span class="col-md-3">
+                <b>秘钥（secret_key）：</b>
+                </span>
+                <input class="col-md-9" type="text" readonly="readonly" v-model="SecretKey">
+              </div>
+              <el-button type="primary" @click="open">重置秘钥</el-button>
             </form>
           </div>
         </div>
@@ -126,12 +136,15 @@
                     </div>
               </div>
               <div class="form-group row">
-                <label for="hf-email" class="col-md-9 form-control-label">完整跳转路径样例：（ <b style="color: red;">请求参数需转换成base64放到data里</b>）</label>
+                <label for="hf-email" class="col-md-9 form-control-label">完整跳转路径样例：<b style="color: red;">（请求参数需转换成base64放到data里）</b></label>
                 <div class="col-md-12" style="word-wrap: break-word;
 word-break: normal;">
-                    <b>
-                    http://m.tst.ruwe.cn/api/app/user/auth?data= YWN0aXZpdHlfY29kZT03MjkzYTUxZS1hYzJjLTQxYmMtOTQ4OS0yMjA3MzQ1NWIwYzgmYnVzaW5lc3NfaWQ9MTAwMDAwMDEmcGhvbmVfbnVtYmVyPTE4ODEwMzk1NjA3JnRpbWVzdGFtcD0xNTA1NDYyMzkxNDk1JnV1aWQ9MTg4MTAzOTU2MDcmc2lnbj04NWIyMjAzN2U0NGI3ZTQwMWVhZmJmNjQzYzc3OWYyZQ==
-                    </b>
+                    <b>活动入口：</b><br/>
+                    https://m.ruwe.cn/api/app/user/auth?data= YWN0aXZpdHlfY29kZT03MjkzYTUxZS1hYzJjLTQxYmMtOTQ4OS0yMjA3MzQ1NWIwYzgmYnVzaW5lc3NfaWQ9MTAwMDAwMDEmcGhvbmVfbnVtYmVyPTE4ODEwMzk1NjA3JnRpbWVzdGFtcD0xNTA1NDYyMzkxNDk1JnV1aWQ9MTg4MTAzOTU2MDcmc2lnbj04NWIyMjAzN2U0NGI3ZTQwMWVhZmJmNjQzYzc3OWYyZQ==
+                    <br/>
+                     <b>流量银行入口：<b style="color: red;">(参数不需要 activity_code)</b></b><br/>
+                    https://m.ruwe.cn/api/app/user/auth/tobank?data= YWN0aXZpdHlfY29kZT03MjkzYTUxZS1hYzJjLTQxYmMtOTQ4OS0yMjA3MzQ1NWIwYzgmYnVzaW5lc3NfaWQ9MTAwMDAwMDEmcGhvbmVfbnVtYmVyPTE4ODEwMzk1NjA3JnRpbWVzdGFtcD0xNTA1NDYyMzkxNDk1JnV1aWQ9MTg4MTAzOTU2MDcmc2lnbj04NWIyMjAzN2U0NGI3ZTQwMWVhZmJmNjQzYzc3OWYyZQ==
+                    </br>
                 </div>
               </div>
 
@@ -200,7 +213,8 @@ import NProgress from 'nprogress'
 export default {
   data () {
     return {
-        SecretKey: '',
+        SecretData: {},
+        SecretKey:'',
         activeFlow:require('../../static/img/merchant/flow-chart.jpg'),
         parameter:require('../../static/img/merchant/parameter.jpg'),
         express:'1199bd4aea685f080a07652cb87ea488&activity_code=7293a51e-ac2c-41bc-9489-22073455b0c8&business_id=10000001&phone_number=18810395607&timestamp=1487827759145&uuid=' +
@@ -215,7 +229,8 @@ export default {
             console.log(res)
             NProgress.done()
             if(res.status == 0){
-                this.SecretKey = res.data
+                this.SecretData = res.data
+                this.SecretKey  = res.data.secret_key
 
             }
           })
