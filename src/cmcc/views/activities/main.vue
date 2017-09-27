@@ -68,7 +68,6 @@
                                                                             type="datetime"
                                                                             placeholder="选择开始时间"
                                                                             style="width:100%"
-                                                                            format="yyyy-MM-DD HH:mm:ss"
                                                                             :editable="false"
                                                                     >
                                                             </el-date-picker>
@@ -82,7 +81,6 @@
                                                                             type="datetime"
                                                                             placeholder="选择结束时间"
                                                                             style="width:100%;"
-                                                                            format="yyyy-MM-DD HH:mm:ss"
                                                                             :editable="false">
                                                             </el-date-picker>
                                                         </el-form-item>
