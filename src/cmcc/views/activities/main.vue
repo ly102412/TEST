@@ -595,7 +595,6 @@
                 }
             };
             return {
-                defaultUrl:'javascript:;',
                 isDisable:false,
                 code: '',
                 act: '',
