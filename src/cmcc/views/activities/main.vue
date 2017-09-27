@@ -970,18 +970,23 @@
                 switch (this.activity.upload_image_name) {
                     case 'main_bg':
                         this.activity.activity_img_upload.main_bg = require('../../../../static/template/common/images/active-bg.jpg')
+                        this.activity.upload_image_url = ''
                         break
                     case 'rules_icon':
                         this.activity.activity_img_upload.rules_icon = require('../../../../static/template/common/images/ruleImg_yellow.png')
+                        this.activity.upload_image_url = ''
                         break
                     case 'turnplate_bg':
                         this.activity.activity_img_upload.turnplate_bg = require('../../../../static/template/common/images/turnplate-bg.png')
+                        this.activity.upload_image_url = ''
                         break
                     case 'lottery_success':
                         this.activity.activity_img_upload.lottery_success = require('../../../../static/template/common/images/gift.png')
+                        this.activity.upload_image_url = ''
                         break
                     case 'lottery_faild':
                         this.activity.activity_img_upload.lottery_faild = require('../../../../static/template/common/images/faiImg.png')
+                        this.activity.upload_image_url = ''
                         break
                 }
             },

@@ -84,13 +84,22 @@ export default {
     getRecords (id,formRecordRules) {
       this.$refs.formRecordRules.validate((valid) => {
         if (valid) {
+            let startTime = ''
+            let end_time = ''
+            if(this.formRecord.start_time){
+               startTime = moment(this.formRecord.start_time).format('YYYY-MM-DD HH:mm:ss')
+            }
+            if(this.formRecord.end_time){
+                end_time = moment(this.formRecord.end_time).format('YYYY-MM-DD HH:mm:ss')
+            }
+
           let params = {
             business_activity_info_id: id,
             page_number: this.page_number,
             page_size: this.page_size,
             phone_number: this.formRecord.phone_number,
-            start_time: moment(this.formRecord.start_time).format('YYYY-MM-DD HH:mm:ss'),
-            end_time: moment(this.formRecord.end_time).format('YYYY-MM-DD HH:mm:ss')
+            start_time: startTime,
+            end_time: end_time
           }
           this.listloading = true
           NProgress.start()
