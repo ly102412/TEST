@@ -944,10 +944,12 @@
             handleUploadScucess(res, file) {
                 if (res.status == 0) {
                     this.activity.upload_image_url = res.data.file
+                    console.log(this.activity.upload_image_url);
                     this.$message({
                         message: res.message,
                         type: 'success'
                     });
+                    console.log(this.activity.upload_image_name);
                     switch (this.activity.upload_image_name) {
                         case 'main_bg':
                             this.activity.activity_img_upload.main_bg = this.activity.upload_image_url

@@ -149,8 +149,9 @@
         </div>
     </div>
     <!-- 中奖页面 end-->
+    <!-- 中奖页面 begin-->
     <div class="result-failed" v-show="activity.main_tab == 5">
-        <div class="failed-img edit-layer">
+        <div class="failed-img edit-layer" data-layer="lottery_faild">
             <img :src="activity.activity_img_upload.lottery_faild" alt="" data-type="1" data-layer="lottery_faild">
         </div>
         <div class="contract">
@@ -163,6 +164,7 @@
                data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
         </div>
     </div>
+    <!-- 中奖页面 end-->
 </div>
 <script>
     window.app = new Vue({
