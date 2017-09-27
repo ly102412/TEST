@@ -271,10 +271,10 @@
                                             </div>
                                         </el-tab-pane>
                                         <el-tab-pane>
-                                            <span slot="label"><i class="el-icon-share"></i> 分享设置</span>
+                                            <span slot="label" ><i class="el-icon-share"></i> 分享设置</span>
                                             <el-form :model="activity.sharing_setting" :rules="sharing_setting_rules"
                                                      ref="activity.sharing_setting" label-width="120px">
-                                                <el-form-item label="分享活动">
+                                                <!-- <el-form-item label="分享活动">
                                                     <el-radio label="0"
                                                               v-model="activity.sharing_setting.is_allow_sharing"
                                                               :disabled="isDisable"
@@ -285,7 +285,7 @@
                                                               :disabled="isDisable"
                                                     >禁止分享
                                                     </el-radio>
-                                                </el-form-item>
+                                                </el-form-item> -->
                                                 <el-form-item label="微信分享图标"
                                                               v-if="activity.sharing_setting.is_allow_sharing == '0'">
                                                     <el-radio label="0"
@@ -371,7 +371,7 @@
                                                                     :disabled="isDisable"
                                                             ></el-input>
                                                         </el-form-item>
-                                                        <el-form-item label="企业Logo">
+                                                        <!-- <el-form-item label="企业Logo">
                                                             <el-radio label="0"
                                                                       v-model="activity.advanced_setting.enterprise_setting.is_showing_logo"
                                                                       :disabled="isDisable"
@@ -508,9 +508,9 @@
                                                                     </el-form-item>
                                                                 </div>
                                                             </div>
-                                                        </el-form-item>
+                                                        </el-form-item> -->
                                                     </el-tab-pane>
-                                                    <el-tab-pane label="游戏设置" name="2">
+                                                    <el-tab-pane label="游戏设置" name="2" disabled>
                                                         <el-form-item label="广告">
                                                             <el-col>
                                                                 <el-radio label="0"
