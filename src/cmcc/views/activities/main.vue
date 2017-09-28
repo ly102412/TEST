@@ -748,10 +748,10 @@
                         {required: true, message: '请输入活动名称', trigger: 'blur'}
                     ],
                     begin_date: [
-                        { validator: validateBeginTime, type: 'date', trigger: 'blur' }
+                        { validator: validateBeginTime,  trigger: 'blur' }
                     ],
                     end_date: [
-                        {validator: validateEndTime, type: 'date', trigger: 'blur'},
+                        {validator: validateEndTime,  trigger: 'blur'},
 
                     ],
                 },
