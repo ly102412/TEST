@@ -60,7 +60,7 @@
                                                 <el-form-item label="活动名称" prop="activity_name" required>
                                                     <el-input v-model="activity.base_setting.activity_name"></el-input>
                                                 </el-form-item>
-                                                <el-form-item label="开始时间" prop="begin_date" required>
+                                                <el-form-item label="开始时间"  required>
                                                     <el-col :span="14">
                                                         <el-form-item>
                                                             <el-date-picker
@@ -137,7 +137,7 @@
                                                     </el-radio>
                                                 </el-form-item>
                                                 <el-form-item v-if="activity.lottery_setting.is_total_lottery == 1">
-                                                    <el-input placeholder="请输入内容"
+                                                    <el-input placeholder="请输入次数"
                                                               v-model="activity.lottery_setting.total_lottery_time"
                                                               :disabled="isDisable"
                                                     >
@@ -147,7 +147,7 @@
                                                 </el-form-item>
                                                 <el-form-item label="每日抽奖机会" data-source="daily_lottery_time"
                                                               prop="daily_lottery_time" required>
-                                                    <el-input placeholder="请输入内容"
+                                                    <el-input placeholder="请输入次数"
                                                               v-model="activity.lottery_setting.daily_lottery_time"
                                                               :disabled="isDisable"
                                                         >
@@ -211,7 +211,6 @@
                                                 >
                                                     <el-form ref="activity.award_setting"
                                                              label-width="120px" style="padding:0 10px"
-                                                             :rules="award_setting_rules"
                                                     >
                                                         <el-form-item label="奖品类型" v-if="item.award_value !== '-1'">
                                                             <el-radio-group v-model="item.award_type"
@@ -571,6 +570,7 @@
             // 验证总每人每日抽奖次数
             var validateDailyLotteryTime = (rule, value, callback) => {
                 if (this.activity.lottery_setting.is_total_lottery == 1) {
+                    console.log('total_lottery_time===='+this.activity.lottery_setting.total_lottery_time)
                     if (value === '' || value == 0) {
                         callback(new Error('请输入每日抽奖机会'))
                     } else if (value > this.activity.lottery_setting.total_lottery_time) {
@@ -586,7 +586,7 @@
             };
 
             // 验证开始时间和结束时间
-            var validateBeginTime = (rule, vlaue, callback) => {
+            var validateBeginTime = (rule, value, callback) => {
               if(value === '' || value == null ){
                 callback(new Error('请输入开始时间'))
               }else if(value < this.activity.base_setting.end_date){
@@ -596,7 +596,7 @@
               }
             }
 
-            var validateEndTime = (rule, vlaue, callback) => {
+            var validateEndTime = (rule, value, callback) => {
               if(value === '' || value == null ){
                 callback(new Error('请输入结束时间'))
               }else if(value < this.activity.base_setting.begin_date){
@@ -617,17 +617,7 @@
                     }
                 }
             };
-            var validateAwardType = (rule, value, callback) => {
-                console.log(value)
-                let myreg = /^(0|\+?[1-9][0-9]*)$/
-                if (value === '') {
-                    callback(new Error('请输入奖品数量'))
-                } else if (!myreg.test(value)) {
-                    callback(new Error('奖品数量只能输入正整数'))
-                } else {
-                    callback()
-                }
-            };
+
 
             return {
                 isDisable:false,
@@ -768,9 +758,6 @@
                     ]
                 },
                 award_setting_rules: {
-                    award_type:[
-                        {validator: validateAwardType, required: true, trigger: 'blur'}
-                    ]
                 },
                 sharing_setting_rules: {},
                 advanced_setting_rules: {}

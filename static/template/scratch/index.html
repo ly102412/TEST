@@ -11,6 +11,7 @@
     <script src="../common/js/jquery.min.js"></script>
     <script src="../common/js/vue.min.js"></script>
     <script src="../common/js/rem.js"></script>
+    <script src="../common/js/moment.js"></script>
     <script src="js/ggl.js"></script>
     <link rel="stylesheet" href="../common/css/reset.css"/>
     <link rel="stylesheet" href="css/ggl.css"/>
@@ -341,15 +342,18 @@
                 this.toast = true
                 if (this.toastTimer) clearTimeout(this.toastTimer)
                 this.toastTimer = setTimeout(() => { this.toast = false }, 2500)
+
+            },
+            setContent(activity) {
+                this.activity = activity
                 if(this.activity.base_setting.begin_date){
                     this.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
                 }
                 if(this.activity.base_setting.end_date){
                     this.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
                 }
-            },
-            setContent(activity) {
-                this.activity = activity
+                console.log(this.begin_date);
+                console.log(this.end_date);
             },
             getUrl(paras) {
                 var url = location.href;
