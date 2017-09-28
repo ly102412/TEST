@@ -748,17 +748,11 @@
                         {required: true, message: '请输入活动名称', trigger: 'blur'}
                     ],
                     begin_date: [
-<<<<<<< HEAD
-                        { validator: validateBeginTime, type: 'date', trigger: 'change' }
+                        { validator: validateBeginTime, type: 'date', trigger: 'blur' }
                     ],
                     end_date: [
-                        {validator: validateEndTime, type: 'date', trigger: 'change'},
-=======
-                        { validator: validateBeginTime, required: true, trigger: 'blur'}
-                    ],
-                    end_date: [
-                        {validator: validateEndTime, required: true, trigger: 'blur'},
->>>>>>> master
+                        {validator: validateEndTime, type: 'date', trigger: 'blur'},
+
                     ],
                 },
                 lottery_setting_rules: {

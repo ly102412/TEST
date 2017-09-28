@@ -390,11 +390,6 @@
                         'code': code
                     },
                     type: 'get',
-                    beforeSend: fun
-                    .？
-                    ction () {
-                        //请求前的处理
-                    },
                     success: function (res) {
                         if (res.status == 0) {
                             res.data.activity.main_tab = _this.activity.main_tab
@@ -407,12 +402,6 @@
                             }
                         }
 
-                    },
-                    complete: function () {
-                        //请求完成的处理
-                    },
-                    error: function () {
-                        //请求出错处理
                     }
                 });
 
