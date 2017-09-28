@@ -568,25 +568,43 @@
     export default {
         data() {
             // 验证总每人每日抽奖次数
-            var validateDailyLotteryTime = (rule, value, callback) => {
-                if (this.activity.lottery_setting.is_total_lottery == 1) {
-                    console.log('total_lottery_time===='+this.activity.lottery_setting.total_lottery_time)
-                    if (value === '' || value == 0) {
+            let validateDailyLotteryTime = (rule, value, callback) => {
+                let isTotal = this.activity.lottery_setting.is_total_lottery
+                let dailyLottery = parseInt(value);
+                let totalLottery = parseInt(this.activity.lottery_setting.total_lottery_time);
+                if (isTotal == 1) {
+                    if (dailyLottery === '' || dailyLottery == 0) {
                         callback(new Error('请输入每日抽奖机会'))
-                    } else if (value > this.activity.lottery_setting.total_lottery_time) {
+                    } else if (dailyLottery > totalLottery) {
                         callback(new Error('每日抽奖机会不能大于总抽奖机会'))
                     } else {
                         callback()
                     }
-                }else if(this.activity.lottery_setting.is_total_lottery == 0){
-                  if (value === '' || value == 0) {
+                }else if(isTotal == 0){
+                  if (dailyLottery === '' || dailyLottery == 0) {
                         callback(new Error('请输入每日抽奖机会'))
                     }
                 }
             };
 
+            // 验证每人总中奖次数
+            let validateWinningTime = (rule, value, callback) => {
+                let isTotal = this.activity.lottery_setting.is_total_lottery
+                let winning_time = parseInt(value)
+                let totalLottery = parseInt(this.activity.lottery_setting.total_lottery_time);
+                if (isTotal == 1) {
+                    if (winning_time === '' || winning_time == 0) {
+                        callback(new Error('请输入中奖次数'))
+                    } else if (winning_time > totalLottery) {
+                        callback(new Error('每人中奖次数不能大于总抽奖机会'))
+                    } else {
+                        callback()
+                    }
+                }
+            };
+
             // 验证开始时间和结束时间
-            var validateBeginTime = (rule, value, callback) => {
+            let validateBeginTime = (rule, value, callback) => {
               if(value === '' || value == null ){
                 callback(new Error('请输入开始时间'))
               }else if(value > this.activity.base_setting.end_date){
@@ -596,7 +614,7 @@
               }
             }
 
-            var validateEndTime = (rule, value, callback) => {
+            let validateEndTime = (rule, value, callback) => {
               if(value === '' || value == null ){
                 callback(new Error('请输入结束时间'))
               }else if(value < this.activity.base_setting.begin_date){
@@ -605,19 +623,6 @@
                 callback()
               }
             }
-            // 验证每人总中奖次数
-            var validateWinningTime = (rule, value, callback) => {
-                if (this.activity.lottery_setting.is_total_lottery == 1) {
-                    if (value === '' || value == 0) {
-                        callback(new Error('请输入中奖次数'))
-                    } else if (value > this.activity.lottery_setting.total_lottery_time) {
-                        callback(new Error('每人中奖次数不能大于总抽奖机会'))
-                    } else {
-                        callback()
-                    }
-                }
-            };
-
 
             return {
                 isDisable:false,
@@ -785,7 +790,7 @@
             },
             'activity.award_setting': {
                 handler: function () {
-                    var freeze_money = 0;
+                    let freeze_money = 0;
                     let scores = 0;
                     let coupon_size_100 = 0;
                     let coupon_size_500 = 0;
