@@ -167,20 +167,27 @@
 .rules-content .rules-card-list li h1{
   font-size: .4rem;
 }
- .contract{
-  width: 100%;
+ .contract,.contract-green{
+  width: 6.7rem;
   margin: 0 auto;
-  margin-top: 1rem;
+  background-color: #fff;
+  padding-top: 0.6rem;
 }
- .btn-contract{
-  font-size: .32rem;
-  width: 100%;
+.contract-green{
+  background: rgba(255,255,255,0)!important;
+}
+.btn-contract-green{
+  background: #47b146!important;
+}
+ .btn-contract,.btn-contract-green{
+  margin: 0 auto;
+  font-size: .36rem;
   display: block;
   color: #fff;
-  background: #41bd43;
+  background: #e84742;
   height: .8rem;
-  width:100%;
-  border-radius: .2rem;
+  width:4.3rem;
+  border-radius: .4rem;
   text-align: center;
   line-height: .8rem;
 }
@@ -199,6 +206,19 @@
   background: rgba(0,0,0,.85);
   z-index: 999;
 }
+
+/*.result-box .result-img{
+  width: 6.7rem;
+  height: 4.88rem;
+  background-color: #b8b7b7;
+  text-align: center;
+  margin: 1.5rem auto 0;
+}
+.result-box .result-img img{
+  width: 100%;
+  height: 100%;
+  display: block;
+}*/
 .result-box .result-gift-scroll{
   padding: 0 .5rem;
   word-wrap: break-word;
@@ -243,12 +263,16 @@
   color: #ffdb12;
 }
 .result-failed .failed-img{
-  width: 80%;
+  width: 6.7rem;
+  height: 4.88rem;
+  background-color: #b8b7b7;
   text-align: center;
-  margin: 1rem auto;
+  margin: 1.5rem auto 0;
 }
 .result-failed .failed-img img{
   width: 100%;
+  height: 100%;
+  display: block;
 }
 @keyframes bgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@-webkit-keyframes bgRotate{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(360deg)}}
 
@@ -284,4 +308,24 @@
 }
 .tool-bar:hover{
   background: #4db3ff
+}
+.toast{
+  max-width: 5.8rem;
+  min-width: 4.5rem;
+  min-height: 0.9rem;
+  text-align: center;
+  font-size: 0.28rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+  position: fixed;
+  left: 50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+  padding-left: 0.42rem;
+  padding-right:0.42rem;
+}
+.toast p{
+  margin: 0.2rem auto;
+  line-height: 0.5rem;
+  color: #fff;
 }

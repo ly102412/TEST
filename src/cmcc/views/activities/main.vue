@@ -332,9 +332,9 @@
                                                     </el-radio>
                                                     <el-col>
                                                         <div class="text-tips">
-                                                            <p>好友成功参与后才能获得奖励，邀请同一位好友无效；</p>
-                                                            <p>分享提示语仅在抽奖次数为零时提示，次数不为零时分享也会额外增加抽奖机会；</p>
-                                                            <p>开启有被微信拉黑朋友圈仅自己可见的风险，请慎用！</p>
+                                                            <p>1、微信分享后，好友看到并且点击参与活动，才能获得奖励（注：邀请同一位好友无效）
+                                                            </p>
+                                                            <p>2、分享内容请不要带“微信违禁字眼”会被微信关小黑屋哦</p>
                                                         </div>
                                                     </el-col>
                                                     <el-col v-if="activity.sharing_setting.is_wx_sharing_content == '1'">
@@ -674,7 +674,7 @@
                         main_bg: require('../../../../static/template/common/images/active-bg.jpg'),                      // 活动背景图
                         rules_icon: require('../../../../static/template/common/images/ruleImg_yellow.png'),                   // 活动图标
                         turnplate_bg: require('../../../../static/template/common/images/turnplate-bg.png'),                 // 大转盘背景
-                        lottery_success: require('../../../../static/template/common/images/gift.png'),              // 抽奖成功图片
+                        lottery_success: require('../../../../static/template/common/images/succmg.png'),              // 抽奖成功图片
                         lottery_faild: require('../../../../static/template/common/images/faiImg.png')                 // 抽奖失败图片
                     },
                     base_setting: {
@@ -686,7 +686,7 @@
                         is_join_num_limit: false,     // 是否限制参与人数 boolean
                         join_num: 0,                  // 限制参与人数量
                         fictitious_join_num: 0,       // 虚拟参加人数
-                        activity_des: '获奖后凭兑奖码联系活动主办单位即可兑奖'              // 活动兑奖说明
+                        activity_des: '活动赠送的流量奖品暂存在流量银行内，请使用领取流量的手机号码登录流量银行内充值流量'              // 活动兑奖说明
                     },
                     // 派奖方式
                     lottery_setting: {
@@ -1026,7 +1026,7 @@
                         this.activity.upload_image_url = ''
                         break
                     case 'lottery_success':
-                        this.activity.activity_img_upload.lottery_success = require('../../../../static/template/common/images/gift.png')
+                        this.activity.activity_img_upload.lottery_success = require('../../../../static/template/common/images/succmg.png')
                         this.activity.upload_image_url = ''
                         break
                     case 'lottery_faild':
@@ -1110,7 +1110,6 @@
                 // 判断用户操作
                 if (action === 'add') {
                     let tab_name = ''
-                    console.log('tabIndex==='+this.tabIndex);
                     let tab_targetName = ++this.tabIndex + ''
                     for (let i = 0; i < tab_length; i++) {
                         tab_name = this.tab_awards_name_list[i]
@@ -1143,10 +1142,20 @@
                     }
                 }
                 if (action === 'remove') {
-                    let activeName = this.edit_awards_tabs_value
-                    if(targetName == '1'){return}
+                    console.log('targetName==='+targetName);
+                    let activeName = this.edit_awards_tabs_value  //当前选中的
+
+                    if(targetName == '1'){
+                        this.$notify({
+                            title: '提示',
+                            message: '谢谢参与为必填奖项',
+                            type: 'warning'
+                        });
+                        return false
+                    }
                     if (tab_length > 1) {
                         if (activeName === targetName) {
+                            console.log('activeName==='+activeName);
                             tabs.forEach((tab, index) => {
                                 if (tab.name === targetName) {
                                     let nextTab = tabs[index + 1] || tabs[index - 1]
@@ -1156,7 +1165,6 @@
                                 }
                             })
                         }
-
                         this.edit_awards_tabs_value = activeName
                         this.activity.award_setting = tabs.filter(tab => tab.name !== targetName)
                     } else {

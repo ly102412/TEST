@@ -134,17 +134,19 @@
                 <img :src="activity.activity_img_upload.lottery_success" alt="">
             </div>
             <div class="result-footer">
-
                 <p>{{lottery.award_name}}</p>
             </div>
-            <div class="contract">
-                <a class="btn-contract" @click.stop="goBank">领取奖品</a></br>
-                <a class="btn-contract" @click="activity.main_tab = '1'">再来一次</a></br>
+            <!--<div class="result-img edit-layer" data-type="1" data-layer="lottery_success">-->
+                <!--<img :src="activity.activity_img_upload.lottery_success" alt="">-->
+            <!--</div>-->
+            <div class="contract-green">
+                <a class="btn-contract-green" @click.stop="goBank">领取奖品</a></br>
+                <a class="btn-contract-green" @click="activity.main_tab = '1'">再来一次</a></br>
                 <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'"
-                   class="btn-contract edit-layer" data-type="2" data-layer="button_link_text"
+                   class="btn-contract-green edit-layer" data-type="2" data-layer="button_link_text"
                    :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
                 <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'"
-                   class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
+                   class="btn-contract-green edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
             </div>
         </div>
     </div>
@@ -152,10 +154,10 @@
     <!-- 中奖页面 begin-->
     <div class="result-failed" v-show="activity.main_tab == 5">
         <div class="failed-img edit-layer" data-layer="lottery_faild">
-            <img :src="activity.activity_img_upload.lottery_faild" alt="" data-type="1" data-layer="lottery_faild">
+            <img :src="activity.activity_img_upload.lottery_faild" alt="">
         </div>
         <div class="contract">
-            <a class="btn-contract" @click="activity.main_tab = '1'" style="width:80%;margin:0 auto">再来一次</a></br>
+            <a class="btn-contract" @click="activity.main_tab = '1'">再来一次</a></br>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'"
                style="width:80%;margin:0 auto" class="btn-contract edit-layer" data-type="2"
                data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
@@ -197,7 +199,7 @@
                         is_join_num_limit: false,     // 是否限制参与人数 boolean
                         join_num: 0,                  // 限制参与人数量
                         fictitious_join_num: 0,       // 虚拟参加人数
-                        activity_des: '获奖后凭兑奖码联系活动主办单位即可兑奖'              // 活动兑奖说明
+                        activity_des: '活动赠送的流量奖品暂存在流量银行内，请使用领取流量的手机号码登录流量银行内充值流量'              // 活动兑奖说明
                     },
                     // 派奖方式
                     lottery_setting: {

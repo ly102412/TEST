@@ -289,19 +289,20 @@
   font-size: .4rem;
 }
  .contract{
-  width: 100%;
+  width: 6.7rem;
   margin: 0 auto;
-  margin-top: 1rem;
+  background-color: #fff;
+  padding-top: 0.6rem;
 }
  .btn-contract{
-  font-size: .32rem;
-  width: 100%;
+  margin: 0 auto;
+  font-size: .36rem;
   display: block;
   color: #fff;
-  background: #41bd43;
+  background: #e84742;
   height: .8rem;
-  width:100%;
-  border-radius: .2rem;
+  width:4.3rem;
+  border-radius: .4rem;
   text-align: center;
   line-height: .8rem;
 }
@@ -364,12 +365,15 @@
   color: #ffdb12;
 }
 .result-failed .failed-img{
-  width: 80%;
+  width: 6.7rem;
+  height: 4.88rem;
+  background-color: #b8b7b7;
   text-align: center;
-  margin: 1rem auto;
+  margin: 1.5rem auto 0;
 }
 .result-failed .failed-img img{
   width: 100%;
+  display: block;
 }
 @keyframes bgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@-webkit-keyframes bgRotate{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(360deg)}}
 
