@@ -7,7 +7,7 @@
       <div class="col-sm-6 col-lg-4">
         <div class="card card-inverse card-primary">
           <div class="card-block pb-0">
-            <h4 class="mb-0">{{business_info.freeze_money + business_info.money}}元</h4>
+            <h4 class="mb-0">{{full_money}}元</h4>
             <p>账户总余额</p>
           </div>
         </div>
@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-lg-4"><div class="card"><div class="card-block p-3 clearfix"><i class="fa fa-moon-o bg-warning p-3 font-2xl mr-3 float-left"></i> <div class="h5 text-warning mb-0 mt-2">账户资金{{business_info.money_expire_days}}天</div> <div class="text-muted text-uppercase font-weight-bold font-xs">{{business_info.money_expire_date}}&nbsp;到期</div></div></div></div>
+      <div class="col-12 col-lg-4"><div class="card"><div class="card-block p-3 clearfix"><i class="fa fa-moon-o bg-warning p-3 font-2xl mr-3 float-left"></i> <div class="h5 text-warning mb-0 mt-2">账户资金剩余{{business_info.money_expire_days}}</div> <div class="text-muted text-uppercase font-weight-bold font-xs">{{business_info.money_expire_date}}&nbsp;到期</div></div></div></div>
     </div>
     <div class="row">
       <div class="col-sm-6 col-md-6">
@@ -96,7 +96,8 @@ export default {
   data() {
     return {
       business_info: {},
-      flow_price_info: {}
+      flow_price_info: {},
+      full_money:null
     }
   },
   mounted() {
@@ -112,6 +113,7 @@ export default {
         NProgress.done()
         if (res.status === 0) {
           this.business_info = res.data
+          this.full_money =  (Number(this.business_info.freeze_money) + Number(this.business_info.money)).toFixed(2)
         }
       })
     },

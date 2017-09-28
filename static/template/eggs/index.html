@@ -43,7 +43,7 @@
       </div>
       <!-- 活动规则按钮 end-->
       <!-- 大转盘 begin-->
-      
+
       <!-- 大转盘 end-->
       <!-- 参与人数 begin-->
       <div class="join-num">
@@ -84,13 +84,13 @@
         <div class="module edit-layer" data-type="2" data-layer="base_setting_date">
           <h3>活动时间</h3>
           <div class="info">
-            <p>{{activity.base_setting.begin_date}} - {{activity.base_setting.end_date}}</p>
+            <p>{{begin_date}} - {{end_date}}</p>
           </div>
         </div>
         <div class="module edit-layer" data-type="2" data-layer="enterprise_setting">
           <h3>主办单位</h3>
           <div class="info">
-            <p>本次活动主办单位为<a :href="activity.advanced_setting.enterprise_setting.website_url"><strong>{{activity.advanced_setting.enterprise_setting.organizers}}</strong></a></p>
+            <p>本次活动主办单位为<a :href="activity.advanced_setting.enterprise_setting.website_url?activity.advanced_setting.enterprise_setting.website_url:'javascript:;'"><strong>{{activity.advanced_setting.enterprise_setting.organizers}}</strong></a></p>
           </div>
         </div>
         <div class="module">
@@ -139,7 +139,7 @@
           <p>{{lottery.award_name}}</p>
         </div>
         <div class="contract">
-            <a class="btn-contract" :href="activity.bank_url">领取奖品</a></br>
+            <a class="btn-contract" @click.stop="goBank()">领取奖品</a></br>
             <a class="btn-contract" @click="window.location.reload()">再来一次</a></br>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
             <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
@@ -166,6 +166,8 @@
       el: '#app',
       data () {
         return {
+          begin_date:'',
+          end_date:'',
           code: '',
           lottery: {
             award_name:'',
@@ -232,8 +234,8 @@
             advanced_setting: {
               enterprise_setting:{
                 organizers: '',             // 主办单位
-                website_url: '',            // 链接地址
-                is_showing_logo: '0',     // 是否显示企业Logo
+                website_url: '',// 链接地址
+                is_showing_logo: '0',       // 是否显示企业Logo
                 logo_url: '',               // 企业logo
                 is_loading_img: '0',          // 页面加载图片
                 loading_img_url: '',        // 加载图片url
@@ -254,24 +256,24 @@
           // 初始化砸金蛋效果
           var self = this;
           $('#carousel').carousel({
-            //width: 320, 
-            //height: 150, 
-            itemWidth:120, 
-            horizontalRadius:90, 
-            verticalRadius:40, 
-            resize:false, 
-            mouseScroll:false, 
-            mouseDrag:true, 
-            scaleRatio:0.635, 
-            scrollbar:true, 
-            tooltip:true, 
+            //width: 320,
+            //height: 150,
+            itemWidth:120,
+            horizontalRadius:90,
+            verticalRadius:40,
+            resize:false,
+            mouseScroll:false,
+            mouseDrag:true,
+            scaleRatio:0.635,
+            scrollbar:true,
+            tooltip:true,
             mouseWheel:true,
             mouseWheelReverse:true
           });
           // 点击金蛋抽奖
           $("#carousel img ").click(function(){
             var gm = $(this).attr('src','images/egg2.gif');
-            setTimeout(function(){  
+            setTimeout(function(){
               self.goLottery(this.code);
               // window.location.reload();
             },2000)
@@ -296,6 +298,12 @@
       methods: {
         setContent (activity) {
           this.activity = activity
+          if(this.activity.base_setting.begin_date){
+              this.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
+          }
+          if(this.activity.base_setting.end_date){
+              this.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
+          }
         },
         getUrl (paras) {
           var url = location.href;
@@ -374,11 +382,18 @@
                 if(res.status == 0){
                   res.data.activity.main_tab = _this.activity.main_tab
                   _this.activity = res.data.activity
+                  _this.begin_date = moment(_this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
+                  _this.end_date = moment(_this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
                 }
 
               }
           });
-        }
+        },
+        // 领取奖品，跳转流量银行
+        goBank() {
+            window.location.href="/api/bank/user/auth"
+        },
+
       }
   });
   </script>

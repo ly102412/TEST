@@ -24,7 +24,7 @@
               <div class="col-sm-6 col-lg-3">
                 <div class="active-box">
                   <div class="pic">
-                    <span class="status">敬请期待</span>
+                    <span class="status">New</span>
                     <img src="../../static/img/guaguaka.jpg" alt="">
                   </div>
                   <div class="bottom">
@@ -37,7 +37,7 @@
               <div class="col-sm-6 col-lg-3">
                 <div class="active-box">
                   <div class="pic">
-                    <span class="status">正在开发</span>
+                    <span class="status">New</span>
                     <img src="../../static/img/eggs.jpg" alt="">
                   </div>
                   <div class="bottom">

@@ -45,7 +45,7 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-lg-4"><div class="card"><div class="card-block p-3 clearfix"><i class="fa fa-moon-o bg-warning p-3 font-2xl mr-3 float-left"></i> <div class="h5 text-warning mb-0 mt-2">账户资金{{businessInfo.money_expire_days}}天</div> <div class="text-muted text-uppercase font-weight-bold font-xs">{{businessInfo.money_expire_date}}&nbsp;到期</div></div></div></div>
+      <div class="col-12 col-lg-4"><div class="card"><div class="card-block p-3 clearfix"><i class="fa fa-moon-o bg-warning p-3 font-2xl mr-3 float-left"></i> <div class="h5 text-warning mb-0 mt-2">账户资金剩余{{businessInfo.money_expire_days}}</div> <div class="text-muted text-uppercase font-weight-bold font-xs">{{businessInfo.money_expire_date}}&nbsp;到期</div></div></div></div>
     </div>
     <div class="card">
       <div class="card-block">
@@ -138,9 +138,9 @@ export default {
         if(res.status === 0){
           console.log(res.data)
           this.businessInfo = res.data
-          this.freeze_money = res.data.freeze_money.toFixed(2)
+          this.freeze_money = Number(res.data.freeze_money).toFixed(2)
           this.money = res.data.money.toFixed(2)
-          this.full_money = Number(this.freeze_money) + Number(this.money)
+          this.full_money = (Number(this.freeze_money) + Number(this.money)).toFixed(2)
         }
       })
     }

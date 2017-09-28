@@ -32,7 +32,7 @@ module.exports = {
     cssSourceMap: false,// 是否开启 cssSourceMap
     proxyTable: {
       '/api': {
-        target: 'http://192.168.199.118:7012', // 目标地址 http://ruowei.ap.ngrok.io/     http://app.m.ruwe.cn/api/  测试环境http://mas.tst.ruwe.cn  瑞清：'http://192.168.199.190:7012/
+        target: 'http://mas.tst.ruwe.cn', // 目标地址 http://ruowei.ap.ngrok.io/     http://app.m.ruwe.cn/api/  测试环境http://mas.tst.ruwe.cn  瑞清：'http://192.168.199.190:7012/
         changeOrigin: true,               // needed for virtual hosted sites
         ws: true,                         // websockets代理
         pathRewrite: {
