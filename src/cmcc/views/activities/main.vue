@@ -586,21 +586,21 @@
             };
 
             // 验证开始时间和结束时间
-            var validateBeginTime = (rule, vlaue, callback) => {
+            var validateBeginTime = (rule, value, callback) => {
               if(value === '' || value == null ){
                 callback(new Error('请输入开始时间'))
-              }else if(value < this.activity.base_setting.end_date){
-                callback(new Error('开始时间不能小于结束时间'))
+              }else if(value > this.activity.base_setting.end_date){
+                callback(new Error('开始时间不能大于结束时间'))
               }else{
                 callback()
               }
             }
 
-            var validateEndTime = (rule, vlaue, callback) => {
+            var validateEndTime = (rule, value, callback) => {
               if(value === '' || value == null ){
                 callback(new Error('请输入结束时间'))
               }else if(value < this.activity.base_setting.begin_date){
-                callback(new Error('结束时间不能大于开始时间'))
+                callback(new Error('结束时间不能小于开始时间'))
               }else{
                 callback()
               }
@@ -753,10 +753,10 @@
                         {required: true, message: '请输入活动名称', trigger: 'blur'}
                     ],
                     begin_date: [
-                        { validator: validateBeginTime, type: 'date', required: true, message: '请选择开始日期', trigger: 'change' }
+                        { validator: validateBeginTime, required: true, trigger: 'blur'}
                     ],
                     end_date: [
-                        {validator: validateEndTime, type: 'date', required: true, message: '请选择结束日期', trigger: 'change'},
+                        {validator: validateEndTime, required: true, trigger: 'blur'},
                     ],
                 },
                 lottery_setting_rules: {
