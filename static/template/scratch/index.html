@@ -115,32 +115,36 @@
 
         <div class="rules-content">
             <div class="module edit-layer" data-type="2" data-layer="award_setting">
-                <h3>活动奖品</h3>
+                <h3><b>·</b>活动奖品:</h3>
+                <!--<div class="info">-->
+                <!--<p><span>奖品名称</span><span style="margin-left: 0.5rem">奖品大小</span></p>-->
+                <!--</div>-->
                 <div class="info" v-for="(item,index) in activity.award_setting">
-                    <p v-if="index > 0">{{item.award_name}}</p>
+                    <p><span>{{item.award_name}}</span><span style="margin-left: 0.5rem" v-if="item.award_value">{{item.award_value |awardValue}}<i v-show="item.award_type==1">流量</i>
+                    <i v-show="item.award_type==2">流量券</i></span></p>
                 </div>
             </div>
             <div class="module edit-layer" data-type="2" data-layer="base_setting_date">
-                <h3>活动时间</h3>
+                <h3><b>·</b>活动时间:</h3>
                 <div class="info">
                     <p>{{begin_date}} - {{end_date}}</p>
                 </div>
             </div>
-            <div class="module edit-layer" data-type="2" data-layer="enterprise_setting">
-                <h3>主办单位</h3>
+            <div class="module edit-layer" data-type="2" data-layer="enterprise_setting" v-if="activity.advanced_setting.enterprise_setting.organizers">
+                <h3><b>·</b>主办单位:</h3>
                 <div class="info">
-                    <p>本次活动主办单位为<a :href="activity.advanced_setting.enterprise_setting.website_url?activity.advanced_setting.enterprise_setting.website_url:'javascript:;'"><strong>{{activity.advanced_setting.enterprise_setting.organizers}}</strong></a>
+                    <p>本次活动主办单位为<a :href="activity.advanced_setting.enterprise_setting.website_url"><strong>{{activity.advanced_setting.enterprise_setting.organizers}}</strong></a>
                     </p>
                 </div>
             </div>
             <div class="module">
-                <h3>技术支持</h3>
+                <h3><b>·</b>技术支持:</h3>
                 <div class="info">
                     <p>页面技术由<strong>若为</strong>提供，技术支持方仅提供页面技术，不承担由活动引起的相关法律责任</p>
                 </div>
             </div>
             <div class="module edit-layer" data-type="2" data-layer="activity_des">
-                <h3>活动及兑奖说明</h3>
+                <h3><b>·</b>活动及兑奖说明:</h3>
                 <div class="info">
                     <p></p>
                     <p>{{activity.base_setting.activity_des}}</p>

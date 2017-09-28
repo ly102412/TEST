@@ -60,7 +60,7 @@
                                                 <el-form-item label="活动名称" prop="activity_name" required>
                                                     <el-input v-model="activity.base_setting.activity_name"></el-input>
                                                 </el-form-item>
-                                                <el-form-item label="开始时间" prop="begin_date" required>
+                                                <el-form-item label="开始时间" prop="begin_date" required  data-source="base_setting_date" >
                                                     <el-col :span="14">
                                                         <el-form-item>
                                                             <el-date-picker

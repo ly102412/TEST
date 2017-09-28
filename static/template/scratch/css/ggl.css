@@ -206,10 +206,10 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: rgba(0,0,0,0.8);
+  background: rgb(255,255,255);
   /*transform: scale(0,0);*/
   transition: .4s;
-  color: #fff;
+  color: #323333;
   overflow: hidden;
   z-index: 9999;
 }
@@ -218,7 +218,7 @@
   width: 100%;
   top: 0;
   height: 1.25rem;
-  border-bottom: 1px solid rgba(255,255,255,.6);
+  border-bottom: 1px solid rgba(0,0,0,.6);
   padding: .2rem 0 0;
   overflow: hidden;
 }
@@ -237,11 +237,11 @@
   border-left: none;
 }
 .rules-box .rules-box-top .rules-tab li  strong{
-  border-left: 1px solid #fff;
+  border-left: 1px solid rgba(0,0,0,.6);
   padding: .2rem .8rem;
 }
 .rules-box .rules-box-top .rules-tab li.cur strong{
-  border-bottom: 7px solid #fff;
+  border-bottom: 7px solid rgba(0,0,0,.6);
 }
 .rules-box .rules-box-top .close{
   position: absolute;
@@ -270,13 +270,21 @@
   margin: .4rem 0;
 }
 .rules-content .module h3{
-  padding: 0 .3rem;
-  background: #fff;
   color: #000;
   display: inline-block;
+  font-weight: bold;
+}
+.rules-content .module h3 b{
+  color: #e84742;
+  font-weight: bold;
+  margin-right: 0.2rem;
+  font-size: 0.3rem;
+}
+.rules-content .module .info p{
+  padding-left: 0.6rem;
 }
 .rules-content .module .info strong{
-  color: #fff500
+  color: #47b146;
 }
 
 .rules-content .rules-card-list li{
@@ -288,13 +296,19 @@
 .rules-content .rules-card-list li h1{
   font-size: .4rem;
 }
- .contract{
+ .contract,.contract-green{
   width: 6.7rem;
   margin: 0 auto;
   background-color: #fff;
   padding-top: 0.6rem;
 }
- .btn-contract{
+.contract-green{
+  background: rgba(255,255,255,0)!important;
+}
+.btn-contract-green{
+  background: #47b146!important;
+}
+ .btn-contract,.btn-contract-green{
   margin: 0 auto;
   font-size: .36rem;
   display: block;
@@ -373,6 +387,7 @@
 }
 .result-failed .failed-img img{
   width: 100%;
+  height: 100%;
   display: block;
 }
 @keyframes bgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@-webkit-keyframes bgRotate{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(360deg)}}
