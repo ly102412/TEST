@@ -60,7 +60,7 @@
                                                 <el-form-item label="活动名称" prop="activity_name" required>
                                                     <el-input v-model="activity.base_setting.activity_name"></el-input>
                                                 </el-form-item>
-                                                <el-form-item label="开始时间" required>
+                                                <el-form-item label="开始时间" prop="begin_date" required>
                                                     <el-col :span="14">
                                                         <el-form-item>
                                                             <el-date-picker
@@ -74,7 +74,7 @@
                                                         </el-form-item>
                                                     </el-col>
                                                 </el-form-item>
-                                                <el-form-item label="结束时间" required>
+                                                <el-form-item label="结束时间" prop="end_date" required>
                                                     <el-col :span="14">
                                                         <el-form-item>
                                                             <el-date-picker v-model="activity.base_setting.end_date"
@@ -584,6 +584,27 @@
                     }
                 }
             };
+
+            // 验证开始时间和结束时间
+            var validateBeginTime = (rule, vlaue, callback) => {
+              if(value === '' || value == null ){
+                callback(new Error('请输入开始时间'))
+              }else if(value < this.activity.base_setting.end_date){
+                callback(new Error('开始时间不能小于结束时间'))
+              }else{
+                callback()
+              }
+            }
+
+            var validateEndTime = (rule, vlaue, callback) => {
+              if(value === '' || value == null ){
+                callback(new Error('请输入结束时间'))
+              }else if(value < this.activity.base_setting.begin_date){
+                callback(new Error('结束时间不能大于开始时间'))
+              }else{
+                callback()
+              }
+            }
             // 验证每人总中奖次数
             var validateWinningTime = (rule, value, callback) => {
                 if (this.activity.lottery_setting.is_total_lottery == 1) {
@@ -732,10 +753,10 @@
                         {required: true, message: '请输入活动名称', trigger: 'blur'}
                     ],
                     begin_date: [
-                        { type: 'date', required: true, message: '请选择开始日期', trigger: 'change' }
+                        { validator: validateBeginTime, type: 'date', required: true, message: '请选择开始日期', trigger: 'change' }
                     ],
                     end_date: [
-                        {type: 'date', required: true, message: '请选择结束日期', trigger: 'change'},
+                        {validator: validateEndTime, type: 'date', required: true, message: '请选择结束日期', trigger: 'change'},
                     ],
                 },
                 lottery_setting_rules: {
