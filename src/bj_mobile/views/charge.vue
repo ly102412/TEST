@@ -32,7 +32,7 @@
             <p>亲爱的用户，存满100M流量再来提取吧</p>
             <router-link to="/index" class="goback">返回流量银行</router-link>
         </div>
-        <div class="tipBox">
+        <div class="tipBox" v-show="tipBox">
             温馨提示： <br>
             <p>1、月初的第一天和月末最后一天不能提取。</p>
             <p>2、流量支持提取到中国移动、中国联通、中国电信任意号码，虚拟运营商除外。</p>
@@ -398,6 +398,7 @@
     },
     data () {
       return {
+        tipBox:true,
         loading:false,
         phone_number:'', //手机号码,
         score:'', //可提取的流量包
@@ -595,6 +596,7 @@
                     console.log('---------api/extract/recharge/pay---------');
                     if (res.data.status == 0) { //流量提取成功
                         this.isSucc = true
+                        this.tipBox = false
                         //this.alertmask = false
                         this.iscanuse = false
                         this.order =  res.data.data
@@ -618,6 +620,7 @@
                 console.log('---------api/extract/recharge/pay---------');
                 if (res.data.status == 0) { //流量提取成功
                     this.isSucc = true
+                    this.tipBox = false
                     //this.alertmask = false
                     this.iscanuse = false
                     this.order =  res.data.data
