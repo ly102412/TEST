@@ -69,6 +69,7 @@
                                                                             placeholder="选择开始时间"
                                                                             style="width:100%"
                                                                             :editable="false"
+                                                                            :picker-options = "startPickerOption"
                                                                     >
                                                             </el-date-picker>
                                                         </el-form-item>
@@ -211,6 +212,7 @@
                                                 >
                                                     <el-form ref="activity.award_setting"
                                                              label-width="120px" style="padding:0 10px"
+                                                            :rules="gift_setting_rules"
                                                     >
                                                         <el-form-item label="奖品类型" v-if="item.award_value !== '-1'">
                                                             <el-radio-group v-model="item.award_type"
@@ -241,7 +243,7 @@
                                                                 </el-option>
                                                             </el-select>
                                                         </el-form-item>
-                                                        <el-form-item label="奖品数量" v-if="item.award_type !=='0'" required>
+                                                        <el-form-item label="奖品数量" prop = "award_num" v-if="item.award_type !=='0'" required>
                                                             <el-input v-model.number="item.award_num" type="number" :disabled="isDisable" ></el-input>
                                                         </el-form-item>
                                                         <el-form-item label="中奖概率">
@@ -624,6 +626,14 @@
               }
             }
 
+            let validateNumber = (rule,value,call) =>{
+                if(!/^[1-9]\d*$/.test(value)){
+                    call(new Error('请输入大于0的正整数'))
+                    return false
+                }else{
+                    call()
+                }
+            }
             return {
                 isDisable:false,
                 code: '',
@@ -755,6 +765,11 @@
 
                     ],
                 },
+                gift_setting_rules:{
+                    award_num:[
+                        {validator: validateNumber,  trigger: 'blur'},
+                    ]
+                },
                 lottery_setting_rules: {
                     daily_lottery_time: [
                         {validator: validateDailyLotteryTime, required: true, trigger: 'blur'}
@@ -766,7 +781,12 @@
                 award_setting_rules: {
                 },
                 sharing_setting_rules: {},
-                advanced_setting_rules: {}
+                advanced_setting_rules: {},
+                startPickerOption:{
+                    disabledDate(time) {
+                      return time.getTime() < Date.now() - 8.64e7
+                    }
+                }
             }
         },
         created() {
