@@ -374,7 +374,7 @@
                 }
             },
             // 抽奖接口
-            goLottery(code) {
+            goLottery() {
                 var _this = this
                 if (location == top.location) {
                     $.ajax({
@@ -382,7 +382,7 @@
                         dataType: 'json',
                         async: true,
                         data: {
-                            'code': code
+                            'code': _this.code
                         },
                         type: 'get',
                         beforeSend: function () {
