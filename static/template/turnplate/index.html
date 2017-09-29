@@ -58,7 +58,7 @@
     </div>
     <!-- 首页 end-->
     <!-- 活动说明 begin-->
-    <div class="result-box" v-show="activity.main_tab == 2" style="overflow: hidden" id="rules-box">
+    <div class="result-box" v-show="activity.main_tab == 2" id="rules-box">
         <div class="rules-box" >
             <div class="rules-box-top">
                 <div class="rules-tab">
@@ -114,14 +114,15 @@
                 <div class="rules-card-list">
                     <ul>
                         <li v-for="item in lottery.record_list">
-                            <div class="card-top">{{item.create_time}}</div>
+                            <div class="card-top">中奖日期：{{item.create_time}}</div>
                             <div class="card-content">
                                 <h1 class="price-name">{{item.prize_name}}</h1>
-                                <p>中奖日期:</p>
                                 <!-- <p>兑奖期限: {{activity.base_setting.begin_date}} 至 {{activity.base_setting.begin_date}}</p> -->
                             </div>
+
                         </li>
                     </ul>
+                    <div class="card-bottom" @click.stop="goBank">进入流量银行</div>
                 </div>
                 <!-- <div class="contract edit-layer" data-type="2" data-layer="button_link_text">
                     <a class="btn-contract">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
@@ -185,7 +186,8 @@
                 code: '',
                 lottery: {
                     award_name: '',
-                    record_list: []
+            		record_list: []
+                      
                 },
                 activity: {
                     main_tab: '1',                  // 当前导航栏状态

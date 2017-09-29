@@ -129,7 +129,7 @@
 }
 .rules-content{
   width: 6.6rem;
-  min-height: 8rem;
+  min-height: 9rem;
   text-align: left;
   font-size: .28rem;
   line-height: .6rem;
@@ -137,7 +137,7 @@
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  padding: 0rem 0.3rem 2rem;
+  padding: 0.3rem 0.15rem 2rem;
   background-color: #fff;
 
 }
@@ -164,20 +164,34 @@
 
 .rules-content .rules-card-list li{
   font-size: .32rem;
-  width: 5.7rem;
-  border: #ddd 2px solid;
+  width: 100%;
+  border: #ddd 1px solid;
   margin-bottom: .2rem;
   border-radius: 5px;
 }
 .rules-content .rules-card-list .card-top {
   color: #999;
   border-bottom: #ddd 2px solid;
-  margin-left: 0.22rem;
-  padding: 0 0.2rem;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.22rem;
 }
 .rules-content .rules-card-list li h1{
   font-size: .4rem;
-  margin-left: 0.22rem;
+  text-align: center;
+  padding: 0.2rem 0;
+}
+.rules-content .rules-card-list .card-bottom {
+  width: 4.6rem;
+  height: 0.9rem;
+  border-radius: 0.9rem;
+  line-height: 0.9rem;
+  text-align: center;
+  font-size: 0.34rem;
+  position: fixed;
+  left: 1.5rem;
+  bottom: 2rem;
+  background-color: #47b146;
+  color: #fff;
 }
  .contract,.contract-green{
   width: 6.7rem;
