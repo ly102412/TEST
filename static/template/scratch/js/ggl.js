@@ -62,9 +62,9 @@ ggl.init = function(){
     }
     ismousedown = false;
 
-    if(isOk){
-      $('.cardButton').css('z-index','3');
-    }
+    // if(isOk){
+    //   $('.cardButton').css('z-index','3');
+    // }
   }
 
   //鼠标移动 和 触摸移动

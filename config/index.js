@@ -25,14 +25,14 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'), // 使用 config/dev.env.js 中定义的编译环境
-    port: 8000, // 运行测试页面的端口
+    port: 8080, // 运行测试页面的端口
     assetsEntry:'src/'+directory+'/index.html',
     assetsSubDirectory: 'static', // 编译输出的二级目录
     assetsPublicPath: '/', // 编译发布的根目录，可配置为资源服务器域名或 CDN 域名
     cssSourceMap: false,// 是否开启 cssSourceMap
     proxyTable: {
       '/api': {
-        target: 'http://192.168.199.190:7012/', // 目标地址 http://ruowei.ap.ngrok.io/     http://app.m.ruwe.cn/api/  内网环境http://m.ruowei.cn/  瑞清：192.168.199.204:7040
+        target: 'http://mas.tst.ruwe.cn', // 目标地址 http://ruowei.ap.ngrok.io/     http://app.m.ruwe.cn/api/  测试环境http://mas.tst.ruwe.cn  瑞清：'http://192.168.199.190:7012/
         changeOrigin: true,               // needed for virtual hosted sites
         ws: true,                         // websockets代理
         pathRewrite: {

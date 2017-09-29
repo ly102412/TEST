@@ -24,13 +24,26 @@
               <div class="col-sm-6 col-lg-3">
                 <div class="active-box">
                   <div class="pic">
-                    <span class="status">敬请期待</span>
+                    <span class="status">New</span>
                     <img src="../../static/img/guaguaka.jpg" alt="">
                   </div>
                   <div class="bottom">
                     <strong>幸运刮刮卡</strong>
                     <span><el-button type="primary" size="mini" icon="plus"
                       @click="goToCreate(2)">创建活动</el-button></span>
+                  </div>
+                </div>
+              </div><!--/.col-->
+              <div class="col-sm-6 col-lg-3">
+                <div class="active-box">
+                  <div class="pic">
+                    <span class="status">New</span>
+                    <img src="../../static/img/eggs.jpg" alt="">
+                  </div>
+                  <div class="bottom">
+                    <strong>砸金蛋</strong>
+                    <span><el-button type="primary" size="mini" icon="plus"
+                      @click="goToCreate(3)">创建活动</el-button></span>
                   </div>
                 </div>
               </div><!--/.col-->

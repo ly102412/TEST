@@ -4,6 +4,7 @@ $(function(){
   //     console.log('微信=========================='+token);
 
   var redirect_url;
+  var code;
   $.ajax({
       url: "/api/wechat/jsapi/signature?url="+encodeURIComponent(shareUrl)+'&code='+code,
       type: "get",

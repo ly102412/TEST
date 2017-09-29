@@ -16,7 +16,7 @@
       </template>
     </el-table-column>
       <el-table-column prop="activity_name" label="活动标题" width="120"></el-table-column>
-      <!-- <el-table-column prop="activity_desc" label="活动描述" width="150"></el-table-column> -->
+       <el-table-column prop="code" label="活动code" width="350"></el-table-column>
       <el-table-column prop="activity_type" label="活动类型" :formatter="formatType" width="120"></el-table-column>
       <el-table-column prop="start_time" label="活动开始时间" width="120"></el-table-column>
       <el-table-column prop="end_time" label="活动结束时间" width="120"></el-table-column>
@@ -83,7 +83,8 @@ export default {
       this.$confirm('发布后的活动有部分信息不可修改, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
+        closeOnClickModal:false
       }).then(() => {
         let params = {
           code: code
@@ -123,7 +124,8 @@ export default {
       this.$confirm('此活动已发布, 确定要结束?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
+        closeOnClickModal:false
       }).then(() => {
         let params = {
           code: code
@@ -155,14 +157,15 @@ export default {
     },
     // 复制链接
     handleCopy (msg) {
-      this.$alert(msg,'复制以下链接')
+      this.$alert(msg,'复制以下链接' ,{confirmButtonText: '关闭'})
     },
     // 删除活动
     handleDel (code) {
       this.$confirm('此操作将删除该活动, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
+        closeOnClickModal:false
       }).then(() => {
         let params = {
           code: code
@@ -241,7 +244,7 @@ export default {
           type = '刮刮卡'
         break;
         default:
-          type = '过期清零'
+          type = '砸金蛋'
         break;
       }
       return type

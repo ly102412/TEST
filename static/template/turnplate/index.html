@@ -1,458 +1,457 @@
 <!DOCTYPE html>
 <html lang="en" data-use-rem="750">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="renderer" content="webkit">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <script src="../common/js/jquery.min.js"></script>
-  <script src="../common/js/vue.min.js"></script>
-  <script src="../common/js/rem.js"></script>
-  <script src="js/turnplate.js"></script>
-  <script src="js/awardRotate.js"></script>
-  <link rel="stylesheet" href="../common/css/reset.css" />
-  <link rel="stylesheet" href="css/turnplate.css" />
-  <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <script src="../common/js/jquery.min.js"></script>
+    <script src="../common/js/vue.min.js"></script>
+    <script src="../common/js/rem.js"></script>
+    <script src="../common/js/moment.js"></script>
+    <script src="js/turnplate.js"></script>
+    <script src="js/awardRotate.js"></script>
+    <link rel="stylesheet" href="../common/css/reset.css"/>
+    <link rel="stylesheet" href="css/turnplate.css"/>
+    <title></title>
 </head>
 <body class="turnplate-lottery-body">
-  <div id="app">
+<div id="app">
     <!-- 首页 begin-->
     <div class="main" v-show="activity.main_tab == 1">
-      <!-- 活动背景图 begin-->
-      <div class="home-bg edit-layer" data-type="1" data-layer="main_bg">
-        <img :src="activity.activity_img_upload.main_bg" alt="">
-      </div>
-      <!-- 活动背景图 begin-->
-      <!-- 活动规则按钮 begin-->
-      <div class="rules-icon edit-layer" id="btn" data-type="1" data-layer="rules_icon">
-        <img :src="activity.activity_img_upload.rules_icon" alt="">
-      </div>
-      <!-- 活动规则按钮 end-->
-      <!-- 大转盘 begin-->
-      <div class="turnplate edit-layer" data-type="1" data-layer="turnplate_bg">
-        <canvas id="wheelcanvas" style="width:100%;z-index:1;position:relative" width="422" height="422"></canvas>
-        <img id="btn_start" src="images/turnplate-pointer.png" @click="goLottery(code)"/>
-        <img class="turnplate-bg" :src="activity.activity_img_upload.turnplate_bg"/>
-      </div>
-      <!-- 大转盘 end-->
-      <!-- 参与人数 begin-->
-      <div class="join-num">
-        <p class="edit-layer" data-type="2" data-layer="fictitious_join_num">已有<strong>{{activity.base_setting.fictitious_join_num | filterJoinNum}}</strong>人参与</p>
-        <p class="edit-layer" data-type="2" data-layer="total_lottery_time">今天还有<strong>{{activity.lottery_setting.daily_lottery_time}}</strong>次抽奖机会</p>
-        <p class="edit-layer" data-type="2" data-layer="daily_lottery_time" v-if="activity.lottery_setting.is_total_lottery == '1'">您还有<strong>{{activity.lottery_setting.total_lottery_time}}</strong>次抽奖机会</p>
-      </div>
-      <!-- 参与人数 end-->
-      <!-- 版权 begin-->
-      <div class="copyright">
-        页面技术由若为提供
-      </div>
-      <!-- 版权 end-->
+        <!-- 活动背景图 begin-->
+        <div class="home-bg edit-layer" data-type="1" data-layer="main_bg">
+            <img :src="activity.activity_img_upload.main_bg" alt="">
+        </div>
+        <!-- 活动背景图 begin-->
+        <!-- 活动规则按钮 begin-->
+        <div class="rules-icon edit-layer" id="btn" data-type="1" data-layer="rules_icon">
+            <img :src="activity.activity_img_upload.rules_icon" alt="">
+        </div>
+        <!-- 活动规则按钮 end-->
+        <!-- 大转盘 begin-->
+        <div class="turnplate edit-layer" data-type="1" data-layer="turnplate_bg">
+            <canvas id="wheelcanvas" style="width:100%;z-index:1;position:relative" width="422" height="422"></canvas>
+            <img id="btn_start" src="images/turnplate-pointer.png" @click="goLottery(code)"/>
+            <img class="turnplate-bg" :src="activity.activity_img_upload.turnplate_bg"/>
+        </div>
+        <!-- 大转盘 end-->
+        <!-- 参与人数 begin-->
+        <div class="join-num">
+            <p class="edit-layer" data-type="2" data-layer="fictitious_join_num">已有<strong>{{activity.base_setting.fictitious_join_num
+                | filterJoinNum}}</strong>人参与</p>
+            <p class="edit-layer" data-type="2" data-layer="total_lottery_time">今天还有<strong>{{activity.lottery_setting.daily_lottery_time}}</strong>次抽奖机会
+            </p>
+            <p class="edit-layer" data-type="2" data-layer="daily_lottery_time"
+               v-if="activity.lottery_setting.is_total_lottery == '1'">您还有<strong>{{activity.lottery_setting.total_lottery_time}}</strong>次抽奖机会
+            </p>
+        </div>
+        <!-- 参与人数 end-->
+        <!-- 版权 begin-->
+        <div class="copyright">
+            页面技术由若为提供
+        </div>
+        <!-- 版权 end-->
     </div>
     <!-- 首页 end-->
     <!-- 活动说明 begin-->
     <div class="rules-box" v-show="activity.main_tab == 2">
-      <div class="rules-box-top">
-        <div class="rules-tab">
-          <li class="cur">
-            <strong>活动说明</strong>
-          </li>
-          <li>
-            <strong>我的奖品</strong>
-          </li>
-        </div>
-        <div class="close">
-        </div>
-      </div>
-
-      <div class="rules-content">
-        <div class="module edit-layer" data-type="2" data-layer="award_setting">
-            <h3>活动奖品</h3>
-            <div class="info" v-for="(item,index) in activity.award_setting">
-              <p v-if="index > 0">{{item.award_name}}</p>
+        <div class="rules-box-top">
+            <div class="rules-tab">
+                <li class="cur">
+                    <strong>活动说明</strong>
+                </li>
+                <li>
+                    <strong>我的奖品</strong>
+                </li>
+            </div>
+            <div class="close">
             </div>
         </div>
-        <div class="module edit-layer" data-type="2" data-layer="base_setting_date">
-          <h3>活动时间</h3>
-          <div class="info">
-            <p>{{activity.base_setting.begin_date}} - {{activity.base_setting.end_date}}</p>
-          </div>
+
+        <div class="rules-content">
+            <div class="module edit-layer" data-type="2" data-layer="award_setting">
+                <h3><b>·</b>活动奖品:</h3>
+                <!--<div class="info">-->
+                    <!--<p><span>奖品名称</span><span style="margin-left: 0.5rem">奖品大小</span></p>-->
+                <!--</div>-->
+                <div class="info" v-for="(item,index) in activity.award_setting">
+                    <p><span>{{item.award_name}}</span><span style="margin-left: 0.5rem" v-if="item.award_value">{{item.award_value |awardValue}}<i v-show="item.award_type==1">流量</i>
+                    <i v-show="item.award_type==2">流量券</i></span></p>
+                </div>
+            </div>
+            <div class="module edit-layer" data-type="2" data-layer="base_setting_date">
+                <h3><b>·</b>活动时间:</h3>
+                <div class="info">
+                    <p>{{begin_date}} - {{end_date}}</p>
+                </div>
+            </div>
+            <div class="module edit-layer" data-type="2" data-layer="enterprise_setting" v-if="activity.advanced_setting.enterprise_setting.organizers">
+                <h3><b>·</b>主办单位:</h3>
+                <div class="info">
+                    <p>本次活动主办单位为<a :href="activity.advanced_setting.enterprise_setting.website_url"><strong>{{activity.advanced_setting.enterprise_setting.organizers}}</strong></a>
+                    </p>
+                </div>
+            </div>
+            <div class="module">
+                <h3><b>·</b>技术支持:</h3>
+                <div class="info">
+                    <p>页面技术由<strong>若为</strong>提供，技术支持方仅提供页面技术，不承担由活动引起的相关法律责任</p>
+                </div>
+            </div>
+            <div class="module edit-layer" data-type="2" data-layer="activity_des">
+                <h3><b>·</b>活动及兑奖说明:</h3>
+                <div class="info">
+                    <p></p>
+                    <p>{{activity.base_setting.activity_des}}</p>
+                </div>
+            </div>
         </div>
-        <div class="module edit-layer" data-type="2" data-layer="enterprise_setting">
-          <h3>主办单位</h3>
-          <div class="info">
-            <p>本次活动主办单位为<a :href="activity.advanced_setting.enterprise_setting.website_url"><strong>{{activity.advanced_setting.enterprise_setting.organizers}}</strong></a></p>
-          </div>
+        <div class="rules-content" style="display:none">
+            <div class="rules-card-list">
+                <ul>
+                    <li v-for="item in lottery.record_list">
+                        <div class="card-content">
+                            <h1 class="price-name">{{item.prize_name}}</h1>
+                            <p>中奖日期:{{item.create_time}}</p>
+                            <!-- <p>兑奖期限: {{activity.base_setting.begin_date}} 至 {{activity.base_setting.begin_date}}</p> -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- <div class="contract edit-layer" data-type="2" data-layer="button_link_text">
+                <a class="btn-contract">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
+            </div> -->
         </div>
-        <div class="module">
-          <h3>技术支持</h3>
-          <div class="info">
-            <p>页面技术由<strong>若为</strong>提供，技术支持方仅提供页面技术，不承担由活动引起的相关法律责任</p>
-          </div>
-        </div>
-        <div class="module edit-layer" data-type="2" data-layer="activity_des">
-          <h3>活动及兑奖说明</h3>
-          <div class="info">
-            <p></p>
-            <p>{{activity.base_setting.activity_des}}</p>
-          </div>
-        </div>
-      </div>
-      <div class="rules-content" style="display:none">
-        <div class="rules-card-list">
-          <ul>
-            <li v-for="item in lottery.record_list">
-              <div class="card-content">
-                <h1 class="price-name">{{item.prize_name}}</h1>
-                <p>中奖日期:{{item.create_time}}</p>
-                <!-- <p>兑奖期限: {{activity.base_setting.begin_date}} 至 {{activity.base_setting.begin_date}}</p> -->
-              </div>
-            </li>
-          </ul>
-        </div>
-        <!-- <div class="contract edit-layer" data-type="2" data-layer="button_link_text">
-            <a class="btn-contract">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
-        </div> -->
-      </div>
     </div>
     <!-- 活动说明 end-->
     <!-- 中奖页面 begin-->
     <div class="result-box" v-show="activity.main_tab == 4">
-      <div id="back-arrow"></div>
-      <div class="result-gift-scroll">
-        <div class="result-bglight"></div>
-        <h1 class="title">恭喜您获得了</h1>
-        <div class="result-img edit-layer" data-type="1" data-layer="lottery_success">
-          <img :src="activity.activity_img_upload.lottery_success" alt="">
+        <div id="back-arrow"></div>
+        <div class="result-gift-scroll">
+            <div class="result-bglight"></div>
+            <h1 class="title">恭喜您获得了</h1>
+            <div class="result-img edit-layer" data-type="1" data-layer="lottery_success">
+                <img :src="activity.activity_img_upload.lottery_success" alt="">
+            </div>
+            <div class="result-footer">
+                <p>{{lottery.award_name}}</p>
+            </div>
+            <!--<div class="result-img edit-layer" data-type="1" data-layer="lottery_success">-->
+                <!--<img :src="activity.activity_img_upload.lottery_success" alt="">-->
+            <!--</div>-->
+            <div class="contract-green">
+                <a class="btn-contract-green" @click.stop="goBank">领取奖品</a></br>
+                <a class="btn-contract-green" @click="activity.main_tab = '1'">再来一次</a></br>
+                <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'"
+                   class="btn-contract-green edit-layer" data-type="2" data-layer="button_link_text"
+                   :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
+                <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'"
+                   class="btn-contract-green edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
+            </div>
         </div>
-        <div class="result-footer">
-
-          <p>{{lottery.award_name}}</p>
-        </div>
-        <div class="contract">
-            <a class="btn-contract" :href="activity.bank_url">领取奖品</a></br>
-            <a class="btn-contract" @click="activity.main_tab = '1'">再来一次</a></br>
-            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
-            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
-        </div>
-      </div>
     </div>
     <!-- 中奖页面 end-->
+    <!-- 中奖页面 begin-->
     <div class="result-failed" v-show="activity.main_tab == 5">
-      <div class="failed-img edit-layer">
-        <img :src="activity.activity_img_upload.lottery_faild" alt="" data-type="1" data-layer="lottery_faild">
-      </div>
-      <div class="contract">
-          <a class="btn-contract" @click="activity.main_tab = '1'" style="width:80%;margin:0 auto">再来一次</a></br>
-          <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'" style="width:80%;margin:0 auto" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
-          <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'" style="width:80%;margin:0 auto" class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
-      </div>
+        <div class="failed-img edit-layer" data-layer="lottery_faild">
+            <img :src="activity.activity_img_upload.lottery_faild" alt="">
+        </div>
+        <div class="contract">
+            <a class="btn-contract" @click="activity.main_tab = '1'">再来一次</a></br>
+            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'"
+               style="width:80%;margin:0 auto" class="btn-contract edit-layer" data-type="2"
+               data-layer="button_link_text" :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
+            <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'"
+               style="width:80%;margin:0 auto" class="btn-contract edit-layer" data-type="2"
+               data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
+        </div>
     </div>
-  </div>
-  <script>
-  window.app = new Vue({
-      el: '#app',
-      data () {
-        return {
-          code: '',
-          lottery: {
-            award_name:'',
-            record_list: []
-          },
-          activity: {
-            main_tab: '1',                  // 当前导航栏状态
-            upload_image_url: '',           // 上传图片地址
-            activity_tab: '0',              // 活动设置导航状态
-            activity_img_upload: {          // 活动图片素材上传
-              main_bg: '',  // 活动背景图
-              rules_icon: '',                   // 活动图标
-              turnplate_bg: '',                 // 大转盘背景
-              lottery_success: '',              // 抽奖成功图片
-              lottery_faild: ''                 // 抽奖失败图片
-            },
-            base_setting: {
-              activity_name: '大转盘活动',    // 活动名称
-              begin_date: '',               // 活动开始时间
-              end_date: '',                 // 活动结束时间
-              is_join_num: false,           // 是否显示参与人数 boolean
-              is_join_num_limit: false,     // 是否限制参与人数 boolean
-              join_num: 0,                  // 限制参与人数量
-              fictitious_join_num: 0,       // 虚拟参加人数
-              activity_des: '获奖后凭兑奖码联系活动主办单位即可兑奖'              // 活动兑奖说明
-            },
-            // 派奖方式
-            lottery_setting: {
-              is_total_lottery: '0',        // 是否限制总抽奖机会 boolean
-              total_lottery_time: 6,        // 总抽奖次数
-              daily_lottery_time: 3,        // 每人每日抽奖次数
-              winning_time: 1,              // 每人中奖次数
-              // total_winning_rate: 10,       // 总中奖概率 百分比
-              friend_booster: '0',            // 好友助力 0关闭 1分享奖励 2邀请奖励
-              friend_sharing_time: 0,       // 分享活动可获得的抽奖次数
-              friend_Invitation_time: 0     // 每成功邀请一位好友，当天将额外获得一次抽奖机会，每天最多获得n次
-            },
-            // 奖项设置
-            award_setting: [
-              {
-                title: 'Tab 1',
-                name: '1',
-                content: 'Tab 1 content',
-                award_id: 1,
-                award_level: '奖项一',       // 奖品等级
-                award_type: '0',            // 奖品类型 0流量 1流量券 2实物   活动发布后类型无法修改
-                award_name: '100M流量',      // 奖品名称                    活动发布后名称无法修改
-                award_num: 100,             // 奖品数量
-                winning_rate: 10,           // 中奖概率
-                limit_begin_time: '',       // 限制有效期开始时间
-                limit_end_time: ''          // 限制有效期结束时间
-              }
-            ],
-            // 分享设置
-            sharing_setting: {
-              is_allow_sharing: '0',       // 是否允许分享
-              is_wx_sharing_icon: '0',        // 微信分享图标 0默认 1自定义上传
-              wx_sharing_icon_url: '',      // 上传的微信图标url
-              is_wx_sharing_content: '0',     // 微信分享内容 0默认 1自定义
-              wx_sharing_loser_content: '​轻轻松松就能抽到大奖，积攒多年的人品终于有用了，你也赶紧来抽奖吧！！', // 没有获奖的玩家分享的内容
-              wx_sharing_winner_content: '​我已经在活动中抽到了奖品，你也快来抽大奖吧！',// 获奖玩家分享的内容
-            },
-            // 高级设置
-            advanced_setting: {
-              enterprise_setting:{
-                organizers: '',             // 主办单位
-                website_url: '',            // 链接地址
-                is_showing_logo: '0',     // 是否显示企业Logo
-                logo_url: '',               // 企业logo
-                is_loading_img: '0',          // 页面加载图片
-                loading_img_url: '',        // 加载图片url
-                is_showing_function_button: '0', //功能按钮  0隐藏 1页面跳转 2一键关注
-                button_link_text: '企业官网',        // 点击按钮跳转链接地址
-                button_link_url: '',        // 点击按钮跳转链接地址
-                button_flow_text: ''        // 点击按钮一键关注
-              },
-              game_setting: {
-                is_showing_ad: '0',           // 是否显示广告
-                is_play_award_info: '0',     // 是否播放获奖信息
-              }
+    <!-- 中奖页面 end-->
+</div>
+<script>
+    window.app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                begin_date:'',
+                end_date:'',
+                code: '',
+                lottery: {
+                    award_name: '',
+                    record_list: []
+                },
+                activity: {
+                    main_tab: '1',                  // 当前导航栏状态
+                    upload_image_url: '',           // 上传图片地址
+                    activity_tab: '0',              // 活动设置导航状态
+                    activity_img_upload: {          // 活动图片素材上传
+                        main_bg: '',  // 活动背景图
+                        rules_icon: '',                   // 活动图标
+                        turnplate_bg: '',                 // 大转盘背景
+                        lottery_success: '',              // 抽奖成功图片
+                        lottery_faild: ''                 // 抽奖失败图片
+                    },
+                    base_setting: {
+                        activity_name: '大转盘活动',    // 活动名称
+                        begin_date: '',               // 活动开始时间
+                        end_date: '',                 // 活动结束时间
+                        is_join_num: false,           // 是否显示参与人数 boolean
+                        is_join_num_limit: false,     // 是否限制参与人数 boolean
+                        join_num: 0,                  // 限制参与人数量
+                        fictitious_join_num: 0,       // 虚拟参加人数
+                        activity_des: '活动赠送的流量奖品暂存在流量银行内，请使用领取流量的手机号码登录流量银行内充值流量'              // 活动兑奖说明
+                    },
+                    // 派奖方式
+                    lottery_setting: {
+                        is_total_lottery: '0',        // 是否限制总抽奖机会 boolean
+                        total_lottery_time: 6,        // 总抽奖次数
+                        daily_lottery_time: 3,        // 每人每日抽奖次数
+                        winning_time: 1,              // 每人中奖次数
+                        // total_winning_rate: 10,       // 总中奖概率 百分比
+                        friend_booster: '0',            // 好友助力 0关闭 1分享奖励 2邀请奖励
+                        friend_sharing_time: 0,       // 分享活动可获得的抽奖次数
+                        friend_Invitation_time: 0     // 每成功邀请一位好友，当天将额外获得一次抽奖机会，每天最多获得n次
+                    },
+                    // 奖项设置
+                    award_setting: [
+                        {
+                            title: 'Tab 1',
+                            name: '1',
+                            content: 'Tab 1 content',
+                            award_id: 1,
+                            award_level: '奖项一',       // 奖品等级
+                            award_type: '0',            // 奖品类型 0流量 1流量券 2实物   活动发布后类型无法修改
+                            award_name: '100M流量',      // 奖品名称                    活动发布后名称无法修改
+                            award_num: 100,             //奖品数量
+                            award_value: '-1',           // 奖品值
+                            winning_rate: 10,           // 中奖概率
+                            limit_begin_time: '',       // 限制有效期开始时间
+                            limit_end_time: ''          // 限制有效期结束时间
+                        }
+                    ],
+                    // 分享设置
+                    sharing_setting: {
+                        is_allow_sharing: '0',       // 是否允许分享
+                        is_wx_sharing_icon: '0',        // 微信分享图标 0默认 1自定义上传
+                        wx_sharing_icon_url: '',      // 上传的微信图标url
+                        is_wx_sharing_content: '0',     // 微信分享内容 0默认 1自定义
+                        wx_sharing_loser_content: '​轻轻松松就能抽到大奖，积攒多年的人品终于有用了，你也赶紧来抽奖吧！！', // 没有获奖的玩家分享的内容
+                        wx_sharing_winner_content: '​我已经在活动中抽到了奖品，你也快来抽大奖吧！',// 获奖玩家分享的内容
+                    },
+                    // 高级设置
+                    advanced_setting: {
+                        enterprise_setting: {
+                            organizers: '',             // 主办单位
+                            website_url: 'javascript:;',            // 链接地址
+                            is_showing_logo: '0',     // 是否显示企业Logo
+                            logo_url: '',               // 企业logo
+                            is_loading_img: '0',          // 页面加载图片
+                            loading_img_url: '',        // 加载图片url
+                            is_showing_function_button: '0', //功能按钮  0隐藏 1页面跳转 2一键关注
+                            button_link_text: '企业官网',        // 点击按钮跳转链接地址
+                            button_link_url: '',        // 点击按钮跳转链接地址
+                            button_flow_text: ''        // 点击按钮一键关注
+                        },
+                        game_setting: {
+                            is_showing_ad: '0',           // 是否显示广告
+                            is_play_award_info: '0',     // 是否播放获奖信息
+                        }
+                    }
+                },
             }
-          },
-        }
-      },
-      mounted () {
-          // var url = window.location.href.match(/[^]*[?]/);
-          // alert(url)
-          if(top.location != location){
-            this.setContent(window.parent.window._activity)
-          }else{
-            // 用户页面
-            this.code = this.getUrl('code')
-            this.activity.main_tab = '1'
-            this.getUserInfo(this.code, true)
-            this.getLotteryRecord(this.code)
-            window.code = this.code
-            window.activity = this.activity
-          }
-        //  if(window.parent.window._activity){
-        //
-        //  }else{
-        //     // this.activity.base_setting.activity_name = '哈哈哈'
-        //  }
-      },
-      filters: {
-        filterJoinNum: function (value){
-          return parseInt(value)
-        }
-      },
-      methods: {
-        setContent (activity) {
-          this.activity = activity
-          this.setAwardList(this.activity)
         },
-       getUrl (paras) {
-          var url = location.href;
-          var paraString = url.substring(url.indexOf("?")+1,url.length).split("&");
-          var paraObj = {}
-          for (var i= 0,j; j=paraString[i]; i++){
-              paraObj[j.substring(0,j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=")+1,j.length);
-          }
-          var returnValue = paraObj[paras.toLowerCase()];
-          if(typeof(returnValue)=="undefined"){
-              return "";
-          }else{
-              return returnValue;
-          }
+        mounted() {
+            // var url = window.location.href.match(/[^]*[?]/);
+            // alert(url)
+            if (top.location != location) {
+                this.setContent(window.parent.window._activity)
+            } else {
+                // 用户页面
+                this.code = this.getUrl('code')
+                this.activity.main_tab = '1'
+                this.getUserInfo(this.code, true)
+                this.getLotteryRecord(this.code)
+                window.code = this.code
+                window.activity = this.activity
+            }
+            //  if(window.parent.window._activity){
+            //
+            //  }else{
+            //     // this.activity.base_setting.activity_name = '哈哈哈'
+            //  }
         },
-        // 抽奖接口
-        goLottery (code) {
-          var _this = this
-          if(turnplate.bRotate) return;
-          if(!turnplate.restaraunts) return;
-          turnplate.bRotate = !turnplate.bRotate;
-          // 点击抽奖
-          // turnplate.getLottery(work_id,workData);
-          // 奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
-          // console.log(turnplate.restaraunts[item-1]);
-          if(location == top.location){
-            $.ajax({
-                url: '/api/front/lottery',    //请求的url地址
-                dataType: 'json',
-                async: true,
-                data: {
-                  'code': code
-                },
-                type: 'get',
-                beforeSend: function(){
-                    //请求前的处理
-                },
-                success: function(res){
-                  if(res.status == 0){
-                    turnplate.award_id = res.data.id
-                    var award_index = turnplate.getPrizeIndex(turnplate.award_id,turnplate.restaraunts)
-                    turnplate.rotateFn(award_index+1, 1000, function(){
-                      if(res.data.prize_denomination !== -1){
-                        _this.activity.main_tab = 4
-                        _this.lottery.award_name = res.data.prize_name
-                      }else{
-                        _this.activity.main_tab = 5
-                      }
-                      _this.getUserInfo(code)
-                      // alert(res.data.prize_name)
-                      // _this.activity.main_tab = 4
+        filters: {
+            filterJoinNum: function (value) {
+                return parseInt(value)
+            }
+        },
+        methods: {
+            setContent(activity) {
+                this.activity = activity
+                this.setAwardList(this.activity)
+                if(this.activity.base_setting.begin_date){
+                    this.begin_date = moment(this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
+                }
+                if(this.activity.base_setting.end_date){
+                    this.end_date = moment(this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
+                }
+            },
+            getUrl(paras) {
+                var url = location.href;
+                var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
+                var paraObj = {}
+                for (var i = 0, j; j = paraString[i]; i++) {
+                    paraObj[j.substring(0, j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=") + 1, j.length);
+                }
+                var returnValue = paraObj[paras.toLowerCase()];
+                if (typeof(returnValue) == "undefined") {
+                    return "";
+                } else {
+                    return returnValue;
+                }
+            },
+            // 抽奖接口
+            goLottery(code) {
+                var _this = this
+                if (turnplate.bRotate) return;
+                if (!turnplate.restaraunts) return;
+                turnplate.bRotate = !turnplate.bRotate;
+                // 点击抽奖
+                // turnplate.getLottery(work_id,workData);
+                // 奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
+                // console.log(turnplate.restaraunts[item-1]);
+                if (location == top.location) {
+                    $.ajax({
+                        url: '/api/front/lottery',    //请求的url地址
+                        dataType: 'json',
+                        async: true,
+                        data: {
+                            'code': code
+                        },
+                        type: 'get',
+                        beforeSend: function () {
+                            //请求前的处理
+                        },
+                        success: function (res) {
+                            if (res.status == 0) {
+                                turnplate.award_id = res.data.id
+                                var award_index = turnplate.getPrizeIndex(turnplate.award_id, turnplate.restaraunts)
+                                turnplate.rotateFn(award_index + 1, 1000, function () {
+                                    if (res.data.prize_denomination !== -1) {
+                                        _this.activity.main_tab = 4
+                                        _this.lottery.award_name = res.data.prize_name
+                                    } else {
+                                        _this.activity.main_tab = 5
+                                    }
+                                    _this.getUserInfo(code)
+                                    // alert(res.data.prize_name)
+                                    // _this.activity.main_tab = 4
+                                });
+                            } else {
+                                $('#wheelcanvas').stopRotate();
+                                alert(res.message)
+                            }
+                        },
+                        complete: function () {
+                            //请求完成的处理
+                        },
+                        error: function () {
+                            //请求出错处理
+                        }
                     });
-                  }else{
-                    $('#wheelcanvas').stopRotate();
-                    alert(res.message)
-                  }
-                },
-                complete: function(){
-                    //请求完成的处理
-                },
-                error: function(){
-                    //请求出错处理
-                }
-            });
-          }
-
-          turnplate.rotateFn(2000);
-        },
-        // 获取中奖纪录
-        getLotteryRecord (code) {
-          var _this = this
-          $.ajax({
-              url: '/api/front/user/lottery/list',    //请求的url地址
-              dataType: 'json',
-              async: true,
-              data: {
-                'code': code
-              },
-              type: 'get',
-              success: function(res){
-                console.log(res)
-                if(res.status == 0){
-                  _this.lottery.record_list = res.data.list
-                }
-              }
-          });
-        },
-        // 获取用户信息
-        getUserInfo (code,bRepaint) {
-          var _this = this
-          $.ajax({
-              url: '/api/front/get/user/info',    //请求的url地址
-              dataType: 'json',
-              async: true,
-              data: {
-                'code': code
-              },
-              type: 'get',
-              beforeSend: function(){
-                  //请求前的处理
-              },
-              success: function(res){
-                if(res.status == 0){
-                  res.data.activity.main_tab = _this.activity.main_tab
-                  _this.activity = res.data.activity
-                  turnplate.restaraunts = _this.activity.award_setting
-                  if(bRepaint){
-                    turnplate.drawRouletteWheel();
-                  }
                 }
 
-              },
-              complete: function(){
-                  //请求完成的处理
-              },
-              error: function(){
-                  //请求出错处理
-              }
-          });
+                turnplate.rotateFn(2000);
+            },
+            // 获取中奖纪录
+            getLotteryRecord(code) {
+                var _this = this
+                $.ajax({
+                    url: '/api/front/user/lottery/list',    //请求的url地址
+                    dataType: 'json',
+                    async: true,
+                    data: {
+                        'code': code
+                    },
+                    type: 'get',
+                    success: function (res) {
+                        console.log(res)
+                        if (res.status == 0) {
+                            _this.lottery.record_list = res.data.list
+                        }
+                    }
+                });
+            },
+            // 获取用户信息
+            getUserInfo(code, bRepaint) {
+                var _this = this
+                $.ajax({
+                    url: '/api/front/get/user/info',    //请求的url地址
+                    dataType: 'json',
+                    async: true,
+                    data: {
+                        'code': code
+                    },
+                    type: 'get',
+                    success: function (res) {
+                        if (res.status == 0) {
+                            res.data.activity.main_tab = _this.activity.main_tab
+                            _this.activity = res.data.activity
+                            turnplate.restaraunts = _this.activity.award_setting
+                            _this.begin_date = moment(_this.activity.base_setting.begin_date).format('YYYY-MM-DD HH:mm:ss')
+                            _this.end_date = moment(_this.activity.base_setting.end_date).format('YYYY-MM-DD HH:mm:ss')
+                            if (bRepaint) {
+                                turnplate.drawRouletteWheel();
+                            }
+                        }
+
+                    }
+                });
+
+
+            },
+            // 领取奖品，跳转流量银行
+            goBank() {
+                window.location.href="/api/bank/user/auth"
+            },
+
+            // 设置奖品列表
+            setAwardList(activity) {
+                // console.log(activity.award_setting)
+                turnplate.restaraunts = []
+                var award_length = activity.award_setting.length
+                for (var i = 0; i < award_length; i++) {
+                    turnplate.restaraunts.push(
+                        {
+                            'award_id': activity.award_setting[i].award_id,
+                            'award_name': activity.award_setting[i].award_name
+                        }
+                    )
+                }
+                turnplate.drawRouletteWheel();
+            },
+
+
         },
-        // 设置奖品列表
-        setAwardList (activity) {
-          // console.log(activity.award_setting)
-          turnplate.restaraunts = []
-          var award_length = activity.award_setting.length
-          for(var i = 0; i < award_length; i++){
-            turnplate.restaraunts.push(
-              {'award_id':activity.award_setting[i].award_id,'award_name':activity.award_setting[i].award_name}
-            )
-          }
-          turnplate.drawRouletteWheel();
+        filters: {
+            awardValue: function (value) {
+                if(value == '-1'||!value){
+                    value == ''
+
+                }else{
+                    return value+'M'
+                }
+
+            }
         }
-      }
-  });
-  </script>
-  <script>
-  $(function(){
-      // 活动说明tab
-      $(".rules-tab li").click(function(){
-          $(".rules-tab li").eq($(this).index()).addClass("cur").siblings().removeClass('cur');
-          $(".rules-content").hide().eq($(this).index()).show();
-      });
-      $('.rules-icon').click(function(){
-        $('.rules-box').show()
-      });
-      $('.close').click(function(){
-        $('.rules-box').hide()
-        $('.main').show()
-      });
-      // 判断当前页面环境是否是在iframe中
-      if(location != top.location){
-        // 移入添加border
-        $('.edit-layer').hover(function(){
-          $('.edit-layer').removeClass('layer-border');
-          $(this).addClass('layer-border');
-          // 点击事件
-        },function(){
-          $('.layer-border').removeClass('layer-border');
-        });
-
-        // 点击激活编辑状态
-        $('.edit-layer').click(function(){
-          $('.edit-layer').removeClass('layer-border-active');
-          $(this).addClass('layer-border-active');
-          if($('.tool-bar')){
-            $('.tool-bar').remove();
-          }
-          setTimeout(function(){
-            $(this).removeClass('layer-border-active');
-          }, 3000);
-          $(this).append('<div class="tool-bar"><span>编辑</span></div>');
-          $('.edit-layer .tool-bar').on('click',function(e){
-            e.stopPropagation();
-            var label_name = $(this).parent().attr('data-layer');
-            var label_type = $(this).parent().attr('data-type');
-            parent._setProperty(label_name,label_type)
-          });
-        });
-      }else{
-      }
-
-    })
-  </script>
-  <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-  <script src="../common/js/share.js"></script>
+    });
+</script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="../common/js/share.js"></script>
+<script src="../common/js/edit-layer.js"></script>
 </body>
 </html>
