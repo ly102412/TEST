@@ -39,7 +39,7 @@
           <el-tooltip class="item" effect="dark" content="复制链接" placement="top">
             <el-button size="small" type="primary" icon="share" @click="handleCopy(scope.row.link)"></el-button>
           </el-tooltip>
-          <el-tooltip class="item" effect="dark" content="编辑活动" placement="top">
+          <el-tooltip class="item" effect="dark" content="编辑活动" placement="top" v-if="scope.row.activity_status != 2">
             <el-button size="small" icon="edit" type="warning" @click="handleEdit(scope.row.code)"></el-button>
           </el-tooltip>
           <el-dropdown trigger="click" @command="handleMenuCommand">

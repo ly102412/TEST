@@ -59,23 +59,20 @@
 }
 .shake .startBtn{
   width: 3.2rem;
-  height: 1.49rem;
-  background: url(../images/drawBg.png) no-repeat center center;
-  background-size: 100% 100%;
+  height: 1rem;
+  line-height: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
   position: absolute;
   left: 50%;
   top: 52%;
   margin-left: -1.7rem;
+  background-color: #47b146;
+  color: #fff;
+  font-size: 0.4rem;
 }
 .shake .startBtn .tada{
-  width: 1.71rem;
-  height: 1.49rem;
-  background: url(../images/shake.png) no-repeat center center;
-  background-size: 100% 100%;
-  position: absolute;
-  top: 0;
-  left:0;
-  animation: tada 2s ease 0s infinite forwards
+  animation: tada 2s ease 2s infinite forwards
 }
 @keyframes tada {
   0% {
@@ -310,7 +307,7 @@
   font-size: 0.34rem;
   position: fixed;
   left: 1.5rem;
-  bottom: 2rem;
+  bottom: 0.2rem;
   background-color: #47b146;
   color: #fff;
 }

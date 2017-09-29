@@ -34,13 +34,12 @@
         <!-- 活动抽奖title begin-->
         <div class="shake_tit"></div>
         <!-- 活动抽奖title end-->
-        <audio src="shake.mp3" controls id="shakeMusic" style="display:none "></audio>
         <!-- 活动抽奖盒子 begin-->
         <div class="prize_box"></div>
         <!-- 活动抽奖盒子 end-->
         <!-- 抽奖按钮 begin-->
-        <div class="startBtn">
-            <div id="shake" class="tada"></div>
+        <div class="startBtn" @click="goLottery">
+            <div id="shake" class="tada">抽一张</div>
         </div>
         <!-- 参与人数 begin-->
         <div class="join-num">
@@ -99,7 +98,7 @@
     </div>
     <!-- 抽奖 end-->
     <!-- 活动说明 begin-->
-    <div class="result-box" v-show="activity.main_tab == 2" id="rules-box">
+    <div class="result-box" v-show="activity.main_tab == 3" id="rules-box">
         <div class="rules-box">
             <div class="rules-box-top">
                 <div class="rules-tab">
@@ -187,20 +186,20 @@
                     <i v-show="lottery.award_type==2">流量券</i>
                 </p>
             </div>
-            <div class="contract">
-                <a class="btn-contract" @click.stop="goBank">领取奖品</a></br>
-                <a class="btn-contract" @click="goLotteryAngin">再来一次</a></br>
+            <div class="contract-green">
+                <a class="btn-contract-green" @click.stop="goBank">领取奖品</a></br>
+                <a class="btn-contract-green" @click="goLotteryAngin">再来一次</a></br>
                 <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '1'"
-                   class="btn-contract edit-layer" data-type="2" data-layer="button_link_text"
+                   class="btn-contract-green edit-layer" data-type="2" data-layer="button_link_text"
                    :href="activity.advanced_setting.enterprise_setting.button_link_url">{{activity.advanced_setting.enterprise_setting.button_link_text}}</a>
                 <a v-if="activity.advanced_setting.enterprise_setting.is_showing_function_button == '2'"
-                   class="btn-contract edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
+                   class="btn-contract-green edit-layer" data-type="2" data-layer="button_link_text">{{activity.advanced_setting.enterprise_setting.button_flow_text}}</a>
             </div>
         </div>
     </div>
     <!-- 中奖页面 end-->
     <div class="result-failed" v-show="activity.main_tab == 5">
-        <div class="failed-img edit-layer">
+        <div class="failed-img edit-layer" data-layer="lottery_faild">
             <img :src="activity.activity_img_upload.lottery_faild" alt="" data-type="1" data-layer="lottery_faild">
         </div>
         <div class="contract">
@@ -321,7 +320,6 @@
         },
         mounted() {
             // var url = window.location.href.match(/[^]*[?]/);
-            // alert(url)
                 this.init()
 
             if (top.location != location) {
@@ -335,10 +333,8 @@
                 this.getLotteryRecord(this.code)
                 window.code = this.code
                 window.activity = this.activity
-                this.shake()
 
             }
-            //this.shake()
             //  if(window.parent.window._activity){
             //
             //  }else{
@@ -379,7 +375,6 @@
             },
             // 抽奖接口
             goLottery(code) {
-                alert('调用成功')
                 var _this = this
                 if (location == top.location) {
                     $.ajax({
@@ -574,44 +569,6 @@
                 this.init()
                 this.activity.main_tab = 1
             },
-            shake(){
-
-                //摇一摇重力感应 start
-                let _this = this
-                let lastX=0;
-                let lastY=0;
-                let lastZ=0;
-                if(window.DeviceMotionEvent && _this.activity.main_tab == 1){
-                    window.addEventListener('devicemotion',function(ev){
-                        let acceleration=ev.accelerationIncludingGravity;
-                        let audio = document.getElementById('shakeMusic');
-
-                        let x=acceleration.x;
-                        let y=acceleration.y;
-                        let z=acceleration.z;
-
-                        if(
-                            Math.abs(x-lastX)>25 ||
-                            Math.abs(y-lastY)>25 ||
-                            Math.abs(z-lastZ)>25
-                        ){
-                            audio.play()//播放音乐
-                            //摇的时候 调用
-                            _this.goLottery(_this.code)
-
-                        }
-
-
-                        lastX=x;
-                        lastY=y;
-                        lastZ=z;
-                    },false);
-                }else{
-                    console.log('不支持重力感应');
-                }
-//摇一摇重力感应 end
-            },
-
         },
         filters: {
             awardValue: function (value) {

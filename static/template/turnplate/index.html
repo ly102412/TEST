@@ -187,7 +187,7 @@
                 lottery: {
                     award_name: '',
             		record_list: []
-                      
+
                 },
                 activity: {
                     main_tab: '1',                  // 当前导航栏状态
@@ -380,7 +380,8 @@
                     dataType: 'json',
                     async: true,
                     data: {
-                        'code': code
+                        'code': code,
+                        'page_size':1000
                     },
                     type: 'get',
                     success: function (res) {
