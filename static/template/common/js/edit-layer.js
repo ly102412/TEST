@@ -5,10 +5,10 @@
           $(".rules-content").hide().eq($(this).index()).show();
       });
       $('.rules-icon').click(function(){
-        $('.rules-box').show()
+        $('#rules-box').show()
       });
       $('.close').click(function(){
-        $('.rules-box').hide()
+        $('#rules-box').hide()
         $('.main').show()
       });
       // 判断当前页面环境是否是在iframe中

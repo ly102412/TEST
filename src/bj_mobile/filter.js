@@ -171,7 +171,7 @@ Vue.filter('filter_ordertime', function(obj) {
       value = obj.order_create_time
       break;
     case 1:
-      value = obj.receive_start_time
+      value = obj.recharge_start_time
       break;
     case 2:
       value = obj.recharge_success_time
