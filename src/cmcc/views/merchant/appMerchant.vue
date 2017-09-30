@@ -140,10 +140,10 @@
                 <div class="col-md-12" style="word-wrap: break-word;
 word-break: normal;">
                     <b>活动入口：</b><br/>
-                    https://m.ruwe.cn/api/app/user/auth?data= YWN0aXZpdHlfY29kZT03MjkzYTUxZS1hYzJjLTQxYmMtOTQ4OS0yMjA3MzQ1NWIwYzgmYnVzaW5lc3NfaWQ9MTAwMDAwMDEmcGhvbmVfbnVtYmVyPTE4ODEwMzk1NjA3JnRpbWVzdGFtcD0xNTA1NDYyMzkxNDk1JnV1aWQ9MTg4MTAzOTU2MDcmc2lnbj04NWIyMjAzN2U0NGI3ZTQwMWVhZmJmNjQzYzc3OWYyZQ==
+                    https://mas.ruwe.cn/api/app/user/auth?data= YWN0aXZpdHlfY29kZT03MjkzYTUxZS1hYzJjLTQxYmMtOTQ4OS0yMjA3MzQ1NWIwYzgmYnVzaW5lc3NfaWQ9MTAwMDAwMDEmcGhvbmVfbnVtYmVyPTE4ODEwMzk1NjA3JnRpbWVzdGFtcD0xNTA1NDYyMzkxNDk1JnV1aWQ9MTg4MTAzOTU2MDcmc2lnbj04NWIyMjAzN2U0NGI3ZTQwMWVhZmJmNjQzYzc3OWYyZQ==
                     <br/>
                      <b>流量银行入口：<b style="color: red;">(参数不需要 activity_code)</b></b><br/>
-                    https://m.ruwe.cn/api/app/user/auth/tobank?data= YWN0aXZpdHlfY29kZT03MjkzYTUxZS1hYzJjLTQxYmMtOTQ4OS0yMjA3MzQ1NWIwYzgmYnVzaW5lc3NfaWQ9MTAwMDAwMDEmcGhvbmVfbnVtYmVyPTE4ODEwMzk1NjA3JnRpbWVzdGFtcD0xNTA1NDYyMzkxNDk1JnV1aWQ9MTg4MTAzOTU2MDcmc2lnbj04NWIyMjAzN2U0NGI3ZTQwMWVhZmJmNjQzYzc3OWYyZQ==
+                    https://mas.ruwe.cn/api/app/user/auth/tobank?data= YWN0aXZpdHlfY29kZT03MjkzYTUxZS1hYzJjLTQxYmMtOTQ4OS0yMjA3MzQ1NWIwYzgmYnVzaW5lc3NfaWQ9MTAwMDAwMDEmcGhvbmVfbnVtYmVyPTE4ODEwMzk1NjA3JnRpbWVzdGFtcD0xNTA1NDYyMzkxNDk1JnV1aWQ9MTg4MTAzOTU2MDcmc2lnbj04NWIyMjAzN2U0NGI3ZTQwMWVhZmJmNjQzYzc3OWYyZQ==
                     </br>
                 </div>
               </div>
