@@ -18,6 +18,12 @@ import BalanceInfo from '../views/bussiness/balanceInfo'
 // views - app商家接入
 import AppMerchant from '../views/merchant/appMerchant'
 import WxMerchant from '../views/merchant/wxMerchant'
+
+// views - 批充流量
+import AccountChargeFlow from '../views/chargeflow/accountChargeFlow'
+import ChargeFlowList from '../views/chargeflow/chargeFlowList'
+import TelChargeFlow from '../views/chargeflow/telChargeFlow'
+
 // views - pages
 import Page404 from '../views/pages/404'
 
@@ -108,7 +114,7 @@ const routes = [
             name: '账户余额明细',
             component: BalanceInfo,
             hidden: true
-          },
+          }
         ]
       },
       {
@@ -129,6 +135,32 @@ const routes = [
             path: '/merchant/wxMerchant',
             name: '微信接入',
             component: WxMerchant
+          }
+        ]
+      },
+      {
+        path: '/chargeflow',
+        redirect: '/chargeflow/accountChargeFlow',
+        name: '批充流量',
+        iconCls: 'fa fa-feed',
+        component: {
+          render (c) { return c('router-view') }
+        },
+        children: [
+          {
+            path: '/chargeflow/accountChargeFlow',
+            name: '流量账户批充',
+            component: AccountChargeFlow
+          },
+          {
+            path: '/chargeflow/telChargeFlow',
+            name: '手机流量批充',
+            component: TelChargeFlow
+          },
+          {
+            path: '/chargeflow/chargeFlowList',
+            name: '批充列表',
+            component: ChargeFlowList
           }
         ]
       }
