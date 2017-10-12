@@ -105,3 +105,41 @@ export const getSecretKey = params => { return axios.get(`${base}/get/secretkey`
  */
 export const resetSecretKey = params => { return axios.get(`${base}/reset/secretkey`, { params: params}).then(res => res.data)}
 
+
+/**
+ * 账号批冲
+ * [readAccountCsv 获取导入的手机号码]
+ */
+export const readAccountCsv = params => { return axios.get(`/api/batch/recharge/read/csv/bank`, { params: params}).then(res => res.data)}
+
+/**
+ * 账号批冲
+ * [createAccountCsv 创建账号批冲]
+ */
+export const createAccountCsv = params => { return axios.post(`/api/batch/recharge/create/bank/activity`, params).then(res => res.data)}
+
+
+/**
+ * 手机号码批冲
+ * [readCsvPhone 获取导入的手机号码]
+ */
+export const readPhoneCsv = params => { return axios.get(`/api/batch/recharge/read/csv/phone`, { params: params}).then(res => res.data)}
+
+/**
+ * 手机号码批冲
+ * [createPhoneCsv 创建手机号码批冲]
+ */
+export const createPhoneCsv = params => { return axios.post(`/api/batch/recharge/create/phone/activity`, params).then(res => res.data)}
+
+/**
+ * 批冲列表
+ * [rechargeList 批冲列表]
+ */
+export const rechargeList = params => { return axios.post(`/api/batch/recharge/list`, params).then(res => res.data)}
+
+/**
+ * 批冲详情
+ * [rechargeDetail 批冲详情]
+ */
+export const rechargeDetail = params => { return axios.post(`api/batch/recharge/detail`, params).then(res => res.data)}
+

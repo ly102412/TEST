@@ -3,7 +3,7 @@ import NotFound from './views/404'
 import Home from './views/Home'
 import Main from './views/Main'
 import OrderList from './views/nav1/orderList'
-
+import ChargeFlowList from './views/nav1/chargeFlowList'
 import Test from './views/Test.vue'
 
 const routes = [
@@ -25,16 +25,6 @@ const routes = [
     name: '',
     hidden: true
   },
-  // {
-  //     path: '/',
-  //     component: Home,
-  //     name: '导航二',
-  //     iconCls: 'fa fa-id-card-o',
-  //     children: [
-  //       { path: '/redeemCodeRecord', component: RedeemCodeRecord, name: '流量兑换码记录' },
-  //       { path: '/redeemCodeRecord', component: RedeemCodeRecord, name: '流量兑换码记录' },
-  //     ]
-  // },
   {
     path: '/orderList',
     component: Home,
@@ -45,15 +35,16 @@ const routes = [
       { path: '/orderList', component: OrderList, name: '订单管理' },
     ]
   },
-  // {
-  //     path: '/',
-  //     component: Home,
-  //     name: 'Charts',
-  //     iconCls: 'fa fa-bar-chart',
-  //     children: [
-  //         { path: '/echarts', component: echarts, name: 'echarts' }
-  //     ]
-  // },
+  {
+    path: '/chargeFlowList',
+    component: Home,
+    name: '审核列表',
+    iconCls: 'fel-icon-message',
+    leaf: true,//只有一个节点
+    children: [
+      { path: '/chargeFlowList', component: ChargeFlowList, name: '审核列表' },
+    ]
+  },
   {
     path: '*',
     hidden: true,

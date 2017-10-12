@@ -9,12 +9,14 @@
                 <el-col :span="24">
                     <div class="grid-content  text-regular " align="center">
                         <el-col :span="2" style="line-height: 35px;">
-                            批充类型:
+                            状态:
                         </el-col>
                         <el-col :span="5" style="margin-left: 20px">
-                            <el-select v-model="batch_type" placeholder="请选择批冲类型">
-                                <el-option label="流量账户批充" value="1"></el-option>
-                                <el-option label="手机流量批冲" value="2"></el-option>
+                            <el-select v-model="batch_status" placeholder="请选择批冲类型">
+                                <el-option label="全部" value=""></el-option>
+                                <el-option label="未审核" value="0"></el-option>
+                                <el-option label="审核通过" value="1"></el-option>
+                                <el-option label="驳回" value="2"></el-option>
                             </el-select>
                         </el-col>
 
@@ -35,7 +37,8 @@
                             <el-date-picker
                                     v-model="end_time"
                                     type="datetime"
-                                    placeholder="选择结束时间">
+                                    placeholder="选择结束时间"
+                            >
                             </el-date-picker>
                         </el-col>
                     </div>
@@ -70,19 +73,19 @@
                 <el-table-column
                         prop="id"
                         label="ID"
-                        width="120"
+                        width="100"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="batch_name"
-                        label="活动名称"
+                        label="商户名"
                         width="200"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="create_time"
                         label="创建时间"
-                        width="140"
+                        width="120"
                         align="center">
                 </el-table-column>
                 <el-table-column
@@ -119,16 +122,25 @@
                 >
                 </el-table-column>
                 <el-table-column
-                        prop=""
+                        prop="batch_money"
+                        label="备注"
+                        width="200"
+                        align="center"
+                >
+                </el-table-column>
+                <el-table-column
                         label="操作"
-                        width="100"
+                        width="200"
                         align="center">
                     <template scope="scope">
                         <el-button type="primary"
-                                   @click="goRechargeDetail(scope.row.id,scope.row.batch_name)" size="small">
-                            详情
+                                   @click="rechargeAudit(scope.row.id,1)" size="small"  v-if="scope.row.batch_status == 0">
+                            审核通过
                         </el-button>
-
+                        <el-button type="danger"
+                                   @click="rechargeAudit(scope.row.id,2)" size="small"  v-if="scope.row.batch_status == 0">
+                            驳回
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -146,7 +158,7 @@
 
 <script>
     import NProgress from 'nprogress';
-    import {rechargeList} from '../../api/api';
+    import {rechargeList,rechargeAudit} from '../../api/api';
     import moment from 'moment';
 
     export default {
@@ -159,7 +171,8 @@
                 end_time: '',  //结束时间
                 total: 0,
                 page_number: 1,
-                page_size: 10
+                page_size: 10,
+                batch_status:''
             }
 
         },
@@ -174,11 +187,14 @@
                     return '审核失败'
                 }
             },
-            //查看详情
-            goRechargeDetail(id,name){
-                this.$router.push({name: '详情', query: {id: id, name:name}})
+            // 批冲类型
+            batchTypeFormat(row, column) {
+                if (row.batch_type == 1) {
+                    return '流量账户批充'
+                } else if (row.batch_type == 2) {
+                    return '手机流量批冲'
+                }
             },
-
             handleCurrentChange: function (val) {
                 this.page_number = val;
                 console.log(this.page_number)
@@ -197,6 +213,7 @@
                 }
                 let startTimeNum = moment(this.start_time).format("YYYYMMDDHHmmss");
                 let endTimeNum = moment(this.end_time).format("YYYYMMDDHHmmss");
+                
                 console.log(endTimeNum + " " + startTimeNum)
                 if (startTimeNum && endTimeNum && endTimeNum - startTimeNum < 0) {
                     this.$message({
@@ -213,10 +230,11 @@
                 let params = {
                     page_number: this.page_number,
                     page_size: this.page_size,
-                    start_time: moment(this.start_time).format("YYYY-MM-DD HH:mm:ss"),
-                    end_time: moment(this.end_time).format("YYYY-MM-DD HH:mm:ss"),
+                    start_time:this.start_time,
+                    end_time: this.end_time,
                     batch_name:this.batch_name,
-                    batch_type:this.batch_type
+                    batch_type:2,
+                    batch_status:this.batch_status
 
                 };
                 NProgress.start();
@@ -227,14 +245,27 @@
 
                 });
             },
-            // 批冲类型
-            batchTypeFormat(row, column) {
-                if (row.batch_type == 1) {
-                    return '流量账户批充'
-                } else if (row.batch_type == 2) {
-                    return '手机流量批冲'
-                }
+            rechargeAudit(id,status) { // 审核
+                let params = {
+                    id:id,
+                    batch_status:status
+                };
+                NProgress.start();
+                rechargeAudit(params).then((res) => {
+                    NProgress.done();
+                    if(res.status == 0){
+                        this.$message({
+                            message: '操作成功',
+                            type: 'success'
+                        });
+                        this.init()
+
+                    }
+
+
+                });
             },
+
         },
         mounted() {
             this.init();

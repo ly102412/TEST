@@ -21,8 +21,10 @@ import WxMerchant from '../views/merchant/wxMerchant'
 
 // views - 批充流量
 import AccountChargeFlow from '../views/chargeflow/accountChargeFlow'
-import ChargeFlowList from '../views/chargeflow/chargeFlowList'
 import TelChargeFlow from '../views/chargeflow/telChargeFlow'
+import ChargeFlowList from '../views/chargeflow/chargeFlowList'
+import ChargeDetails from '../views/chargeflow/chargeDetails'
+
 
 // views - pages
 import Page404 from '../views/pages/404'
@@ -141,7 +143,7 @@ const routes = [
       {
         path: '/chargeflow',
         redirect: '/chargeflow/accountChargeFlow',
-        name: '批充流量',
+        name: '流量批充',
         iconCls: 'fa fa-feed',
         component: {
           render (c) { return c('router-view') }
@@ -161,6 +163,12 @@ const routes = [
             path: '/chargeflow/chargeFlowList',
             name: '批充列表',
             component: ChargeFlowList
+          },
+          {
+            path: '/chargeflow/chargeDetails',
+            name: '详情',
+            component: ChargeDetails,
+            hidden: true
           }
         ]
       }

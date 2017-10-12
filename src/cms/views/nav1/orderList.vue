@@ -27,6 +27,7 @@
                                     v-model="endTime"
                                     type="datetime"
                                     placeholder="选择日期时间">
+
                             </el-date-picker>
                         </el-col>
                         <el-col :span="2">
@@ -146,7 +147,7 @@
         <el-col :span="24" class="toolbar">
             <!-- <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button> -->
             <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="page_size"
-                           :total="total" style="float:right; margin-right: 13%">
+                           :total="total" style="float:right;">
             </el-pagination>
         </el-col>
     </section>

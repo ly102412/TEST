@@ -16,3 +16,10 @@ export const adoptOrder = params => { return axios.post(`${base}/service/busices
 //上传文件成功后记录文件地址
 export const sendFile = params => { return axios.post(`${base}/service/send/file`, params); };
 
+//审核列表
+export const rechargeList = params => { return axios.post(`${base}/service/batch/recharge/list`, params).then(res => res.data); };
+
+
+//审核列表
+export const rechargeAudit = params => { return axios.post(`${base}/service/batch/recharge/audit`, params).then(res => res.data); };
+
