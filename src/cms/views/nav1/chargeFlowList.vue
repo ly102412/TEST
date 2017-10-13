@@ -213,7 +213,7 @@
                 }
                 let startTimeNum = moment(this.start_time).format("YYYYMMDDHHmmss");
                 let endTimeNum = moment(this.end_time).format("YYYYMMDDHHmmss");
-                
+
                 console.log(endTimeNum + " " + startTimeNum)
                 if (startTimeNum && endTimeNum && endTimeNum - startTimeNum < 0) {
                     this.$message({

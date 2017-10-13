@@ -213,8 +213,8 @@
                 let params = {
                     page_number: this.page_number,
                     page_size: this.page_size,
-                    start_time: moment(this.start_time).format("YYYY-MM-DD HH:mm:ss"),
-                    end_time: moment(this.end_time).format("YYYY-MM-DD HH:mm:ss"),
+                    start_time: this.start_time,
+                    end_time: this.end_time,
                     batch_name:this.batch_name,
                     batch_type:this.batch_type
 

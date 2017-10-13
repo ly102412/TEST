@@ -202,17 +202,17 @@
             },
             search() { // 搜索
                 if (this.startTime) {
-                    this.start_time = moment(this.startTime).format("YYYY-MM-DD HH:mm:ss");
+                    this.start_time = moment(this.start_time).format("YYYY-MM-DD HH:mm:ss");
                 } else {
                     this.start_time = ''
                 }
                 if (this.endTime) {
-                    this.end_time = moment(this.endTime).format("YYYY-MM-DD HH:mm:ss");
+                    this.end_time = moment(this.end_time).format("YYYY-MM-DD HH:mm:ss");
                 } else {
                     this.end_time = ''
                 }
-                let startTimeNum = moment(this.startTime).format("YYYYMMDDHHmmss");
-                let endTimeNum = moment(this.endTime).format("YYYYMMDDHHmmss");
+                let startTimeNum = moment(this.start_time).format("YYYYMMDDHHmmss");
+                let endTimeNum = moment(this.end_time).format("YYYYMMDDHHmmss");
                 console.log(endTimeNum + " " + startTimeNum)
                 if (startTimeNum && endTimeNum && endTimeNum - startTimeNum < 0) {
                     this.$message({
