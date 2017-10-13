@@ -122,7 +122,7 @@
                 >
                 </el-table-column>
                 <el-table-column
-                        prop="batch_money"
+                        prop="batch_desc"
                         label="备注"
                         width="200"
                         align="center"
