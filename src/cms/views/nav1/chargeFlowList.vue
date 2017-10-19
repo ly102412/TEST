@@ -12,11 +12,11 @@
                             状态:
                         </el-col>
                         <el-col :span="5" style="margin-left: 20px">
-                            <el-select v-model="batch_status" placeholder="请选择批冲类型">
+                            <el-select v-model="batch_status" placeholder="请选择批充类型">
                                 <el-option label="全部" value=""></el-option>
                                 <el-option label="未审核" value="0"></el-option>
-                                <el-option label="审核通过" value="1"></el-option>
-                                <el-option label="驳回" value="2"></el-option>
+                                <el-option label="审核成功" value="1"></el-option>
+                                <el-option label="审核失败" value="2"></el-option>
                             </el-select>
                         </el-col>
 
@@ -77,8 +77,8 @@
                         align="center">
                 </el-table-column>
                 <el-table-column
-                        prop="batch_name"
-                        label="商户名"
+                        prop="business_name"
+                        label="活动名称"
                         width="200"
                         align="center">
                 </el-table-column>
@@ -90,7 +90,7 @@
                 </el-table-column>
                 <el-table-column
                         prop="batch_type"
-                        label="批冲类型"
+                        label="批充类型"
                         width="180"
                         align="center"
                         :formatter="batchTypeFormat"
@@ -147,7 +147,7 @@
         </div>
 
         <!--工具条-->
-        <el-col :span="24" class="toolbar">
+        <el-col :span="24" class="toolbar" v-if = "total > 0 ">
 
             <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="page_size"
                            :total="total" style="float:right;">
@@ -192,7 +192,7 @@
                 if (row.batch_type == 1) {
                     return '流量账户批充'
                 } else if (row.batch_type == 2) {
-                    return '手机流量批冲'
+                    return '手机流量批充'
                 }
             },
             handleCurrentChange: function (val) {

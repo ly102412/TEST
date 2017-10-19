@@ -12,9 +12,9 @@
                             批充类型:
                         </el-col>
                         <el-col :span="5" style="margin-left: 20px">
-                            <el-select v-model="batch_type" placeholder="请选择批冲类型">
+                            <el-select v-model="batch_type" placeholder="请选择批充类型">
                                 <el-option label="流量账户批充" value="1"></el-option>
-                                <el-option label="手机流量批冲" value="2"></el-option>
+                                <el-option label="手机流量批充" value="2"></el-option>
                             </el-select>
                         </el-col>
 
@@ -69,7 +69,7 @@
                     style="width: 1300px;margin: 0 auto;">
                 <el-table-column
                         prop="id"
-                        label="ID"
+                        label="序号"
                         width="120"
                         align="center">
                 </el-table-column>
@@ -87,7 +87,7 @@
                 </el-table-column>
                 <el-table-column
                         prop="batch_type"
-                        label="批冲类型"
+                        label="批充类型"
                         width="180"
                         align="center"
                         :formatter="batchTypeFormat"
@@ -135,7 +135,7 @@
         </div>
 
         <!--工具条-->
-        <el-col :span="24" class="toolbar">
+        <el-col :span="24" class="toolbar" v-if="dataList.length > 0">
 
             <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="page_size"
                            :total="total" style="float:right;">
@@ -232,7 +232,7 @@
                 if (row.batch_type == 1) {
                     return '流量账户批充'
                 } else if (row.batch_type == 2) {
-                    return '手机流量批冲'
+                    return '手机流量批充'
                 }
             },
         },

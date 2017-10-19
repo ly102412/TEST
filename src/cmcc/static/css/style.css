@@ -6,6 +6,12 @@
  * @license MIT
  */
 /*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
+#Bgcanvas{
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
 html {
   font-family: sans-serif;
   line-height: 1.15;

@@ -2,6 +2,14 @@ import axios from 'axios'
 
 let base = '/api/business'
 let mmt = '/api/mmt'
+
+// 登陆接口
+export const requestLogin = params => { return axios.post(`/api/cmcc/login `, params).then(res => res.data); };
+//修改密码接口
+export const requestChangePass = params => { return axios.post(`/api/cmcc/resetpwd `, params).then(res => res.data); };
+//退出登陆接口
+export const requestLogout = params => { return axios.get(`/api/cmcc/logout `, params).then(res => res.data); };
+
 /**
  * [getBussinessInfo 获取商家信息]
  * @param  {[type]} params [description]

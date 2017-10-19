@@ -68,7 +68,6 @@
                               :value="item.value">
                             </el-option>
                         </el-select>
-
                     </el-form-item>
                     <el-form-item label="活动说明：" prop="batch_desc" required>
                         <el-input
@@ -78,18 +77,25 @@
                           v-model="ruleForm.batch_desc">
                         </el-input>
                     </el-form-item>
-                    <el-form-item label="手机号码导入：" prop="flow_num" required>
+                    <el-form-item label="手机号码导入：" prop="flow_num">
                         <el-upload
                                 class="upload"
                                 action="/api/batch/recharge/csv/upload"
                                 :on-preview="handlePreview"
-                                :on-remove="handleRemove"
                                 :on-success="handleSucc"
                                 :before-upload="beforeAvatarUpload"
+                                :multiple="false"
+                                :show-file-list="false"
                         >
                             <el-button size="small" type="info">点击上传</el-button>
                             <div slot="tip" class="el-upload__tip">文本导入仅支持csv格式文档<a href="http://img.tst.ruwe.cn/group1/M00/00/06/Ci-Iq1neyvuAI7OFAAAAGH40ms4582.csv" class="notes">点击下载模板</a></div>
-
+                            <ul class="el-upload-list el-upload-list--text" v-if="file_name">
+                                <li class="el-upload-list__item is-success el-list-enter-to">
+                                    <a class="el-upload-list__item-name"><i class="el-icon-document"></i>{{file_name}}
+    </a>
+                                    <label class="el-upload-list__item-status-label"><i class="el-icon-upload-success el-icon-circle-check"></i></label>
+                                </li>
+                            </ul>
                         </el-upload>
                     </el-form-item>
                     <el-form-item>
@@ -106,10 +112,24 @@
   </div>
 </template>
 <script>
+    
+
     import {readPhoneCsv,createPhoneCsv} from '../../api/api'
     import NProgress from 'nprogress'
     export default {
         data () {
+            let validateSpace = (rule, value, callback)=>{
+                 if(!value){
+                    callback(new Error('不能为空'))
+                 }
+
+                 if(value.match(/^[ ]+$/)){
+                    callback(new Error('不能输入全为空格'))
+                 }
+
+                 callback()
+            }
+
             return {
                 ruleForm:{
                     batch_name:'', //活动名称
@@ -118,11 +138,12 @@
                 },
                 rules:{
                     batch_name: [
-                        { required: true, message: '请输入活动名称', trigger: 'blur' },
+                        { validator:validateSpace,required: true, message: '请输入活动名称', trigger: 'blur' },
                         { max: 10, message: '长度不能超过10个字符', trigger: 'blur' }
                     ],
                     batch_desc:[
-                        { required: true, message: '请输入活动说明', trigger: 'blur' },
+                        {validator:validateSpace, required: true, message: '请输入活动说明', trigger: 'blur' },
+                        { max: 50, message: '长度不能超过50个字符', trigger: 'blur' }
                     ],
                     score: [
                         { required: true, message: '请选择赠送流量值', trigger: 'change' }
@@ -143,7 +164,8 @@
                 file_path:'',//已经上传的文件
                 num:'',//手机号码个数
                 totle:'',     //消费的money
-                business_money:''  //账户总金额
+                business_money:'',  //账户总金额
+                file_name:'' //上传文件的name
             }
         },
         methods: {
@@ -165,11 +187,13 @@
                         type: 'warning'
                     });
                 }
+                this.file_name =  response.data.name
                 this.file_path = response.data.file
             },
             //第一次确认
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
+                    console.log(valid)
                     if (valid) {
                         if(this.file_path){
                             this.readPhoneCsv()
@@ -225,6 +249,12 @@
                         this.totle = res.data.totle
                         this.business_money = res.data.business_money
                         this.dialogVisible2 = true
+                    }else if(res.status == 1){
+                        this.$message({
+                            message: res.message,
+                            type: 'error'
+                        });
+
                     }
                 })
             },

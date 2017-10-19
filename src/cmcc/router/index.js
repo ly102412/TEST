@@ -1,5 +1,6 @@
 import Main from '../containers/main'
 import Index from '../views/index'
+import Login from "../views/Login"
 
 // views - 活动管理
 import ActivityCreate from '../views/activities/create'
@@ -30,6 +31,7 @@ import ChargeDetails from '../views/chargeflow/chargeDetails'
 import Page404 from '../views/pages/404'
 
 const routes = [
+ 
   {
     path: '/',
     name: '首页',
@@ -140,38 +142,38 @@ const routes = [
           }
         ]
       },
-      {
-        path: '/chargeflow',
-        redirect: '/chargeflow/accountChargeFlow',
-        name: '流量批充',
-        iconCls: 'fa fa-feed',
-        component: {
-          render (c) { return c('router-view') }
-        },
-        children: [
-          {
-            path: '/chargeflow/accountChargeFlow',
-            name: '流量账户批充',
-            component: AccountChargeFlow
-          },
-          {
-            path: '/chargeflow/telChargeFlow',
-            name: '手机流量批充',
-            component: TelChargeFlow
-          },
-          {
-            path: '/chargeflow/chargeFlowList',
-            name: '批充列表',
-            component: ChargeFlowList
-          },
-          {
-            path: '/chargeflow/chargeDetails',
-            name: '详情',
-            component: ChargeDetails,
-            hidden: true
-          }
-        ]
-      }
+      // {
+      //   path: '/chargeflow',
+      //   redirect: '/chargeflow/accountChargeFlow',
+      //   name: '流量批充',
+      //   iconCls: 'fa fa-feed',
+      //   component: {
+      //     render (c) { return c('router-view') }
+      //   },
+      //   children: [
+      //     {
+      //       path: '/chargeflow/accountChargeFlow',
+      //       name: '流量账户批充',
+      //       component: AccountChargeFlow
+      //     },
+      //     {
+      //       path: '/chargeflow/telChargeFlow',
+      //       name: '手机流量批充',
+      //       component: TelChargeFlow
+      //     },
+      //     {
+      //       path: '/chargeflow/chargeFlowList',
+      //       name: '批充列表',
+      //       component: ChargeFlowList
+      //     },
+      //     {
+      //       path: '/chargeflow/chargeDetails',
+      //       name: '详情',
+      //       component: ChargeDetails,
+      //       hidden: true
+      //     }
+      //   ]
+      // }
     ]
   },
   {
@@ -187,6 +189,12 @@ const routes = [
         component: Page404
       }
     ]
+  },
+  {
+    path: '/login',
+    component: Login,
+    name: '',
+    hidden: true
   },
   {
     path: '*',

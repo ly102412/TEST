@@ -202,12 +202,12 @@
             },
             search() { // 搜索
                 if (this.startTime) {
-                    this.start_time = moment(this.start_time).format("YYYY-MM-DD HH:mm:ss");
+                    this.start_time = moment(this.startTime).format("YYYY-MM-DD HH:mm:ss");
                 } else {
                     this.start_time = ''
                 }
                 if (this.endTime) {
-                    this.end_time = moment(this.end_time).format("YYYY-MM-DD HH:mm:ss");
+                    this.end_time = moment(this.endTime).format("YYYY-MM-DD HH:mm:ss");
                 } else {
                     this.end_time = ''
                 }
@@ -230,7 +230,7 @@
                 let params = {
                     page_number: this.page_number,
                     page_size: this.page_size,
-                    id: this.batch_name, // 售卡单号
+                    id: this.order_id, // 售卡单号
                     start_time: this.start_time,
                     end_time: this.end_time
                 };

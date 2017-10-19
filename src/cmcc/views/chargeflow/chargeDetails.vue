@@ -10,20 +10,17 @@
                 <el-table-column
                         prop="batch_name"
                         label="活动名称"
-                        width="200"
                         align="center"
                 >
                 </el-table-column>
                 <el-table-column
                         prop="batch_phone"
                         label="手机号码"
-                        width="180"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="score_type"
                         label="流量类型"
-                        width="180"
                         align="center"
                         :formatter="batchTypeFormat"
                 >
@@ -31,13 +28,11 @@
                 <el-table-column
                         prop="batch_score"
                         label="充值流量值（M）"
-                        width="180"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="recharge_status"
                         label="状态"
-                        width="200"
                         align="center"
                         :formatter="rechargeStatusFormat"
                 >
@@ -46,7 +41,7 @@
         </div>
 
         <!--工具条-->
-        <el-col :span="24" class="toolbar">
+        <el-col :span="24" class="toolbar" v-if="dataList.length > 0">
             <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="page_size"
                            :total="total" style="float:right;">
             </el-pagination>
@@ -77,7 +72,7 @@
                 if (row.score_type == 1) {
                     return '流量账户批充'
                 } else if (row.score_type == 2) {
-                    return '手机流量批冲'
+                    return '手机流量批充'
                 }
             },
             // 充值状态
@@ -85,7 +80,7 @@
                 if (row.recharge_status == 0) {
                     return '待充值'
                 } else if (row.recharge_status == 1) {
-                    return '流量充值中'
+                    return '充值中'
                 }else if (row.recharge_status == 2) {
                     return '充值成功'
                 }else if (row.recharge_status == 3) {

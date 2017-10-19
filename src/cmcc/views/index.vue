@@ -136,7 +136,6 @@ export default {
       getBussinessInfo(params).then((res) => {
         NProgress.done()
         if(res.status === 0){
-          console.log(res.data)
           this.businessInfo = res.data
           this.freeze_money = Number(res.data.freeze_money).toFixed(2)
           this.money = res.data.money.toFixed(2)

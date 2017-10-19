@@ -7,7 +7,7 @@
         :close-on-click-modal="false"
         >
         <el-row type="flex" class="row-bg" justify="center">
-          <el-col :span="12"><div class="fl">单个流量值：</div><div class="fl ml65">{{ruleForm.score}}M</div></el-col>
+          <el-col :span="12"><div class="fl">单个流量值：</div><div class="fl ml65">{{score_abs}}M</div></el-col>
         </el-row>
         <el-row type="flex" class="row-bg" justify="center">
           <el-col :span="12"><div class="fl">手机号码个数：</div><div class="fl ml50">{{num}}个</div></el-col>
@@ -69,13 +69,20 @@
                                 class="upload"
                                 action="/api/batch/recharge/csv/upload"
                                 :on-preview="handlePreview"
-                                :on-remove="handleRemove"
                                 :on-success="handleSucc"
                                 :before-upload="beforeAvatarUpload"
+                                :multiple="false"
+                                :show-file-list="false"
                         >
                             <el-button size="small" type="info">点击上传</el-button>
                             <div slot="tip" class="el-upload__tip">文本导入仅支持csv格式文档<a href="http://img.tst.ruwe.cn/group1/M00/00/06/Ci-Iq1neyvuAI7OFAAAAGH40ms4582.csv" class="notes">点击下载模板</a></div>
-
+                            <ul class="el-upload-list el-upload-list--text" v-if="file_name">
+                                <li class="el-upload-list__item is-success el-list-enter-to">
+                                    <a class="el-upload-list__item-name"><i class="el-icon-document"></i>{{file_name}}
+                                    </a>
+                                    <label class="el-upload-list__item-status-label"><i class="el-icon-upload-success el-icon-circle-check"></i></label>
+                                </li>
+                            </ul>
                         </el-upload>
                     </el-form-item>
                     <el-form-item>
@@ -96,6 +103,14 @@ import {readAccountCsv,createAccountCsv} from '../../api/api'
 import NProgress from 'nprogress'
 export default {
   data () {
+      let validateNumber = (rule,value,call) =>{
+            if(!/^[1-9]\d*$/.test(value)){
+                call(new Error('请输入大于0的正整数'))
+                return false
+            }else{
+                call()
+            }
+        }
     return {
         ruleForm:{
             batch_name:'', //活动名称
@@ -107,18 +122,21 @@ export default {
                 { max: 10, message: '长度不能超过10个字符', trigger: 'blur' }
             ],
             score: [
-                { required: true, message: '请输入赠送流量值', trigger: 'blur' }
+                { required: true, message: '请输入赠送流量值', trigger: 'blur' },
+                {validator: validateNumber,  trigger: 'blur'},
             ]
         },
         accountValidateForm: {
 
         },
+        score_abs:'',
         dialogVisible:false,
         dialogVisible2:false,
         file_path:'',//已经上传的文件
         num:'',//手机号码个数
         totle:'',     //消费的money
-        business_money:''  //账户总金额
+        business_money:'',  //账户总金额
+        file_name:'' //上传文件的name
     }
   },
     methods: {
@@ -140,6 +158,7 @@ export default {
                     type: 'warning'
                 });
             }
+            this.file_name =  response.data.name
             this.file_path = response.data.file
         },
         //第一次确认
@@ -147,6 +166,10 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     if(this.file_path){
+                        if(this.ruleForm.score){
+                            this.score_abs = Math.abs(this.ruleForm.score)
+                            console.log( this.score_abs );
+                        }
                         this.readAccountCsv()
                     }else{
                         this.$message({
@@ -200,6 +223,11 @@ export default {
                     this.totle = res.data.totle
                     this.business_money = res.data.business_money
                     this.dialogVisible2 = true
+                }else if(res.status == 1){
+                    this.$message({
+                        message: res.message,
+                        type: 'error'
+                    });
                 }
             })
         },
