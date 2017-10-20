@@ -228,13 +228,13 @@
                                                             <el-input v-model="item.award_name" :disabled="isDisable"></el-input>
                                                         </el-form-item>
                                                         <el-form-item label="奖品大小"
-                                                                      v-if="item.award_type == '1' && item.award_value !== '-1'">
+                                                                      v-if="item.award_type == '1' ">
                                                             <el-input v-model="item.award_value" type="number" :disabled="isDisable">
                                                                 <template slot="append">M</template>
                                                             </el-input>
                                                         </el-form-item>
                                                         <el-form-item label="奖品大小"
-                                                                      v-if="item.award_type == '2' && item.award_value !== '-1'">
+                                                                      v-if="item.award_type == '2'">
                                                             <el-select v-model="item.award_value" placeholder="请选择" :disabled="isDisable">
                                                                 <el-option
                                                                         v-for="list in award_list_value"
