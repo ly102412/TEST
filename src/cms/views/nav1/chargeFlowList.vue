@@ -78,7 +78,7 @@
                 </el-table-column>
                 <el-table-column
                         prop="business_name"
-                        label="活动名称"
+                        label="商户名"
                         width="200"
                         align="center">
                 </el-table-column>

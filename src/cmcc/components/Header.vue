@@ -31,13 +31,13 @@
     <el-dialog title="修改密码"  ref="ruleModal"  v-model="dialogFormVisible" size="tiny">
           <el-form ref="passwordFrom" :rules="rules"  :model="passwordFrom" label-width="80px">
             <el-form-item label="旧密码"  prop="old_passwd">
-              <el-input v-model="passwordFrom.old_passwd"></el-input>
+              <el-input v-model="passwordFrom.old_passwd" type="password"></el-input>
             </el-form-item>
             <el-form-item label="新密码" prop="new_passwd1">
-              <el-input v-model="passwordFrom.new_passwd1"></el-input>
+              <el-input v-model="passwordFrom.new_passwd1" type="password"></el-input>
             </el-form-item>
             <el-form-item label="确认密码" prop="new_passwd2">
-              <el-input v-model="passwordFrom.new_passwd2"></el-input>
+              <el-input v-model="passwordFrom.new_passwd2" type="password"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="handleSave" >修改</el-button>
@@ -86,7 +86,7 @@ export default {
                   title:"密码输入不一致",
                   type: 'error'
                 });
-          return false 
+          return false
       }
 
       let params = {old_passwd:this.passwordFrom.old_passwd,new_passwd:this.passwordFrom.new_passwd1}
@@ -119,7 +119,7 @@ export default {
             }
         })
     },
-  
+
     sidebarToggle (e) {
       e.preventDefault()
       document.body.classList.toggle('sidebar-hidden')
@@ -139,9 +139,9 @@ export default {
   },
   mounted() {
       this.user_name = sessionStorage.getItem('user_name');
-      if(!this.user_name){
-          this.$router.push({ path: '/login' });
-      }
+      // if(!this.user_name){
+      //     this.$router.push({ path: '/login' });
+      // }
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div style="position: absolute;left: 50%;margin-left: -175px;">
     <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
-    <h3 class="title">系统登录</h3>
+    <h3 class="title">流量服务平台</h3>
     <el-form-item prop="account">
       <el-input type="text" v-model="ruleForm2.user_name" auto-complete="off" placeholder="用户名"></el-input>
     </el-form-item>
@@ -14,7 +14,7 @@
     </el-form-item>
   </el-form>
   </div>
-  
+
 </template>
 
 <script>
@@ -51,7 +51,7 @@
           if (valid) {
             this.logining = true;
             NProgress.start();
-            let loginParams = { user_name: this.ruleForm2.user_name, passwd: this.ruleForm2.passwd };
+            let loginParams = { user_name: this.ruleForm2.user_name, passwd: md5(this.ruleForm2.passwd) };
             requestLogin(loginParams).then(data => {
               console.log(data);
               this.logining = false;

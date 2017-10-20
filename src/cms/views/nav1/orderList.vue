@@ -230,7 +230,7 @@
                 let params = {
                     page_number: this.page_number,
                     page_size: this.page_size,
-                    id: this.order_id, // 售卡单号
+                    order_id: this.order_id, // 售卡单号
                     start_time: this.start_time,
                     end_time: this.end_time
                 };
