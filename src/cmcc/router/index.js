@@ -142,38 +142,38 @@ const routes = [
           }
         ]
       },
-      // {
-      //   path: '/chargeflow',
-      //   redirect: '/chargeflow/accountChargeFlow',
-      //   name: '流量批充',
-      //   iconCls: 'fa fa-feed',
-      //   component: {
-      //     render (c) { return c('router-view') }
-      //   },
-      //   children: [
-      //     {
-      //       path: '/chargeflow/accountChargeFlow',
-      //       name: '流量账户批充',
-      //       component: AccountChargeFlow
-      //     },
-      //     {
-      //       path: '/chargeflow/telChargeFlow',
-      //       name: '手机流量批充',
-      //       component: TelChargeFlow
-      //     },
-      //     {
-      //       path: '/chargeflow/chargeFlowList',
-      //       name: '批充列表',
-      //       component: ChargeFlowList
-      //     },
-      //     {
-      //       path: '/chargeflow/chargeDetails',
-      //       name: '详情',
-      //       component: ChargeDetails,
-      //       hidden: true
-      //     }
-      //   ]
-      // }
+      {
+        path: '/chargeflow',
+        redirect: '/chargeflow/accountChargeFlow',
+        name: '流量批充',
+        iconCls: 'fa fa-feed',
+        component: {
+          render (c) { return c('router-view') }
+        },
+        children: [
+          // {
+          //   path: '/chargeflow/accountChargeFlow',
+          //   name: '流量账户批充',
+          //   component: AccountChargeFlow
+          // },
+          {
+            path: '/chargeflow/telChargeFlow',
+            name: '手机流量批充',
+            component: TelChargeFlow
+          },
+          {
+            path: '/chargeflow/chargeFlowList',
+            name: '批充列表',
+            component: ChargeFlowList
+          },
+          {
+            path: '/chargeflow/chargeDetails',
+            name: '详情',
+            component: ChargeDetails,
+            hidden: true
+          }
+        ]
+      }
     ]
   },
   {
