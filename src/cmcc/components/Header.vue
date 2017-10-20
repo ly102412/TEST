@@ -139,9 +139,9 @@ export default {
   },
   mounted() {
       this.user_name = sessionStorage.getItem('user_name');
-      // if(!this.user_name){
-      //     this.$router.push({ path: '/login' });
-      // }
+      if(!this.user_name){
+          this.$router.push({ path: '/login' });
+      }
   }
 }
 </script>
