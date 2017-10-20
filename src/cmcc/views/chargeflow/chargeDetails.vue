@@ -37,6 +37,20 @@
                         :formatter="rechargeStatusFormat"
                 >
                 </el-table-column>
+                <el-table-column
+                        prop=""
+                        label="操作"
+                        align="center"
+                >
+                    <template scope="scope" >
+                        <el-button type="primary"
+                                   @click="goRechargeDetail(scope.row)" size="small" v-show="scope.row.score_type == 2 && scope.row.recharge_status == 3">
+                            重新充值
+
+                        </el-button>
+
+                    </template>
+                </el-table-column>
             </el-table>
         </div>
 
@@ -51,7 +65,7 @@
 
 <script>
     import NProgress from 'nprogress';
-    import {rechargeDetail} from '../../api/api';
+    import {rechargeDetail,rechargeAgain} from '../../api/api';
     import moment from 'moment';
 
     export default {
@@ -62,9 +76,10 @@
                 total: 0,
                 page_number: 1,
                 page_size: 10,
-                batch_name:''
-            }
+                batch_name:'',
+                order_id : ''
 
+            }
         },
         methods: {
             // 批冲类型
@@ -75,6 +90,7 @@
                     return '手机流量批充'
                 }
             },
+
             // 充值状态
             rechargeStatusFormat(row, column) {
                 if (row.recharge_status == 0) {
@@ -92,6 +108,24 @@
                 console.log(this.page_number)
                 this.init();
             },
+            //查看详情
+            goRechargeDetail(row){
+
+                rechargeAgain({order_id :row.charge_order_id}).then((res) => {
+                    if(res.status!=0){
+                        this.$message({
+                            message: res.message,
+                            type: 'error'
+                        });
+                    }else {
+                        this.$message({
+                            message: res.message,
+                            type: 'success'
+                        });
+                        this.init()
+                    }
+                })
+            },
             init() { // 查询表单
                 let _this = this;
                 let params = {
@@ -102,7 +136,7 @@
 
                 NProgress.start();
                 rechargeDetail(params).then((res) => {
-                    _this.total = res.data.rows || 0;
+                    _this.total = res.data&&res.data.rows?res.data.rows:0;
                     NProgress.done();
                     this.dataList = res.data.list
                     for(let i= 0;i <this.dataList.length;i++){

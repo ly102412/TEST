@@ -151,3 +151,5 @@ export const rechargeList = params => { return axios.post(`/api/batch/recharge/l
  */
 export const rechargeDetail = params => { return axios.post(`/api/batch/recharge/detail`, params).then(res => res.data)}
 
+export const rechargeAgain = params => { return axios.post(`/api/batch/recharge/again`, params).then(res => res.data)}
+
