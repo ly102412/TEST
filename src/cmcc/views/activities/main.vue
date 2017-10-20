@@ -210,9 +210,9 @@
                                                         :label="item.award_level"
                                                         :name="item.name"
                                                 >
-                                                    <el-form ref="activity.award_setting"
+                                                    <el-form ref="activity.award_setting" :model="activity.award_setting[index]"
                                                              label-width="120px" style="padding:0 10px"
-                                                            :rules="gift_setting_rules"
+                                                            :rules="award_setting_rules"
                                                     >
                                                         <el-form-item label="奖品类型" v-if="item.award_value !== '-1'">
                                                             <el-radio-group v-model="item.award_type"
@@ -243,8 +243,8 @@
                                                                 </el-option>
                                                             </el-select>
                                                         </el-form-item>
-                                                        <el-form-item label="奖品数量" prop = "award_num" v-if="item.award_type !=='0'" required>
-                                                            <el-input v-model.number="item.award_num" type="number" :disabled="isDisable" ></el-input>
+                                                        <el-form-item label="奖品数量" prop="award_num" v-if="item.award_type !=='0'" required>
+                                                            <el-input v-model="item.award_num" type="number" :disabled="isDisable" ></el-input>
                                                         </el-form-item>
                                                         <el-form-item label="中奖概率">
                                                             <!-- <el-input v-model="item.winning_rate">
@@ -627,7 +627,7 @@
             }
 
             let validateNumber = (rule,value,call) =>{
-                if(!/^[1-9]\d*$/.test(value)){
+                if(value && !/^[1-9]\d*$/.test(value)){
                     call(new Error('请输入大于0的正整数'))
                     return false
                 }else{
@@ -762,13 +762,12 @@
                     ],
                     end_date: [
                         {validator: validateEndTime,  trigger: 'blur'},
-
                     ],
                 },
                 gift_setting_rules:{
-                    award_num:[
-                        {validator: validateNumber,  trigger: 'blur'},
-                    ]
+                    // award_num:[
+                    //     {validator: validateNumber,  message: '只能输入大于0的正整数',trigger: 'blur'},
+                    // ]
                 },
                 lottery_setting_rules: {
                     daily_lottery_time: [
@@ -779,6 +778,9 @@
                     ]
                 },
                 award_setting_rules: {
+                   award_num:[
+                        {validator: validateNumber,  message: '只能输入大于0的正整数',trigger: 'blur'},
+                    ]
                 },
                 sharing_setting_rules: {},
                 advanced_setting_rules: {},
